@@ -1,0 +1,7 @@
+# Editor configs
+.vscode/*
+
+# Folders
+app
+server
+node_modules

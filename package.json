@@ -1,0 +1,16 @@
+{
+    "name": "tv-app",
+    "version": "1.0.0",
+    "description": "TV app",
+    "author": "Christian Torrealba",
+    "license": "ISC",
+    "scripts": {
+        "dev:client": "npm run dev --prefix app",
+        "dev:server": "npm run dev --prefix server",
+        "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+        "postinstall": "(cd app && npm install); (cd server && npm install);"
+    },
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
