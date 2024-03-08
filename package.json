@@ -4,13 +4,24 @@
     "description": "TV app",
     "author": "Christian Torrealba",
     "license": "ISC",
+    "private": true,
     "scripts": {
         "dev:client": "npm run dev --prefix app",
         "dev:server": "npm run dev --prefix server",
         "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-        "postinstall": "(cd app && npm install); (cd server && npm install);"
+        "postinstall": "(cd app && npm install); (cd server && npm install);",
+        "build:shared-types": "npm run build --workspace ./packages/shared-types"
     },
+    "workspaces": [
+        "packages/*"
+    ],
     "dependencies": {
-        "concurrently": "^8.2.2"
+        "concurrently": "^8.2.2",
+        "typescript": "^5.4.2"
+    },
+    "devDependencies": {
+        "@tv-app-packages/shared-types": "^1.0.0",
+        "@types/node": "^20.11.25",
+        "ts-node": "^10.9.2"
     }
 }
