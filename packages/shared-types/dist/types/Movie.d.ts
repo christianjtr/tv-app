@@ -11,3 +11,14 @@ export type Movie = {
         w500: string;
     };
 };
+export type MovieDetailed = Movie & {
+    IMDBId: string;
+    tagLine: string;
+    genres: {
+        id: number;
+        name: string;
+    }[];
+    homepage: string;
+    runtime: number;
+    originalLanguage: string;
+};

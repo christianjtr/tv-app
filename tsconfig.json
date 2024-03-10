@@ -11,5 +11,5 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [],
-    "references": [{ "path": "./packages/types" }]
+    "references": [{ "path": "./packages/shared-types" }]
 }
