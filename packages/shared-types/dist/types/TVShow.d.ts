@@ -20,14 +20,19 @@ export type TVShowDetailed = TVShow & {
         name: string;
     }[];
     seasons: {
-        air_date: string;
-        episode_count: number;
+        firstAirDate: string;
+        numberOfEpisodes: number;
         id: number;
         name: string;
-        overview: string;
-        poster_path: string;
-        season_number: number;
-        vote_average: number;
+        description: string;
+        seasonNumber: number;
+        rating: number;
+        images: {
+            original: string;
+            w185: string;
+            w300: string;
+            w500: string;
+        };
     }[];
     tagline: string;
     homepage: string;
