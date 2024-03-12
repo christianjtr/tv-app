@@ -10,6 +10,8 @@
         "dev:server": "npm run dev --prefix server",
         "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
         "postinstall": "(cd app && npm install); (cd server && npm install);",
+        "test:client": "npm test --prefix app",
+        "test:server": "npm test --prefix server",
         "build:shared-types": "npm run build --workspace ./packages/shared-types"
     },
     "workspaces": [
