@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+    title: TV app sample API
+    description: TV app RESTFul API specs
+    version: 1.0.0
+servers:
+    - url: http://localhost:3001/api
+      description: Development environment
+paths:
+    /movies/{movieId}:
+        get:
+            summary: Return a movie by its Id
+            tags:
+                - Movies
+            parameters:
+                - name: movieId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: A movie item
+                '500':
+                    description: Server error
+    /movies/trending:
+        get:
+            summary: Returns a collection of trending movies
+            tags:
+                - Movies
+            parameters:
+                - in: query
+                  name: timeWindow
+                  required: true
+                  schema:
+                      type: string
+                  description: The frequency of trends
+                  default: day
+                  enum: [day, week]
+                - in: query
+                  name: language
+                  required: false
+                  schema:
+                      type: string
+                  description: The language. ISO-639-1 - ISO-3166-1
+            responses:
+                '200':
+                    description: A collection of trending movies
+                '500':
+                    description: Server error
+    /movies/search:
+        get:
+            summary: Returns a collection of movies given a search criteria
+            tags:
+                - Movies
+            parameters:
+                - name: query
+                  in: query
+                  required: true
+                  description: Search criteria
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: A collection of movies
+                '500':
+                    description: Server error
+    /tv-shows/{tvShowId}:
+        get:
+            summary: Return a tv show by its Id
+            tags:
+                - TV Shows
+            parameters:
+                - name: tvShowId
+                  in: path
+                  required: true
+                  description: TV show Id
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: A tv show
+                '500':
+                    description: Server error
+    /tv-shows/trending:
+        get:
+            summary: Returns a collection of trending tv shows
+            tags:
+                - TV Shows
+            parameters:
+                - in: query
+                  name: timeWindow
+                  required: true
+                  schema:
+                      type: string
+                  description: The frequency of trends
+                  default: day
+                  enum: [day, week]
+                - in: query
+                  name: language
+                  required: false
+                  schema:
+                      type: string
+                  description: The language. ISO-639-1 - ISO-3166-1
+            responses:
+                '200':
+                    description: A collection of trending tv shows
+                '500':
+                    description: Server error
+    /tv-shows/search:
+        get:
+            summary: Returns a collection of tv shows given a search criteria
+            tags:
+                - TV Shows
+            parameters:
+                - name: query
+                  in: query
+                  required: true
+                  description: Search criteria
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: A collection of tv shows
+                '500':
+                    description: Server error

@@ -1,0 +1,59 @@
+{
+    "name": "tv-app-client",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "description": "TV app client",
+    "author": "Christian Torrealba",
+    "license": "ISC",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview",
+        "precommit": "lint-staged",
+        "prepare": "husky install"
+    },
+    "lint-staged": {
+        "src/**/*.{js,jsx,ts,tsx}": [
+            "eslint --fix"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run precommit"
+        }
+    },
+    "dependencies": {
+        "qs": "^6.12.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^5.3.4"
+    },
+    "devDependencies": {
+        "@tailwindcss/typography": "^0.5.10",
+        "@types/qs": "^6.9.12",
+        "@types/react": "^18.2.56",
+        "@types/react-dom": "^18.2.19",
+        "@types/react-router-dom": "^5.3.3",
+        "@typescript-eslint/eslint-plugin": "^7.1.1",
+        "@typescript-eslint/parser": "^7.1.1",
+        "@vitejs/plugin-react": "^4.2.1",
+        "autoprefixer": "^10.4.18",
+        "daisyui": "^4.7.2",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
+        "eslint-plugin-react": "^7.34.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2",
+        "postcss": "^8.4.35",
+        "prettier": "^3.2.5",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5.2.2",
+        "vite": "^5.1.4"
+    }
+}
