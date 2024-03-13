@@ -3,12 +3,15 @@ import { tvAppApi } from './tv-app.config';
 import { TVShow, TVShowDetailed, TimeWindow } from '@tv-app-packages/shared-types';
 
 const {
-    config: { baseURL },
+    config: { baseURL, isAPIMocked },
 } = tvAppApi;
 
-// Mocking purposes...
-import TV_SHOW from '../../../../__fixtures__/tvshow.json';
-import TV_SHOWS from '../../../../__fixtures__/tvshows.json';
+// Just for mocking purposes...
+// Just for mocking purposes...
+const apiMock = (async () => {
+    const { default: mocks } = await import('../../../../__mocks__/tv.api.service.mock');
+    return mocks;
+})();
 
 export namespace TVShowResponse {
     export type TVShows = {
@@ -24,14 +27,15 @@ export namespace TVShowResponse {
 
 export const searchTVShow = async (criteria: string): Promise<TVShowResponse.TVShows> => {
     try {
-        // const queryString = `?${stringify({ query: criteria }, { format: 'RFC1738' })}`;
-        // const response = await fetch(`${baseURL}/tv-shows/search${queryString}`);
-        // const { page, results } = await response.json();
-        // return {
-        //     page,
-        //     results,
-        // };
-        return TV_SHOWS as unknown as TVShowResponse.TVShows;
+        if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShows>;
+
+        const queryString = `?${stringify({ query: criteria }, { format: 'RFC1738' })}`;
+        const response = await fetch(`${baseURL}/tv-shows/search${queryString}`);
+        const { page, results } = await response.json();
+        return {
+            page,
+            results,
+        };
     } catch (error) {
         throw new Error(error as string | undefined);
     }
@@ -39,10 +43,11 @@ export const searchTVShow = async (criteria: string): Promise<TVShowResponse.TVS
 
 export const searchTVShowById = async (id: number | string): Promise<TVShowDetailed> => {
     try {
-        // const response = await fetch(`${baseURL}/tv-shows/${id}`);
-        // const tvshow = await response.json();
-        // return tvshow;
-        return TV_SHOW as unknown as TVShowDetailed;
+        if (isAPIMocked) return (await apiMock).tvshowMock as unknown as Promise<TVShowDetailed>;
+
+        const response = await fetch(`${baseURL}/tv-shows/${id}`);
+        const tvshow = await response.json();
+        return tvshow;
     } catch (error) {
         throw new Error(error as string | undefined);
     }
@@ -50,14 +55,15 @@ export const searchTVShowById = async (id: number | string): Promise<TVShowDetai
 
 export const getTrendingTVShows = async (timeWindow: TimeWindow, language?: string): Promise<TVShowResponse.TVShowTrends> => {
     try {
-        // const queryString = `?${stringify({ timeWindow, language })}`;
-        // const response = await fetch(`${baseURL}/tv-shows/trending${queryString}`);
-        // const { page, results } = await response.json();
-        // return {
-        //     page,
-        //     results,
-        // };
-        return TV_SHOWS as unknown as TVShowResponse.TVShowTrends;
+        if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShowTrends>;
+
+        const queryString = `?${stringify({ timeWindow, language })}`;
+        const response = await fetch(`${baseURL}/tv-shows/trending${queryString}`);
+        const { page, results } = await response.json();
+        return {
+            page,
+            results,
+        };
     } catch (error) {
         throw new Error(error as string | undefined);
     }

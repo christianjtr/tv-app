@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TimeWindow, Movie, MovieDetailed } from '@tv-app-packages/shared-types';
 import * as MovieServices from '@services/apis/tv-app/movie.api.services';
 
-const useFetchTrendingMovies = (timeWindow: TimeWindow = 'day', language?: string) => {
+const useFetchTrendingMovies = (timeWindow: TimeWindow = 'day', language?: string): { movies: Movie[]; isLoading: boolean; hasMovies: boolean } => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -27,7 +27,7 @@ const useFetchTrendingMovies = (timeWindow: TimeWindow = 'day', language?: strin
     };
 };
 
-const useSearchMovies = (criteria: string) => {
+const useSearchMovies = (criteria: string): { movies: Movie[]; isLoading: boolean; hasMovies: boolean } => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -56,7 +56,7 @@ const useSearchMovies = (criteria: string) => {
     };
 };
 
-const useSearchMovieById = (id: number | string) => {
+const useSearchMovieById = (id: number | string): { movie: MovieDetailed | null; isLoading: boolean } => {
     const [movie, setMovie] = useState<MovieDetailed | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
