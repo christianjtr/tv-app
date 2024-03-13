@@ -28,6 +28,7 @@ const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps):
 
     const programTitle = info.title || info.name;
 
+    // Consider extract this to a utils...
     const releaseDate = info.releaseDate || info.firstAirDate;
     const formattedReleaseDate = new Date(releaseDate!).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
