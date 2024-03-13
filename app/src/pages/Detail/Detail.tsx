@@ -82,7 +82,7 @@ const Detail: React.FC = (): React.ReactElement => {
                                         id="imdb_link"
                                         data-testid="imdb_link"
                                         className="link link-hover inline-block"
-                                        href={`"https://www.imdb.com/title/${tvProgram?.IMDBId}"`}
+                                        href={`https://www.imdb.com/title/${tvProgram?.IMDBId}`}
                                         rel="noreferrer"
                                         target="_blank"
                                         title="IMDb Official site"
