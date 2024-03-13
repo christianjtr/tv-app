@@ -23,6 +23,7 @@
     },
     "devDependencies": {
         "@tv-app-packages/shared-types": "^1.0.0",
+        "@types/jest": "^29.5.12",
         "@types/node": "^20.11.25",
         "ts-node": "^10.9.2"
     }
