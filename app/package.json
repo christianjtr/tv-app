@@ -45,14 +45,15 @@
         ],
         "transform": {
             ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
-            "^.+\\.tsx?$": "babel-jest"
+            "^.+\\.tsx?$": "babel-jest",
+            "^.+\\.svg$": "jest-transform-stub"
         },
         "moduleNameMapper": {
             "^@services(.*)$": "<rootDir>/src/services$1",
             "^@hooks(.*)$": "<rootDir>/src/hooks$1",
             "^@pages(.*)$": "<rootDir>/src/pages$1",
             "^@config(.*)$": "<rootDir>/src/config$1",
-            "^@app-types(.*)$": "<rootDir>/src/app-types$1",
+            "^@app-types(.*)$": "<rootDir>/src/types$1",
             "^@components(.*)$": "<rootDir>/src/components$1",
             "^@assets(.*)$": "<rootDir>/src/assets$1",
             "^@layout(.*)$": "<rootDir>/src/layout$1"
@@ -94,6 +95,7 @@
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
         "jest-transform-stub": "^2.0.0",
+        "jest-transformer-svg": "^2.0.2",
         "lint-staged": "^15.2.2",
         "postcss": "^8.4.35",
         "prettier": "^3.2.5",
