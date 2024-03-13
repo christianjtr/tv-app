@@ -53,9 +53,9 @@ describe('TVProgramItem component', () => {
         const { title, name } = movieItem;
         const tvProgramTitle = title || name;
 
-        const card = screen.getByTestId(`program_${tvProgramTitle}`);
+        const tvProgramItem = screen.getByTestId(`program_${tvProgramTitle}`);
 
-        fireEvent.click(card);
+        fireEvent.click(tvProgramItem);
 
         expect(callbackFunction).toHaveBeenCalledTimes(1);
     });
