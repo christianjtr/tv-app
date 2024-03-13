@@ -13,7 +13,7 @@ const NotFound: React.FC<NotFoundProps> = (props: NotFoundProps): React.ReactEle
     const titleToDisplay = title || 'The section does not exist';
 
     return (
-        <div className="hero h-full flex flex-col mt-5">
+        <div className="hero h-full flex flex-col mt-5" data-testid="not-found-component">
             <img src={NotFoundStateImage} alt="Not found state image" aria-label="Not found state image" width="400" />
             <h1 className="text-xl my-10">{titleToDisplay}</h1>
             {showBackToHome && (

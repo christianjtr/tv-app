@@ -20,7 +20,7 @@ const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps):
         'tv-show': 'tv-shows',
     };
 
-    const Skeleton = <div className="skeleton w-full h-80"></div>;
+    const Skeleton = <div className="skeleton w-full h-80" data-testid="skeleton"></div>;
     const TVPrograms = tvPrograms.map(({ id, ...tvProgram }) => (
         <TVProgramItem key={id} info={tvProgram} onClick={() => history.push(`/${detailPath[tvProgramType]}/${id}`)} />
     ));
