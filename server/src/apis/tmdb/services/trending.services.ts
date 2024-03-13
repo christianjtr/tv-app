@@ -10,7 +10,7 @@ export interface TrendingServiceInterface {
 }
 
 export default {
-    getTrendingMovies: async (timeWindow, language?: string): Promise<{ page: number; results: Movie[] }> => {
+    getTrendingMovies: async (timeWindow: TimeWindow, language?: string): Promise<{ page: number; results: Movie[] }> => {
         try {
             const queryString = language ? `?${qs.stringify({ language })}` : '';
 
@@ -22,7 +22,7 @@ export default {
             throw error;
         }
     },
-    getTrendingTVShows: async (timeWindow, language?: string): Promise<{ page: number; results: TVShow[] }> => {
+    getTrendingTVShows: async (timeWindow: TimeWindow, language?: string): Promise<{ page: number; results: TVShow[] }> => {
         try {
             const queryString = language ? `?${qs.stringify({ language })}` : '';
 
