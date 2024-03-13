@@ -6,6 +6,8 @@
         "module": "ESNext",
         "skipLibCheck": true,
         "baseUrl": "src/",
+        "types": ["jest", "node"],
+        "esModuleInterop": true,
 
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -36,7 +38,7 @@
             "@layout/*": ["layout/*"]
         }
     },
-    "include": ["src"],
+    "include": ["./src/**/*.ts", "./__tests__/**/*.ts", "./__mocks__/**/*", "./__fixtures__/*.json", "**/*.spec.ts", "**/*.test.ts"],
     "exclude": ["node_modules"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
