@@ -28,7 +28,7 @@ const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps):
     return (
         <div className="my-1" data-element="tv-program-rail">
             <h2 className="divider divider-start text-lg">{title}</h2>
-            {tvPrograms.length === 0 && <NotFound title="Ups, nothing here..." />}
+            {tvPrograms.length === 0 && !isLoading && <NotFound title="Ups, nothing here..." />}
             <div className="carousel w-full p-4 space-x-4 rounded-box">{isLoading ? Skeleton : TVPrograms}</div>
         </div>
     );
