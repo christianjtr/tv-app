@@ -5,7 +5,7 @@
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "module": "ESNext",
         "skipLibCheck": true,
-        "baseUrl": "src/",
+        "baseUrl": "src",
         "types": ["jest", "node"],
         "esModuleInterop": true,
 
@@ -25,12 +25,12 @@
 
         /* Paths */
         "paths": {
-            "@": ["."],
+            "@routes/*": ["routes/*"],
             "@services/*": ["services/*"],
             "@hooks/*": ["hooks/*"],
             "@pages": ["pages"],
             "@pages/*": ["pages/*"],
-            "@config/*": ["config/*"],
+            "@configuration/*": ["configuration/*"],
             "@app-types/*": ["types/*"],
             "@components/*": ["components/*"],
             "@assets/*": ["assets/*"],
@@ -38,7 +38,18 @@
             "@layout/*": ["layout/*"]
         }
     },
-    "include": ["./src/**/*.ts", "./__tests__/**/*.ts", "./__mocks__/**/*", "./__fixtures__/*.json", "**/*.spec.ts", "**/*.test.ts"],
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./__tests__/**/*.ts",
+        "./__mocks__/**/*",
+        "./__fixtures__/*.json",
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "./cypress/**/*.ts"
+    ],
     "exclude": ["node_modules"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

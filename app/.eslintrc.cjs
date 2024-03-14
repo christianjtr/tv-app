@@ -12,7 +12,7 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    plugins: ['react-refresh', 'html', '@typescript-eslint'],
+    plugins: ['react-refresh', 'html', '@typescript-eslint', 'cypress'],
     settings: {
         react: {
             version: 'detect',
