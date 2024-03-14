@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { APP_BASE_PATH } from '@config/app.config';
+import { APP_BASE_PATH } from './configuration/app.config';
 import AppRoutes from './routes/AppRoutes';
 import { Header, Container, Loading } from './layout';
 
