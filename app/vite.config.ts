@@ -13,7 +13,6 @@ export default defineConfig({
     base: '/tv-app',
     resolve: {
         alias: [
-            { find: '@', replacement: resolve(__dirname, './src/') },
             { find: '@services', replacement: resolve(__dirname, './src/services') },
             { find: '@hooks', replacement: resolve(__dirname, './src/hooks') },
             { find: '@pages', replacement: resolve(__dirname, './src/pages') },
