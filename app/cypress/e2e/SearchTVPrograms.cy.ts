@@ -12,7 +12,7 @@ describe('Search view page', () => {
     it('should search a tv program correctly', () => {
         cy.visit(Cypress.env('APP_SEARCH_URL'));
 
-        cy.get('[data-cy="btn_search"]').type(query);
+        cy.get('[data-cy="search_input"]').type(query);
         cy.get('[data-cy="btn_search"]')
             .click()
             .then(() => {
@@ -26,7 +26,7 @@ describe('Search view page', () => {
 
         cy.visit(Cypress.env('APP_SEARCH_URL'));
 
-        cy.get('[data-cy="btn_search"]').type(query);
+        cy.get('[data-cy="search_input"]').type(query);
         cy.get('[data-cy="btn_search"]').click();
         cy.get('[data-cy="tv-program-rail-item"]')
             .first()
