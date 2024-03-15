@@ -20,13 +20,13 @@ const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps):
         'tv-show': 'tv-shows',
     };
 
-    const Skeleton = <div className="skeleton w-full h-80" data-testid="skeleton"></div>;
+    const Skeleton = <div className="skeleton w-full h-80" data-testid="skeleton" data-cy="skeleton"></div>;
     const TVPrograms = tvPrograms.map(({ id, ...tvProgram }) => (
         <TVProgramItem key={id} info={tvProgram} onClick={() => history.push(`/${detailPath[tvProgramType]}/${id}`)} />
     ));
 
     return (
-        <div className="my-1" data-element="tv-program-rail">
+        <div className="my-1" data-element="tv-program-rail" data-cy="tv-program-rail">
             <h2 className="divider divider-start text-lg">{title}</h2>
             {tvPrograms.length === 0 && !isLoading && <NotFound title="Ups, nothing here..." />}
             <div className="carousel w-full p-4 space-x-4 rounded-box">{isLoading ? Skeleton : TVPrograms}</div>
