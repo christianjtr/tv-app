@@ -53,6 +53,7 @@ const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps):
             aria-pressed={isPressed}
             data-testid={`program_${programTitle}`}
             data-element="tv-program-rail-item"
+            data-cy="tv-program-rail-item"
         >
             <div tabIndex={0} className="bg-base-100 w-full h-full absolute opacity-0 tv-program-item__info text-sm text-left">
                 <h4 className="block mb-1 text-base font-semibold">{programTitle}</h4>
