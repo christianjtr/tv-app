@@ -1,16 +1,31 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'cypress';
+import vitePreprocessor from 'cypress-vite';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const env_e2e = dotenv.config({ path: './environment/.env.e2e' }).parsed;
 
 export default defineConfig({
     e2e: {
-        baseUrl: 'http://localhost:3000',
         setupNodeEvents(on, config) {
-            // implement node event listeners here
-        },
-    },
-    component: {
-        devServer: {
-            framework: 'react',
-            bundler: 'vite',
+            on(
+                'file:preprocessor',
+                vitePreprocessor({
+                    configFile: path.resolve(__dirname, './vite.config.ts'),
+                    mode: 'e2e',
+                })
+            );
+
+            config.env = {
+                ...env_e2e,
+                ...config.env,
+            };
+
+            return config;
         },
     },
 });
