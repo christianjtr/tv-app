@@ -6,8 +6,12 @@
     "description": "TV app client",
     "author": "Christian Torrealba",
     "license": "ISC",
+    "config": {
+        "host": "http://localhost:3000"
+    },
     "scripts": {
         "dev": "vite",
+        "dev:e2e": "NODE_ENV=e2e vite",
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
@@ -16,7 +20,7 @@
         "test": "jest --no-cache --detectOpenHandles --forceExit",
         "cy:open": "cypress open",
         "cy:run": "cypress run --e2e",
-        "cy:e2e": "start-server-and-test dev http://localhost:3000 cy:open",
+        "cy:e2e": "start-server-and-test dev:e2e $npm_package_config_host cy:open",
         "ts:trace-resolution": "tsc --traceResolution"
     },
     "lint-staged": {
@@ -91,7 +95,9 @@
         "autoprefixer": "^10.4.18",
         "babel-jest": "^29.7.0",
         "cypress": "^13.6.1",
+        "cypress-vite": "^1.5.0",
         "daisyui": "^4.7.2",
+        "dotenv": "^16.4.5",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-import": "^2.29.1",
