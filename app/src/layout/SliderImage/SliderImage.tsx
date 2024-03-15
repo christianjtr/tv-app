@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Glide, { Autoplay } from '@glidejs/glide/dist/glide.modular.esm';
+import Glide from '@glidejs/glide';
 import './SliderImage.css';
 
 export interface SliderImageProps {
@@ -21,7 +21,7 @@ const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React
                 hoverpause: false,
                 gap: 0,
                 animationDuration: 1000,
-            }).mount({ Autoplay });
+            }).mount();
 
             glide.on('swipe.end', () => {
                 glide.go('0');
