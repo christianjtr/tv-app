@@ -23,6 +23,7 @@
         "typescript": "^5.4.2"
     },
     "devDependencies": {
+        "@babel/plugin-transform-modules-commonjs": "^7.23.3",
         "@tv-app-packages/shared-types": "^1.0.0",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.25",
