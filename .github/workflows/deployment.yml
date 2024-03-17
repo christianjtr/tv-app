@@ -17,27 +17,26 @@ on:
       - docker-compose.yml
 
 jobs:
-  run-tests:
+  # run-tests:
     
-    if: false
-    name: Run tests
-    runs-on: ubuntu-latest
+    # name: Run tests
+    # runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16]
+    # strategy:
+    #   matrix:
+    #     node-version: [16]
         
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run test:client
-    - run: npm run test:server
-    - run: npm run test:client:cy
+    # steps:
+    # - uses: actions/checkout@v3
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    # - run: npm ci
+    # - run: npm run test:client
+    # - run: npm run test:server
+    # - run: npm run test:client:cy
   
   dockerize-app:
     
