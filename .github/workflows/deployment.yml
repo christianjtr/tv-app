@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: CI - Run tests and create the docker containers
 
 on:
   push:
@@ -10,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  tests:
+  run-tests:
 
     runs-on: ubuntu-latest
 
@@ -29,3 +26,20 @@ jobs:
     - run: npm run test:client
     - run: npm run test:server
     - run: npm run test:client:cy
+  
+  dockerize-app:
+    
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: echo "Must dockerize application"
