@@ -1,65 +1,63 @@
 name: CI - Run tests and create the docker containers
 
 on:
-  push:
-    branches: [ "master" ]
-    paths:
-      - 'app/**'
-      - 'server/**'
-      - 'packages/**'
-      - docker-compose.yml
-  pull_request:
-    branches: [ "master" ]
-    paths:
-      - 'app/**'
-      - 'server/**'
-      - 'packages/**'
-      - docker-compose.yml
+    push:
+        branches: ["master"]
+        paths:
+            - "app/**"
+            - "server/**"
+            - "packages/**"
+            - docker-compose.yml
+    pull_request:
+        branches: ["master"]
+        paths:
+            - "app/**"
+            - "server/**"
+            - "packages/**"
+            - docker-compose.yml
 
 jobs:
-  # run-tests:
-    
-    # name: Run tests
-    # runs-on: ubuntu-latest
+    run-tests:
+        name: Run tests
+        runs-on: ubuntu-latest
 
-    # strategy:
-    #   matrix:
-    #     node-version: [16]
-        
-    # steps:
-    # - uses: actions/checkout@v3
-    # - name: Use Node.js ${{ matrix.node-version }}
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: ${{ matrix.node-version }}
-    #     cache: 'npm'
-    # - run: npm ci
-    # - run: npm run test:client
-    # - run: npm run test:server
-    # - run: npm run test:client:cy
-  
-  dockerize-app:
-    
-    needs: run-tests
-    
-    name: Dockerize application
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16]
 
-    strategy:
-      matrix:
-        node-version: [16]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+            - run: npm ci
+            - run: npm run test:client
+            - run: npm run test:server
+            - run: npm run test:client:cy
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Create .env file
-      run: |
-        touch .env
-        echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
-        cat .env
-    - name: Build containers
-      run: docker-compose -f docker-compose.yml -p tv-app --build
+    dockerize-app:
+        needs: run-tests
+
+        name: Dockerize application
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [16]
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+            - name: Create .env file
+              run: |
+                  touch .env
+                  echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
+                  cat .env
+            - name: Build containers
+              run: docker-compose -f docker-compose.yml -p tv-app --build
