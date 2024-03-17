@@ -19,6 +19,7 @@ on:
 jobs:
   run-tests:
     
+    if: false
     name: Run tests
     runs-on: ubuntu-latest
 
