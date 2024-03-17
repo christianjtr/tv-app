@@ -46,4 +46,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm run dev:docker:build-up
+    - name: Create .env file
+      run: |
+        touch .env
+        echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
+        cat .env
+    - run: echo "CREATE CONTAINERS"
