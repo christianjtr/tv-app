@@ -44,10 +44,12 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
+            - uses: actions/checkout@v3
             - name: Create .env file
               run: |
                   touch .env
                   echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
                   cat .env
+            - uses: actions/checkout@v3
             - name: Build containers
-              run: docker-compose -f docker-compose.yml -p tv-app --build
+              run: docker-compose -p tv-app --build
