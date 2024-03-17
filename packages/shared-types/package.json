@@ -1,12 +1,16 @@
 {
-    "name": "@tv-app-packages/shared-types",
-    "version": "1.0.0",
-    "description": "TV app shared types",
-    "author": "Christian Torrealba",
-    "license": "ISC",
-    "private": true,
-    "main": "dist/index.js",
-    "scripts": {
-        "build": "tsc --build --verbose"
-    }
+  "name": "@tv-app-packages/shared-types",
+  "version": "1.0.0",
+  "description": "TV app shared types",
+  "author": "Christian Torrealba",
+  "license": "ISC",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build --verbose"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  },
+  "types": "./dist/index.d.ts"
 }
