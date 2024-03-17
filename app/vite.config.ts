@@ -10,7 +10,7 @@ export default defineConfig({
     mode,
     server: {
         host: true,
-        port: 3000,
+        port: +process.env.VITE_APP_SERVER_PORT! || 3000,
     },
     envDir: './environment',
     base: '/tv-app',

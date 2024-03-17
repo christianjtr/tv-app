@@ -5,6 +5,9 @@
     "author": "Christian Torrealba",
     "license": "ISC",
     "private": true,
+    "config": {
+        "app": "tv-app"
+    },
     "scripts": {
         "dev:client": "npm run dev --prefix app",
         "dev:server": "npm run dev --prefix server",
@@ -13,7 +16,9 @@
         "test:client": "npm test --prefix app",
         "test:client:cy": "npm cy:run --prefix client",
         "test:server": "npm test --prefix server",
-        "build:shared-types": "npm run build --workspace ./packages/shared-types"
+        "build:shared-types": "npm run build --workspace ./packages/shared-types",
+        "dev:docker:build-up": "node ./scripts/runDockerComposeBuilUpWithEnvs.mjs",
+        "dev:docker:stop": "docker-compose -p $npm_package_config_app stop"
     },
     "workspaces": [
         "packages/*"
@@ -27,6 +32,7 @@
         "@tv-app-packages/shared-types": "^1.0.0",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.25",
+        "dotenv": "^16.4.5",
         "ts-node": "^10.9.2"
     }
 }
