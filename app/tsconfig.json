@@ -52,6 +52,6 @@
         "./src/**/*.tsx",
         "./cypress.config.ts"
     ],
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules", "./__fixtures__/**", "./__mocks__/**", "./__tests__/**/*.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
