@@ -52,4 +52,4 @@ jobs:
         echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
         cat .env
     - name: Build containers
-      run: docker-compose -f docker-compose.yml -p tv-app --env-file . -d --build
+      run: docker-compose -f docker-compose.yml -p tv-app --build
