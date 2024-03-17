@@ -50,7 +50,7 @@ jobs:
                   echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
                   cat .env
             - name: Build containers
-              uses: docker/componse@v1
-              with:
-                  file: docker-compose.yml
-                  build: true
+              run: docker-compose -f "docker-compose.yml" up -d --build
+            - name: Stop Containers
+              if: always()
+              run: docker-compose -f "docker-compose.yml" down
