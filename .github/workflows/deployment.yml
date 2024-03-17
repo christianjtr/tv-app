@@ -46,4 +46,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: echo "Must dockerize application"
+    - run: npm run dev:docker:build-up
