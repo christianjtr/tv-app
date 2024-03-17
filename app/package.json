@@ -20,6 +20,7 @@
         "test": "jest --no-cache --detectOpenHandles --forceExit",
         "cy:open": "cypress open",
         "cy:run": "cypress run --e2e",
+        "cy:test": "start-server-and-test dev:e2e $npm_package_config_host cy:run",
         "cy:e2e": "start-server-and-test dev:e2e $npm_package_config_host cy:open",
         "ts:trace-resolution": "tsc --traceResolution"
     },

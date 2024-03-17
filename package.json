@@ -11,7 +11,7 @@
         "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
         "postinstall": "(cd app && npm install); (cd server && npm install);",
         "test:client": "npm test --prefix app",
-        "test:client:cy": "concurrently \"npm run dev:e2e --prefix app\" \"npm run cy:run --prefix app\"",
+        "test:client:cy": "npm run cy:test --prefix app",
         "test:server": "npm test --prefix server",
         "build:shared-types": "npm run build --workspace ./packages/shared-types",
         "dev:docker:build-up": "node ./scripts/runDockerComposeBuildUpWithEnvs.mjs"

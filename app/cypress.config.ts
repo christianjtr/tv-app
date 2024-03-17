@@ -21,8 +21,8 @@ export default defineConfig({
             );
 
             config.env = {
-                ...env_e2e,
                 ...config.env,
+                ...env_e2e,
             };
 
             return config;
