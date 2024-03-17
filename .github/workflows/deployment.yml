@@ -4,16 +4,16 @@ on:
     push:
         branches: ["master"]
         paths:
-            - "app/**"
-            - "server/**"
-            - "packages/**"
+            - app/**
+            - server/**
+            - packages/**
             - docker-compose.yml
     pull_request:
         branches: ["master"]
         paths:
-            - "app/**"
-            - "server/**"
-            - "packages/**"
+            - app/**
+            - server/**
+            - packages/**
             - docker-compose.yml
 
 jobs:
