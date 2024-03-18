@@ -1,8 +1,0 @@
-{
-    "restartable": "rs",
-    "watch": ["src"],
-    "ext": "ts",
-    "execMap": {
-        "ts": "ts-node --esm"
-    }
-}
