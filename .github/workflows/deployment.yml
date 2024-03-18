@@ -1,4 +1,4 @@
-name: CI - Run tests and create the docker containers
+name: CI - Run tests dockerize and push to Docker Hub
 
 on:
     push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
     run-tests:
-        name: Run tests
+        name: Run unit tests and e2e
         runs-on: ubuntu-latest
 
         strategy:
@@ -32,11 +32,12 @@ jobs:
 
         name: Dockerize application
         runs-on: ubuntu-latest
+        env:
+            docker-images: "tv-app_react-webapp,tv-app_nodejs"
 
         strategy:
             matrix:
                 node-version: [16]
-                docker-images: ["tv-app_react-webapp", "tv-app_nodejs"]
 
         steps:
             - uses: actions/checkout@v3
@@ -67,5 +68,7 @@ jobs:
 
             - name: Push to Docker Hub
               run: |
-                  docker tag ${{ matrix.docker-images }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker-images }}
-                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker-images }}
+                  for image in "${{ env.docker-images }}" ; do
+                    docker tag ${{ image }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ image }}
+                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ image }}
+                  done
