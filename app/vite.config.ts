@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const isProduction = mode === 'production';
-    const env = loadEnv(mode, process.cwd(), '');
+    const env = loadEnv(mode, process.cwd(), 'VITE_');
 
     return {
         plugins: [
@@ -29,7 +29,6 @@ export default defineConfig(({ mode }) => {
                 {} as Record<PropertyKey, string>
             ),
         },
-        envDir: './environment',
         base: isProduction ? '/' : '/tv-app',
         resolve: {
             alias: [
