@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const env_e2e = dotenv.config({ path: './environment/.env.e2e' }).parsed;
+const env_e2e = dotenv.config({ path: '.env.e2e' }).parsed;
 
 export default defineConfig({
     e2e: {
