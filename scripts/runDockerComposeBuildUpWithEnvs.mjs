@@ -13,7 +13,7 @@ async function loadEnvFiles(filePaths) {
     }
 }
 
-const envFiles = ["./server/.env", "./app/environment/.env"];
+const envFiles = ["./server/.env", "./app/.env"];
 
 const dockerComposeArgs = [
     "-p",
