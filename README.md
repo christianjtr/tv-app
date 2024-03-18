@@ -19,9 +19,9 @@ Proof of concept aimed at putting into practice an e2e development cycle for an 
 Please, check this considerations out.
 
 > [!IMPORTANT]  
-> The architecture is a **mono repo-like project** that uses **workspaces to share type definitions among the app's tiers**.
-> The application can be either **started locally or containerized**.
-> Each app tier, within the project, can be started for development **independently from the others**.
+- The architecture is a **mono repo-like project** that uses **workspaces to share type definitions among the app's tiers**.
+- The application can be either **started locally or containerized**.
+- Each app tier, within the project, can be started for development **independently from the others**.
 
 ### Tech Stack
 
