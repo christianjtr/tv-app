@@ -186,11 +186,17 @@ The strategy followed to deploy the application implies:
 
 > [!IMPORTANT]
 >
-> At this point, the services are merged to the repository, tested, containerized, and published on Docker Hub (either as public or private images). Now, you should decide which **Cloud provider service to use to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, etc, etc, etc.).
+> At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images). Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
 
-**Choice:** I decided to use [Render](https://render.com/), because is free for hobby projects (under certains conditions, of course).
+**Choice:** I decided to use [Render](https://render.com/) because it's free for hobby projects (under certain conditions, of course).
 
-Have a look at this [article on how to deploy pre-built docker images](https://docs.render.com/deploy-an-image) on their side.
+Look at this [article on how to deploy pre-built docker images](https://docs.render.com/deploy-an-image) on their side.
+
+- [TV application](https://tv-app-react-webapp-latest.onrender.com/)
+- [API service docs](https://tv-app_nodejs-latest.onrender.com/api/docs)
+
+  **Note:** The application should be consuming the published API services (our bank-end which is intended to obtain data from the TMDB Movie service).
+
 
 ![](./samples/cdci.png)
 
