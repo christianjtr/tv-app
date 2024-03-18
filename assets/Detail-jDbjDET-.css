@@ -1,0 +1,1 @@
+.detail-container__wrapper{--background-image: unset;position:relative;background-image:var(--background-image);background-size:contain;background-repeat:no-repeat}.detail-container__wrapper:before{background-image:linear-gradient(0deg,#000 40%,#0000);box-shadow:inset 0 -10px 40px 90px #000;content:"";height:100%;position:absolute;width:100%}
