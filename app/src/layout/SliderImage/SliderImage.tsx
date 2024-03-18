@@ -7,7 +7,7 @@ export interface SliderImageProps {
     hasOverlay?: boolean;
 }
 
-const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React.ReactElement | null => {
+const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React.ReactElement => {
     const { imageSources, hasOverlay = false } = props;
 
     const hasImageSources = imageSources.length > 0;
@@ -22,18 +22,18 @@ const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React
                 gap: 0,
                 animationDuration: 1000,
             }).mount();
-
             glide.on('swipe.end', () => {
                 glide.go('0');
             });
         }
-
         return () => {
             if (glide) glide.destroy();
         };
     }, [imageSources]);
 
-    if (!hasImageSources) return null;
+    if (!hasImageSources) {
+        return <div className="h-96 skeleton w-full flex justify-center items-center opacity-60"></div>;
+    }
 
     return (
         <div className="glide">
