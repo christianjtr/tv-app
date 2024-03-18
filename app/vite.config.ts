@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const mode = process.env.NODE_ENV || 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
         port: +process.env.VITE_APP_SERVER_PORT! || 3000,
     },
     envDir: './environment',
-    base: '/tv-app',
+    base: isProduction ? '/' : '/tv-app',
     resolve: {
         alias: [
             { find: '@services', replacement: resolve(__dirname, './src/services') },
