@@ -68,7 +68,7 @@ jobs:
 
             - name: Push to Docker Hub
               run: |
-                  for image in "${{ env.docker-images }}" ; do
-                    docker tag ${{ image }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ image }}
-                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ image }}
+                  for i in 1 2 3 4 5
+                  do
+                    echo "Mendax Current number: $i"
                   done
