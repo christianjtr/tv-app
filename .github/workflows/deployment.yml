@@ -36,6 +36,7 @@ jobs:
         strategy:
             matrix:
                 node-version: [16]
+                docker-images: ["tv-app_react-webapp", "tv-app_nodejs"]
 
         steps:
             - uses: actions/checkout@v3
@@ -44,20 +45,20 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
-            
+
             - name: Create .env file
               run: |
                   touch .env
                   echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
                   cat .env
-            
+
             - name: Dockerize services
               run: docker-compose -f "docker-compose.prod.yml" up -d --build
-              
+
             - name: Stop services
               if: always()
               run: docker-compose -f "docker-compose.prod.yml" down
-                            
+
             - name: Login to Docker Hub
               uses: docker/login-action@v3
               with:
@@ -65,4 +66,6 @@ jobs:
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             - name: Push to Docker Hub
-              run: docker-compose -f "docker-compose.prod.yml" push
+              run: |
+                  docker tag ${{ matrix.docker-images }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker-images }}
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker-images }}
