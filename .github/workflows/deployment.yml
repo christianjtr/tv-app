@@ -69,8 +69,8 @@ jobs:
             - name: Push to Docker Hub
               run: |
                   IFS=',' read -r -a images <<< "${{ env.docker-images }}"
-                  for image in "${images[@]}"
+                  for image in ${images[@]}
                   do
-                    docker tag ${{image}} ${{ secrets.DOCKERHUB_USERNAME }}/${{image}}
-                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{image}}
+                    docker tag $image ${{ secrets.DOCKERHUB_USERNAME }}/$image
+                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image
                   done
