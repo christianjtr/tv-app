@@ -12,16 +12,16 @@ Proof of concept aimed at putting into practice an e2e development cycle for an 
 
     #### The movie DB API:
 
-    In order to implement the solution, we are required to sign up [themoviedb.org](https://www.themoviedb.org/), and also **integrate it to our back-end** then, we will be able to use their API services. For further details, check the specs here [TMDB API specs](https://developer.themoviedb.org/reference/intro/getting-started).
+    To implement the solution, we are required to sign up [themoviedb.org](https://www.themoviedb.org/), and also **integrate it to our back-end** then, we will be able to use their API services. For further details, check the specs here [TMDB API specs](https://developer.themoviedb.org/reference/intro/getting-started).
 
 ### Considerations
 
-Please, check this considerations out.
+Please, check this consideration out.
 
 > [!IMPORTANT]  
-- The architecture is a **mono repo-like project** that uses **workspaces to share type definitions among the app's tiers**.
-- The application can be either **started locally or containerized**.
-- Each app tier, within the project, can be started for development **independently from the others**.
+> - The architecture is a **mono repo-like project** that uses **workspaces to share type definitions among the app's tiers**.
+> - The application can be either **started locally or containerized**.
+> - Each app tier, within the project, can be started for development **independently from the others**.
 
 ### Tech Stack
 
