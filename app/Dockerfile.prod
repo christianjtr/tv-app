@@ -16,7 +16,7 @@ COPY app/tsconfig.node.json .
 RUN npm install
 COPY --from=builder /tmp /node_modules/@tv-app-packages/shared-types
 COPY app .
-RUN npm run build
+RUN npm run build:prod
 
 FROM nginx:stable-alpine
 
