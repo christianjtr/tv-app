@@ -1,0 +1,111 @@
+{
+    "id": 1429,
+    "name": "Attack on Titan",
+    "description": "Several hundred years ago, humans were nearly exterminated by Titans. Titans are typically several stories tall, seem to have no intelligence, devour human beings and, worst of all, seem to do it for the pleasure rather than as a food source. A small percentage of humanity survived by walling themselves in a city protected by extremely high walls, even taller than the biggest Titans. Flash forward to the present and the city has not seen a Titan in over 100 years. Teenage boy Eren and his foster sister Mikasa witness something horrific as the city walls are destroyed by a Colossal Titan that appears out of thin air. As the smaller Titans flood the city, the two kids watch in horror as their mother is eaten alive. Eren vows that he will murder every single Titan and take revenge for all of mankind.",
+    "firstAirDate": "2013-04-07T00:00:00.000Z",
+    "rating": 8.658,
+    "images": {
+        "original": "https://image.tmdb.org/t/p/original/rqbCbjB19amtOtFQbb3K2lgm2zv.jpg",
+        "w185": "https://image.tmdb.org/t/p/w185/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg",
+        "w300": "https://image.tmdb.org/t/p/w300/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg",
+        "w500": "https://image.tmdb.org/t/p/w500/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg"
+    },
+    "genres": [
+        {
+            "id": 16,
+            "name": "Animation"
+        },
+        {
+            "id": 10765,
+            "name": "Sci-Fi & Fantasy"
+        },
+        {
+            "id": 10759,
+            "name": "Action & Adventure"
+        }
+    ],
+    "seasons": [
+        {
+            "firstAirDate": "2013-07-07",
+            "numberOfEpisodes": 37,
+            "id": 3789,
+            "name": "Specials",
+            "description": "",
+            "images": {
+                "original": "https://image.tmdb.org/t/p/original/no3dkH44ywREi0la8tw4TnA1GxN.jpg",
+                "w185": "https://image.tmdb.org/t/p/w185/no3dkH44ywREi0la8tw4TnA1GxN.jpg",
+                "w300": "https://image.tmdb.org/t/p/w300/no3dkH44ywREi0la8tw4TnA1GxN.jpg",
+                "w500": "https://image.tmdb.org/t/p/w500/no3dkH44ywREi0la8tw4TnA1GxN.jpg"
+            },
+            "seasonNumber": 0,
+            "rating": 0
+        },
+        {
+            "firstAirDate": "2013-04-07",
+            "numberOfEpisodes": 25,
+            "id": 3788,
+            "name": "Season 1",
+            "description": "Centuries ago, mankind was slaughtered to near extinction by monstrous humanoid creatures called titans, forcing humans to hide in fear behind enormous concentric walls. What makes these giants truly terrifying is that their taste for human flesh is not born out of hunger but what appears to be out of pleasure. To ensure their survival, the remnants of humanity began living within defensive barriers, resulting in one hundred years without a single titan encounter. However, that fragile calm is soon shattered when a colossal titan manages to breach the supposedly impregnable outer wall, reigniting the fight for survival against the man-eating abominations.",
+            "images": {
+                "original": "https://image.tmdb.org/t/p/original/gC78bsXhdU2PwT3FkLcn8R5YcHb.jpg",
+                "w185": "https://image.tmdb.org/t/p/w185/gC78bsXhdU2PwT3FkLcn8R5YcHb.jpg",
+                "w300": "https://image.tmdb.org/t/p/w300/gC78bsXhdU2PwT3FkLcn8R5YcHb.jpg",
+                "w500": "https://image.tmdb.org/t/p/w500/gC78bsXhdU2PwT3FkLcn8R5YcHb.jpg"
+            },
+            "seasonNumber": 1,
+            "rating": 8.2
+        },
+        {
+            "firstAirDate": "2017-04-01",
+            "numberOfEpisodes": 12,
+            "id": 84756,
+            "name": "Season 2",
+            "description": "Eren Yeager and others of the 104th Training Corps have just begun to become full members of the Survey Corps. As they ready themselves to face the Titans once again, their preparations are interrupted by the invasion of Wall Rose—but all is not as it seems as more mysteries are unraveled. As the Survey Corps races to save the wall, they uncover more about the invading Titans and the dark secrets of their own members.",
+            "images": {
+                "original": "https://image.tmdb.org/t/p/original/2fhK0wbFixskgRyuq6YvaMn75et.jpg",
+                "w185": "https://image.tmdb.org/t/p/w185/2fhK0wbFixskgRyuq6YvaMn75et.jpg",
+                "w300": "https://image.tmdb.org/t/p/w300/2fhK0wbFixskgRyuq6YvaMn75et.jpg",
+                "w500": "https://image.tmdb.org/t/p/w500/2fhK0wbFixskgRyuq6YvaMn75et.jpg"
+            },
+            "seasonNumber": 2,
+            "rating": 8.4
+        },
+        {
+            "firstAirDate": "2018-07-23",
+            "numberOfEpisodes": 22,
+            "id": 98013,
+            "name": "Season 3",
+            "description": "Eren and his companions in the 104th are assigned to the newly-formed Levi Squad, whose assignment is to keep Eren and Historia safe given Eren's newly-discovered power and Historia's knowledge and pedigree. Levi and Erwin have good reason to be concerned, because the priest of the Church that Hange had hidden away was found tortured to death, making it clear that the Military Police are involved with the cover-up. Things get more harrowing when the MPs make a move on Erwin and the Levi Squad narrowly avoids capture. Eren is also having problems with his Titan transformation, and a deadly killer has been hired to secure Eren and Historia, one Levi knows all too well from his youth.\n\nThen, hoping to retake Wall Maria and find the answers humanity seeks in Grisha's basement, Eren, Mikasa, Armin and the rest of the Survey Corps return to the town where everything began: Shiganshina.",
+            "images": {
+                "original": "https://image.tmdb.org/t/p/original/2F3sYFneiKcrwboD0bOqb29cGET.jpg",
+                "w185": "https://image.tmdb.org/t/p/w185/2F3sYFneiKcrwboD0bOqb29cGET.jpg",
+                "w300": "https://image.tmdb.org/t/p/w300/2F3sYFneiKcrwboD0bOqb29cGET.jpg",
+                "w500": "https://image.tmdb.org/t/p/w500/2F3sYFneiKcrwboD0bOqb29cGET.jpg"
+            },
+            "seasonNumber": 3,
+            "rating": 8.4
+        },
+        {
+            "firstAirDate": "2020-12-07",
+            "numberOfEpisodes": 28,
+            "id": 126952,
+            "name": "The Final Season",
+            "description": "The truth revealed through the memories of Grisha's journals shakes all of Eren's deepest beliefs. There is no rugged but free land beyond the walls. There is a whole other world, equally full of oppression and war. Suddenly, the ambitions that have animated the Survey Corps for generations seem small and naive. What is there left to fight for?",
+            "images": {
+                "original": "https://image.tmdb.org/t/p/original/iUsrnXfubNwhM8FRNEmzXmLfxB2.jpg",
+                "w185": "https://image.tmdb.org/t/p/w185/iUsrnXfubNwhM8FRNEmzXmLfxB2.jpg",
+                "w300": "https://image.tmdb.org/t/p/w300/iUsrnXfubNwhM8FRNEmzXmLfxB2.jpg",
+                "w500": "https://image.tmdb.org/t/p/w500/iUsrnXfubNwhM8FRNEmzXmLfxB2.jpg"
+            },
+            "seasonNumber": 4,
+            "rating": 8.4
+        }
+    ],
+    "tagline": "",
+    "inProduction": false,
+    "homepage": "https://shingeki.tv/",
+    "originalLanguage": "ja",
+    "numberOfEpisodes": 87,
+    "numberOfSeasons": 4,
+    "episodeRuntime": []
+}

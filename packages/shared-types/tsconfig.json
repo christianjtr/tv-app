@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "declaration": true,
+        "strict": true,
+        "incremental": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "composite": true
+    },
+    "include": ["**/*.ts"],
+    "paths": {
+        "@tv-app-packages/shared-types/*": ["./dist/*"]
+    }
+}

@@ -1,0 +1,130 @@
+{
+    "name": "tv-app-client",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "description": "TV app client",
+    "author": "Christian Torrealba",
+    "license": "ISC",
+    "config": {
+        "host": "http://localhost:3000"
+    },
+    "scripts": {
+        "dev": "vite",
+        "dev:e2e": "NODE_ENV=e2e vite",
+        "build": "tsc && vite build",
+        "build:prod": "tsc && vite build --mode production",
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview",
+        "precommit": "lint-staged",
+        "prepare": "husky install",
+        "test": "jest --no-cache --detectOpenHandles --forceExit",
+        "cy:open": "cypress open",
+        "cy:run": "cypress run --e2e",
+        "cy:test": "start-server-and-test dev:e2e $npm_package_config_host cy:run",
+        "cy:e2e": "start-server-and-test dev:e2e $npm_package_config_host cy:open",
+        "ts:trace-resolution": "tsc --traceResolution"
+    },
+    "lint-staged": {
+        "src/**/*.{js,jsx,ts,tsx}": [
+            "eslint --fix"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run precommit"
+        }
+    },
+    "jest": {
+        "clearMocks": true,
+        "collectCoverage": true,
+        "coverageDirectory": "coverage",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ],
+        "moduleFileExtensions": [
+            "js",
+            "ts",
+            "tsx"
+        ],
+        "preset": "ts-jest",
+        "testEnvironment": "jsdom",
+        "testMatch": [
+            "**/__tests__/**/*.[jt]s?(x)",
+            "**/?(*.)+(spec|test).[tj]s?(x)"
+        ],
+        "transform": {
+            ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+            "^.+\\.tsx?$": "babel-jest",
+            "^.+\\.svg$": "jest-transform-stub"
+        },
+        "moduleNameMapper": {
+            "^@services(.*)$": "<rootDir>/src/services$1",
+            "^@hooks(.*)$": "<rootDir>/src/hooks$1",
+            "^@pages(.*)$": "<rootDir>/src/pages$1",
+            "^@configuration(.*)$": "<rootDir>/src/configuration$1",
+            "^@app-types(.*)$": "<rootDir>/src/types$1",
+            "^@components(.*)$": "<rootDir>/src/components$1",
+            "^@assets(.*)$": "<rootDir>/src/assets$1",
+            "^@layout(.*)$": "<rootDir>/src/layout$1",
+            "^@routes(.*)$": "<rootDir>/src/routes$1"
+        }
+    },
+    "dependencies": {
+        "@glidejs/glide": "^3.6.0",
+        "qs": "^6.12.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^5.3.4"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.24.0",
+        "@babel/preset-react": "^7.23.3",
+        "@babel/preset-typescript": "^7.23.3",
+        "@tailwindcss/typography": "^0.5.10",
+        "@testing-library/jest-dom": "^6.4.2",
+        "@testing-library/react": "^14.2.1",
+        "@types/glidejs__glide": "^3.6.5",
+        "@types/jest": "^29.5.12",
+        "@types/qs": "^6.9.12",
+        "@types/react": "^18.2.56",
+        "@types/react-dom": "^18.2.19",
+        "@types/react-router-dom": "^5.3.3",
+        "@types/react-test-renderer": "^18.0.7",
+        "@typescript-eslint/eslint-plugin": "^7.1.1",
+        "@typescript-eslint/parser": "^7.1.1",
+        "@vitejs/plugin-react": "^4.2.1",
+        "autoprefixer": "^10.4.18",
+        "babel-jest": "^29.7.0",
+        "cypress": "^13.6.1",
+        "cypress-vite": "^1.5.0",
+        "cypress-wait-until": "^3.0.1",
+        "daisyui": "^4.7.2",
+        "dotenv": "^16.4.5",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
+        "eslint-plugin-react": "^7.34.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "husky": "^9.0.11",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "jest-transform-stub": "^2.0.0",
+        "jest-transformer-svg": "^2.0.2",
+        "lint-staged": "^15.2.2",
+        "postcss": "^8.4.35",
+        "prettier": "^3.2.5",
+        "react-test-renderer": "^18.2.0",
+        "start-server-and-test": "^2.0.3",
+        "tailwindcss": "^3.4.1",
+        "ts-jest": "^29.1.2",
+        "ts-node": "^10.9.2",
+        "ts-patch": "^3.1.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.2.2",
+        "typescript-transform-paths": "^3.4.7",
+        "vite": "^5.1.4"
+    }
+}

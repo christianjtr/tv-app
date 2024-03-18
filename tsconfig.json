@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "incremental": true,
+        "target": "ES2020",
+        "module": "NodeNext",
+        "declaration": true,
+        "strict": true,
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "files": [],
+    "references": [{ "path": "./packages/shared-types" }]
+}

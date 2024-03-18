@@ -1,0 +1,57 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "baseUrl": "src",
+        "types": ["jest", "node"],
+        "esModuleInterop": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+
+        /* Paths */
+        "paths": {
+            "@routes/*": ["routes/*"],
+            "@services/*": ["services/*"],
+            "@hooks/*": ["hooks/*"],
+            "@pages": ["pages"],
+            "@pages/*": ["pages/*"],
+            "@configuration/*": ["configuration/*"],
+            "@app-types/*": ["types/*"],
+            "@components/*": ["components/*"],
+            "@assets/*": ["assets/*"],
+            "@layout": ["layout"],
+            "@layout/*": ["layout/*"]
+        }
+    },
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./__tests__/**/*.ts",
+        "./__mocks__/**/*",
+        "./__fixtures__/*.json",
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "./cypress/**/*.ts",
+        "./src/**/*.tsx",
+        "./cypress.config.ts"
+    ],
+    "exclude": ["node_modules", "./__fixtures__/**", "./__mocks__/**", "./__tests__/**/*.ts"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+}
