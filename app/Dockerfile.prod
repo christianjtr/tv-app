@@ -7,15 +7,18 @@ RUN npm install
 COPY packages/shared-types .
 RUN npm run build
 
-FROM builder
-ENV VITE_APP_SERVER_PORT=$VITE_APP_SERVER_PORT
+FROM builder as installer
 
 WORKDIR /app
-COPY app/package.json .
+COPY app/package*.json ./
 COPY app/tsconfig.json .
+COPY app/tsconfig.node.json .
 RUN npm install
-RUN npm run build
-COPY app/dist .
 COPY --from=builder /tmp /node_modules/@tv-app-packages/shared-types
-EXPOSE $VITE_APP_SERVER_PORT
-CMD [ "npm", "run", "dev" ]
+COPY app .
+RUN npm run build
+
+FROM nginx:stable-alpine
+
+COPY --from=installer /app/dist /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]

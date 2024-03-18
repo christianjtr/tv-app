@@ -7,14 +7,15 @@ RUN npm install
 COPY packages/shared-types .
 RUN npm run build
 
-FROM builder
+FROM builder as installer
 ENV SERVER_PORT=$SERVER_PORT
 
 WORKDIR /app
-COPY server/package.json .
+COPY server/package*.json ./
 COPY server/tsconfig.json .
+COPY server/tsconfig.prod.json .
 RUN npm install
-COPY server .
 COPY --from=builder /tmp /node_modules/@tv-app-packages/shared-types
+COPY server .
 EXPOSE $SERVER_PORT
 CMD [ "npm", "run", "dev" ]
