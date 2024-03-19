@@ -33,6 +33,7 @@ jobs:
         name: Dockerize application
         runs-on: ubuntu-latest
         env:
+            image-tag: ${{ github.sha }}
             docker-images: "tv-app_react-webapp,tv-app_nodejs"
 
         strategy:
@@ -71,6 +72,6 @@ jobs:
                   IFS=',' read -r -a images <<< "${{ env.docker-images }}"
                   for image in ${images[@]}
                   do
-                    docker tag $image:1.0 ${{ secrets.DOCKERHUB_USERNAME }}/$image:1.0
-                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image
+                    docker tag $image:${{env.image-tag}} ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{env.image-tag}}
+                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{env.image-tag}}
                   done
