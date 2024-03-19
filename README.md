@@ -190,13 +190,14 @@ The strategy followed to deploy the application implies:
 
 **Choice:** I decided to use [Render](https://render.com/) because it's free for hobby projects (under certain conditions, of course).
 
+![](./samples/render.png)
+
 Look at this [article on how to deploy pre-built docker images](https://docs.render.com/deploy-an-image) on their side.
 
-- [TV application](https://tv-app-react-webapp-latest.onrender.com/)
-- [API service docs](https://tv-app-nodejs-latest.onrender.com/api/docs)
+-   [TV application](https://tv-app-react-webapp-latest.onrender.com/)
+-   [API service docs](https://tv-app-nodejs-latest.onrender.com/api/docs)
 
-  **Note:** The application should be consuming the published API services (our bank-end which is intended to obtain data from the TMDB Movie service).
-
+    **Note:** The application should be consuming the published API services (our bank-end which is intended to obtain data from the TMDB Movie service).
 
 ![](./samples/cdci.png)
 
