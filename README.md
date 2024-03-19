@@ -246,3 +246,4 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 -   Better use of npm workspaces (mono-repos).
 -   Improve overall CD/CI process.
 -   Build back-end codebase.
+-   Polish up user experience and responsiveness.
