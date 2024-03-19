@@ -3,8 +3,30 @@ name: CI - Run tests dockerize and push to Docker Hub
 on:
     push:
         branches: ["master"]
+        paths-ignore:
+          - 'README.md'
+          - '**/*.md'
+          - '*.config.*'
+          - '**/*.config.*'
+          - '.gitignore'
+          - '.dockerignore'
+          - 'samples/**'
+          - 'dist/**'
+          - '**/dist/*'
+          - '.github/*'
     pull_request:
         branches: ["master"]
+        paths-ignore:
+          - 'README.md'
+          - '**/*.md'
+          - '*.config.*'
+          - '**/*.config.*'
+          - '.gitignore'
+          - '.dockerignore'
+          - 'samples/**'
+          - 'dist/**'
+          - '**/dist/*'
+          - '.github/*'
 
 jobs:
     run-tests:
