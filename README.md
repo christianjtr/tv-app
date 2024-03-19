@@ -66,16 +66,16 @@ git clone https://github.com/christianjtr/tv-app.git
 
 **Scripts:**
 
-Prior to execute these scripts, you must to run **npm install** in the directory you just downloaded/cloned the codebase.
+Prior to executing these scripts, you must run **npm install** in the directory you just downloaded/cloned the codebase.
 
 ```shell
-# Run the entire develepoment environment for both client and server tiers
+# Run the entire development environment for both client and server tiers
 > npm run dev:app
 
 # Run dev environment for the client-side
 > npm run dev:client
 
-# Run develepoment environment for the server-side
+# Run development environment for the server-side
 > npm run dev:server
 
 # Run unit tests for the client-side tier
@@ -90,13 +90,13 @@ Prior to execute these scripts, you must to run **npm install** in the directory
 # Build shared types across the application
 > npm run build:shared-types
 
-# Perform docker compose to containerize and run the application
+# Perform docker-compose to containerize and run the application
 > npm run dev:docker:build-up
 ```
 
 **Environment variables:**
 
-Each app's tier within the project has its own environment variables file, you **should create a .env file following the templates provided** in the correspondant directory.
+Each app's tier within the project has its own environment variables file, you **should create a .env file following the templates provided** in the corresponding directory.
 
 | Tier   | template     | directory | environment file to create |
 | ------ | ------------ | --------- | -------------------------- |
@@ -125,10 +125,10 @@ Click on the following link [GitHub page project](https://christianjtr.github.io
 
 ##### API specs
 
-The server side API follows the [OpenAPI Specification - Version 3](https://swagger.io/specification/)
+The server-side API follows the [OpenAPI Specification - Version 3](https://swagger.io/specification/)
 
 ```shell
-# Enter the API's specs documenation by browsing to this URL.
+# Enter the API's specs documentation by browsing to this URL.
 
 <YOUR HOST>/api/docs
 ```
@@ -137,12 +137,12 @@ The server side API follows the [OpenAPI Specification - Version 3](https://swag
 
 ### Tests (unit-tests and e2e)
 
-Both applications services (client, server) have a few examples on how to develop unit tests and e2e tests (including some mocking strategies).
+Both application services (client, and server) have a few examples on how to develop unit tests and e2e tests (including some mocking strategies).
 
 -   **Client-side:**
 
-    -   Unit testing for services, react-hooks, state-less components, and entire sections (pages).
-    -   **E2E testing:** Using Cypress. (i.e.: Navigate to search section and look for a movie).
+    -   Unit testing for services, react-hooks, state-less components, and the entire sections (pages).
+    -   **E2E testing:** Using Cypress. (i.e.: Navigate to the search section and look for a movie).
 
 ![](./samples/cy.gif)
 
@@ -164,14 +164,14 @@ The strategy followed to deploy the application implies:
 -   Create **parametrized docker-compose.yml file per environment (dev, prod)**. (At root folder level only - main Docker context).
 -   Create **.dockerignore** files.
 -   Create a docker-compose run and build script.
-    -   Obtain **production environment variables given application's source files**.
-    -   Provide every docker-compose.yml file with those variables in order to parametrize them.
+    -   Obtain **production environment variables given the application's source files**.
+    -   Provide every docker-compose.yml file with those variables to parametrize them.
     -   **Note:** Google Bard supported me on this.
 
 ##### GitHub actions
 
 -   Implement a **GitHub action workflow** which is going to be dispatched whenever a pull-request or merge is performed.
--   Create repository's project secrets.
+-   Create the repository's project secrets.
     -   Environment variables for production.
     -   Docker credentials
         -   Username.
@@ -193,7 +193,7 @@ The strategy followed to deploy the application implies:
 Look at this [article on how to deploy pre-built docker images](https://docs.render.com/deploy-an-image) on their side.
 
 - [TV application](https://tv-app-react-webapp-latest.onrender.com/)
-- [API service docs](https://tv-app_nodejs-latest.onrender.com/api/docs)
+- [API service docs](https://tv-app-nodejs-latest.onrender.com/api/docs)
 
   **Note:** The application should be consuming the published API services (our bank-end which is intended to obtain data from the TMDB Movie service).
 
