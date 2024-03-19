@@ -11,9 +11,10 @@ Proof of concept aimed at putting into practice an e2e development cycle for an 
 3. [Tech Stack](#003)
 4. [Installation and running the project](#004)
 5. [Samples](#005)
-6. [Tests (unit-tests and e2e)](#006)
-7. [CI/CD - Containerization and Deployment](#007)
-8. [Next steps](#008)
+6. [Server side](#006)
+7. [Tests (unit-tests and e2e)](#007)
+8. [CI/CD - Containerization and Deployment](#008)
+9. [Next steps](#009)
 
 <a name="001"></a>
 ### 🎯 Goals
@@ -142,6 +143,7 @@ Click on the following link [GitHub page project](https://christianjtr.github.io
 
 ![](./samples/detail.png)
 
+<a name="006"></a>
 ### Server side
 
 ##### API specs
@@ -156,7 +158,7 @@ The server-side API follows the [OpenAPI Specification - Version 3](https://swag
 
 ![](./samples/swagger.png)
 
-<a name="006"></a>
+<a name="007"></a>
 ### Tests (unit-tests and e2e)
 
 Both services have some examples of how to develop unit tests and e2e tests (including some mocking strategies).
@@ -177,7 +179,7 @@ Both services have some examples of how to develop unit tests and e2e tests (inc
 
 ![](./samples/server-tests.png)
 
-<a name="007"></a>
+<a name="008"></a>
 ### CI/CD - **Containerization and Deployment**
 
 ```mermaid
@@ -238,7 +240,7 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 
 ![](./samples/cdci.png)
 
-<a name="008"></a>
+<a name="009"></a>
 ### Next steps
 
 -   Extend this documentation to the applications (client-side, server-side, GitHub actions).
