@@ -3,8 +3,30 @@ name: CI - Run tests dockerize and push to Docker Hub
 on:
     push:
         branches: ["master"]
+        paths-ignore:
+          - 'README.md'
+          - '**/*.md'
+          - '*.config.*'
+          - '**/*.config.*'
+          - '.gitignore'
+          - '.dockerignore'
+          - 'samples/**'
+          - 'dist/**'
+          - '**/dist/*'
+          - '.github/*'
     pull_request:
         branches: ["master"]
+        paths-ignore:
+          - 'README.md'
+          - '**/*.md'
+          - '*.config.*'
+          - '**/*.config.*'
+          - '.gitignore'
+          - '.dockerignore'
+          - 'samples/**'
+          - 'dist/**'
+          - '**/dist/*'
+          - '.github/*'
 
 jobs:
     run-tests:
@@ -71,6 +93,6 @@ jobs:
                   IFS=',' read -r -a images <<< "${{ env.docker-images }}"
                   for image in ${images[@]}
                   do
-                    docker tag $image ${{ secrets.DOCKERHUB_USERNAME }}/$image
-                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image
+                    docker tag $image ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{ github.sha }}
+                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{ github.sha }}
                   done

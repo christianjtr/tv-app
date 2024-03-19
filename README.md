@@ -2,18 +2,33 @@
 
 Proof of concept aimed at putting into practice an e2e development cycle for an application.
 
-> :bulb: Monorepo-like project in which services can be deployed and run independently. Feel free to add any improvements or suggestions you consider.
+> [!NOTE]  
+> - :bulb: Monorepo-like project in which services can be deployed and run independently.
+> - ❤️ Feel free to add any improvements or suggestions you consider.
 
+1. [Goals](#001)
+2. [Considerations](#002)
+3. [Tech Stack](#003)
+4. [Installation and running the project](#004)
+5. [Samples](#005)
+6. [Server side](#006)
+7. [Tests (unit-tests and e2e)](#007)
+8. [CI/CD - Containerization and Deployment](#008)
+9. [Next steps](#009)
+
+<a name="001"></a>
 ### 🎯 Goals
 
 -   Create an application that displays **trending films and TV shows** in two rails.
 -   Integrate the **The Movie DB API (TMDB)** to the application.
+-   Add the capability of navigating the application using the keyboard (Arrow keys).
 -   Implement a CI/CD process using **GitHub Actions, Docker, and a Cloud application hosting service.**
 
     #### The movie DB API:
 
     To implement the solution, we are required to sign up [themoviedb.org](https://www.themoviedb.org/), and also **integrate it to our back-end** then, we will be able to use their API services. For further details, check the specs here [TMDB API specs](https://developer.themoviedb.org/reference/intro/getting-started).
 
+<a name="002"></a>
 ### Considerations
 
 Please, check this consideration out.
@@ -24,6 +39,7 @@ Please, check this consideration out.
 > -   The application can be either **started locally or containerized**.
 > -   Each app tier, within the project, can be started for development **independently from the others**.
 
+<a name="003"></a>
 ### Tech Stack
 
 This conceptual test has been developed using the following technologies:
@@ -51,6 +67,7 @@ This conceptual test has been developed using the following technologies:
 -   **Architecture**
     -   [NPM workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspaces)
 
+<a name="004"></a>
 ### Installation and running the project
 
 The project requires:
@@ -66,7 +83,7 @@ git clone https://github.com/christianjtr/tv-app.git
 
 **Scripts:**
 
-Prior to executing these scripts, you must run **npm install** in the directory you just downloaded/cloned the codebase.
+Before executing these scripts, you must run **npm install** in the directory you just downloaded/cloned the codebase.
 
 ```shell
 # Run the entire development environment for both client and server tiers
@@ -103,15 +120,20 @@ Each app's tier within the project has its own environment variables file, you *
 | client | .env.local   | /app      | .env                       |
 | server | .env.example | /server   | .env                       |
 
+<a name="005"></a>
 ### Samples
 
 ##### Live demo
 
-Click on the following link [GitHub page project](https://christianjtr.github.io/tv-app). **Note:** It's a mocked version of the project.
+Click on the following link [GitHub page project](https://christianjtr.github.io/tv-app). 
+
+**Note:** It's a mocked version of the project, although we can deploy the front-end project and fetch data from our back-end services hosted.
 
 ##### Preview
 
-![](./samples/showcase.gif)
+<p align="center">
+    <img src="https://github.com/christianjtr/tv-app/blob/master/samples/showcase.gif" alt="gif-demo"/>
+</p>
 
 ##### Home page preview
 
@@ -121,6 +143,7 @@ Click on the following link [GitHub page project](https://christianjtr.github.io
 
 ![](./samples/detail.png)
 
+<a name="006"></a>
 ### Server side
 
 ##### API specs
@@ -135,16 +158,20 @@ The server-side API follows the [OpenAPI Specification - Version 3](https://swag
 
 ![](./samples/swagger.png)
 
+<a name="007"></a>
 ### Tests (unit-tests and e2e)
 
-Both application services (client, and server) have a few examples on how to develop unit tests and e2e tests (including some mocking strategies).
+Both services have some examples of how to develop unit tests and e2e tests (including some mocking strategies).
 
 -   **Client-side:**
 
     -   Unit testing for services, react-hooks, state-less components, and the entire sections (pages).
     -   **E2E testing:** Using Cypress. (i.e.: Navigate to the search section and look for a movie).
 
-![](./samples/cy.gif)
+
+<p align="center">
+    <img src="https://github.com/christianjtr/tv-app/blob/master/samples/cy.gif" alt="gif-demo-cy"/>
+</p>
 
 -   **Server-side:**
     -   Unit testing for services, controllers, etc.
@@ -152,7 +179,18 @@ Both application services (client, and server) have a few examples on how to dev
 
 ![](./samples/server-tests.png)
 
+<a name="008"></a>
 ### CI/CD - **Containerization and Deployment**
+
+```mermaid
+flowchart LR
+    step0["`Developer pushes/merges code into the repository`"]
+    step1["`GitHub actions are triggered`"]
+    step2["`Tests are triggered, and Docker images are built`"]
+    step3["`Docker images are pushed to Docker Hub`"]
+    step4["`**Optional** Render cloud service should deploy the images by latest reference provided`"]
+    step0 --> step1 --> step2 --> step3 --> step4
+```
 
 The strategy followed to deploy the application implies:
 
@@ -186,7 +224,8 @@ The strategy followed to deploy the application implies:
 
 > [!IMPORTANT]
 >
-> At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images). Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
+> - At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images).
+> - Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
 
 **Choice:** I decided to use [Render](https://render.com/) because it's free for hobby projects (under certain conditions, of course).
 
@@ -197,14 +236,16 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 -   [TV application](https://tv-app-react-webapp-latest.onrender.com/)
 -   [API service docs](https://tv-app-nodejs-latest.onrender.com/api/docs)
 
-    **Note:** The application should be consuming the published API services (our bank-end which is intended to obtain data from the TMDB Movie service).
+    **Note:** The application should consume API services published and provided by our back-end, which is intended to obtain data from the TMDB Movie service).
 
 ![](./samples/cdci.png)
 
+<a name="009"></a>
 ### Next steps
 
 -   Extend this documentation to the applications (client-side, server-side, GitHub actions).
 -   Enhance Dockerfiles and multi-stage builds.
--   Better use of npm workspaces (monorepos).
+-   Better use of npm workspaces (mono-repos).
 -   Improve overall CD/CI process.
 -   Build back-end codebase.
+-   Polish up user experience and responsiveness.
