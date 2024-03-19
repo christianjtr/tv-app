@@ -9,7 +9,7 @@
         "dev:client": "npm run dev --prefix app",
         "dev:server": "npm run dev --prefix server",
         "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-        "postinstall": "(cd app && npm install); (cd server && npm install); (cd packages/shared-types && npm install);",
+        "postinstall": "(cd app && npm install); (cd server && npm install);",
         "test:client": "npm test --prefix app",
         "test:client:cy": "npm run cy:test --prefix app",
         "test:server": "npm test --prefix server",
