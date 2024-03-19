@@ -124,7 +124,9 @@ Each app's tier within the project has its own environment variables file, you *
 
 ##### Live demo
 
-Click on the following link [GitHub page project](https://christianjtr.github.io/tv-app). **Note:** It's a mocked version of the project.
+Click on the following link [GitHub page project](https://christianjtr.github.io/tv-app). 
+
+**Note:** It's a mocked version of the project, although we can deploy the front-end project and fetch data from our back-end services hosted.
 
 ##### Preview
 
@@ -157,14 +159,17 @@ The server-side API follows the [OpenAPI Specification - Version 3](https://swag
 <a name="006"></a>
 ### Tests (unit-tests and e2e)
 
-Both application services (client, and server) have a few examples on how to develop unit tests and e2e tests (including some mocking strategies).
+Both services have some examples of how to develop unit tests and e2e tests (including some mocking strategies).
 
 -   **Client-side:**
 
     -   Unit testing for services, react-hooks, state-less components, and the entire sections (pages).
     -   **E2E testing:** Using Cypress. (i.e.: Navigate to the search section and look for a movie).
 
-![](./samples/cy.gif)
+
+<p align="center">
+    <img src="https://github.com/christianjtr/tv-app/blob/master/samples/cy.gif" alt="gif-demo-cy"/>
+</p>
 
 -   **Server-side:**
     -   Unit testing for services, controllers, etc.
@@ -217,7 +222,8 @@ The strategy followed to deploy the application implies:
 
 > [!IMPORTANT]
 >
-> At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images). Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
+> - At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images).
+> - Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
 
 **Choice:** I decided to use [Render](https://render.com/) because it's free for hobby projects (under certain conditions, of course).
 
