@@ -71,6 +71,6 @@ jobs:
                   IFS=',' read -r -a images <<< "${{ env.docker-images }}"
                   for image in ${images[@]}
                   do
-                    docker tag $image ${{ secrets.DOCKERHUB_USERNAME }}/$image
+                    docker tag $image:1.0 ${{ secrets.DOCKERHUB_USERNAME }}/$image:1.0
                     docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image
                   done
