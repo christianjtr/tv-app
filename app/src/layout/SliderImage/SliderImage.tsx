@@ -37,7 +37,7 @@ const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React
 
     return (
         <div className="glide">
-            <div className={`glide__track h-96 ${hasOverlay && 'overlay'}`} data-glide-el="track">
+            <div className={`glide__track h-60 md:h-96 ${hasOverlay && 'overlay'}`} data-glide-el="track">
                 <ul className="glide__slides">
                     {imageSources.map((item, key) => (
                         <li className="glide__slide relative" key={`image_item_${key}`}>

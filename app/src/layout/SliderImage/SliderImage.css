@@ -1,12 +1,14 @@
 .overlay img {
     position: relative;
     width: 100%;
+    -webkit-mask-image: linear-gradient(black 80%, transparent);
+    mask-image: linear-gradient(black 80%, transparent);
 }
 
 .overlay .title--centered {
     position: absolute;
     top: 40%;
-    right: 80px;
+    right: 5%;
     transform: translate(-50%, -50%);
     -webkit-text-stroke: 0.5px floralwhite;
     background-color: rgba(173, 173, 173, 0.05);
@@ -21,4 +23,18 @@
     width: 100%;
     top: 0;
     left: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .overlay .title--centered {
+        top: 65%;
+        right: 7%;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 425px) {
+    .overlay .title--centered {
+        top: 70%;
+        right: 10%;
+    }
 }
