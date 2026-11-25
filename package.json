@@ -5,11 +5,15 @@
     "author": "Christian Torrealba",
     "license": "ISC",
     "private": true,
+    "packageManager": "npm@11.11.1",
+    "engines": {
+        "node": "26.13.1",
+        "npm": "11.11.1"
+    },
     "scripts": {
         "dev:client": "npm run dev --prefix app",
         "dev:server": "npm run dev --prefix server",
         "dev:app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-        "postinstall": "(cd app && npm install); (cd server && npm install);",
         "test:client": "npm test --prefix app",
         "test:client:cy": "npm run cy:test --prefix app",
         "test:server": "npm test --prefix server",
@@ -17,18 +21,12 @@
         "dev:docker:build-up": "node ./scripts/runDockerComposeBuildUpWithEnvs.mjs"
     },
     "workspaces": [
+        "app",
+        "server",
         "packages/*"
     ],
-    "dependencies": {
-        "concurrently": "^8.2.2",
-        "typescript": "^5.4.2"
-    },
     "devDependencies": {
-        "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-        "@tv-app-packages/shared-types": "^1.0.0",
-        "@types/jest": "^29.5.12",
-        "@types/node": "^20.11.25",
-        "dotenv": "^16.4.5",
-        "ts-node": "^10.9.2"
+        "concurrently": "^8.2.2",
+        "dotenv": "^16.4.5"
     }
 }

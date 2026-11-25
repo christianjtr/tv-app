@@ -1,3 +1,6 @@
+**/node_modules
+**/dist
+**/coverage
 **/.env
 **/.env.*
 # Keep the tracked client defaults until the production config fix.

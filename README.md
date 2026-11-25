@@ -72,7 +72,7 @@ This conceptual test has been developed using the following technologies:
 
 The project requires:
 
--   [NodeJS](https://nodejs.org/)
+-   [Node.js 26.13.1](https://nodejs.org/) and npm 11.11.1
 -   [Docker](https://www.docker.com/)
 
 **Clone the repository:**
@@ -83,9 +83,12 @@ git clone https://github.com/christianjtr/tv-app.git
 
 **Scripts:**
 
-Before executing these scripts, you must run **npm install** in the directory you just downloaded/cloned the codebase.
+From the repository root, run **npm ci** once, then build the shared types before using the scripts:
 
 ```shell
+npm ci
+npm run build:shared-types
+
 # Run the entire development environment for both client and server tiers
 > npm run dev:app
 

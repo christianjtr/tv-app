@@ -1,20 +1,18 @@
-FROM node:16 as builder
+FROM node:26.13.1 AS builder
 
-WORKDIR /tmp
-COPY packages/shared-types/package.json .
-COPY packages/shared-types/tsconfig.json .
-RUN npm install
-COPY packages/shared-types .
-RUN npm run build
+WORKDIR /workspace
+COPY package.json package-lock.json ./
+COPY app/package.json app/package.json
+COPY server/package.json server/package.json
+COPY packages/shared-types/package.json packages/shared-types/package.json
+RUN test "$(npm --version)" = "11.11.1" && npm ci
+COPY packages/shared-types packages/shared-types
+RUN npm run build:shared-types
 
-FROM builder
+FROM builder AS app
 ENV VITE_APP_SERVER_PORT=$VITE_APP_SERVER_PORT
 
-WORKDIR /app
-COPY app/package.json .
-COPY app/tsconfig.json .
-RUN npm install
-COPY app .
-COPY --from=builder /tmp /node_modules/@tv-app-packages/shared-types
+COPY app app
+WORKDIR /workspace/app
 EXPOSE $VITE_APP_SERVER_PORT
 CMD [ "npm", "run", "dev" ]

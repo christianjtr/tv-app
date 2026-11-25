@@ -31,18 +31,16 @@ jobs:
         name: Run unit tests and e2e
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [16]
-
         steps:
             - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version-file: .nvmrc
                   cache: "npm"
+            - run: test "$(npm --version)" = "11.11.1"
             - run: npm ci
+            - run: npm run build:shared-types
             - run: npm run test:client
             - run: npm run test:server
             - run: npm run test:client:cy
@@ -56,17 +54,14 @@ jobs:
         env:
             docker-images: "tv-app_react-webapp,tv-app_nodejs"
 
-        strategy:
-            matrix:
-                node-version: [16]
-
         steps:
             - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version-file: .nvmrc
                   cache: "npm"
+            - run: test "$(npm --version)" = "11.11.1"
 
             - name: Create .env file
               env:
