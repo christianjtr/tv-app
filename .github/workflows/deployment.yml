@@ -9,7 +9,6 @@ on:
           - '*.config.*'
           - '**/*.config.*'
           - '.gitignore'
-          - '.dockerignore'
           - 'samples/**'
           - 'dist/**'
           - '**/dist/*'
@@ -22,7 +21,6 @@ on:
           - '*.config.*'
           - '**/*.config.*'
           - '.gitignore'
-          - '.dockerignore'
           - 'samples/**'
           - 'dist/**'
           - '**/dist/*'
@@ -50,6 +48,7 @@ jobs:
             - run: npm run test:client:cy
 
     dockerize-build-and-push:
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         needs: run-tests
 
         name: Dockerize application
@@ -70,10 +69,10 @@ jobs:
                   cache: "npm"
 
             - name: Create .env file
+              env:
+                  TV_APP_PROD_ENV: ${{ secrets.TV_APP_PROD_ENV }}
               run: |
-                  touch .env
-                  echo "${{ secrets.TV_APP_PROD_ENV }}" > .env
-                  cat .env
+                  printf '%s' "$TV_APP_PROD_ENV" > .env
 
             - name: Dockerize services
               run: docker-compose -f "docker-compose.prod.yml" up -d --build

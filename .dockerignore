@@ -1,0 +1,4 @@
+**/.env
+**/.env.*
+# Keep the tracked client defaults until the production config fix.
+!app/.env.local
