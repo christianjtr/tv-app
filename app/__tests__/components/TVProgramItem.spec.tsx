@@ -1,7 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import renderer from 'react-test-renderer';
 import Movies from '../../__fixtures__/movies.json';
 import { TVProgram } from '../../src/types/TVProgram';
 import TVProgramItem, { Rating } from '../../src/components/TVProgamItem/TVProgramItem';
@@ -19,11 +18,6 @@ describe('TVProgramItem component', () => {
 
     afterEach(() => {
         cleanup();
-    });
-
-    it('should render the component correctly', () => {
-        const component = renderer.create(<TVProgramItem info={movieItem} onClick={() => {}} />);
-        expect(component).toBeDefined();
     });
 
     it('should render the correct info', () => {

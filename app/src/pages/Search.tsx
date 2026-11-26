@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SearchProgramForm from '@components/SearchProgramForm';
 import TVProgramItem from '@components/TVProgamItem/TVProgramItem';
 import NotFound from './NotFound';
@@ -10,7 +10,7 @@ import { useSearchQueryParams } from '@hooks/useSearchQueryParams';
 import { TVProgram, TVProgramType } from '@app-types/TVProgram';
 
 const Search: React.FC = (): React.ReactElement => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { query: searchCriteria, setQueryParams } = useSearchQueryParams();
 
     const { movies, isLoading: isLoadingMovies } = useSearchMovies(searchCriteria);
@@ -45,7 +45,7 @@ const Search: React.FC = (): React.ReactElement => {
                 {results.length === 0 && !isLoading && <NotFound title="Please, try searching for something" />}
                 <div className="grid md:grid-cols-5 gap-5 mb-10 sm:grid-cols-3 xs:grid-cols-2">
                     {results.map(({ id, tvProgramType, ...item }, index) => (
-                        <TVProgramItem info={item} key={`program_${index}`} onClick={() => history.push(`/${detailPath[tvProgramType]}/${id}`)} />
+                        <TVProgramItem info={item} key={`program_${index}`} onClick={() => navigate(`/${detailPath[tvProgramType]}/${id}`)} />
                     ))}
                 </div>
             </div>

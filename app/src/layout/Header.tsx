@@ -1,11 +1,11 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = (): React.ReactElement => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleOnClickNavBtn = (path: string): void => {
-        history.push(path);
+        navigate(path);
     };
 
     return (

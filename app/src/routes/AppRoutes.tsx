@@ -1,6 +1,5 @@
 import React, { lazy, useEffect } from 'react';
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
-import { APP_BASE_PATH } from '@configuration/app.config';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 const Home = lazy(() => import('@pages/Home'));
 const Detail = lazy(() => import('@pages/Detail/Detail'));
@@ -15,15 +14,13 @@ const AppRoutes: React.FC = (): React.ReactElement => {
     }, [pathname]);
 
     return (
-        <Switch>
-            <Redirect exact from={APP_BASE_PATH} to="/" />
-            <Route exact path="/" component={Home} />
-            <Route exact path="/search" component={Search} />
-            <Route exact path={['/movies/:id', '/tv-shows/:id']} component={Detail} />
-            <Route path="*">
-                <NotFound showBackToHome />
-            </Route>
-        </Switch>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/movies/:id" element={<Detail />} />
+            <Route path="/tv-shows/:id" element={<Detail />} />
+            <Route path="*" element={<NotFound showBackToHome />} />
+        </Routes>
     );
 };
 

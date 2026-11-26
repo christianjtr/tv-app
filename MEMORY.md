@@ -29,16 +29,17 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F05 | Routes reject invalid query/ID/trending inputs; API errors use stable 400/502/500 JSON responses; TMDB status/JSON failures are normalized with a 10-second deadline. The browser validates the error envelope with Joi, lazy-loading its ~44 KB gzip chunk only on failures. | Commit `8265cfd`; [TMDB client](server/src/apis/tmdb/httpClient.ts), [validation middleware](server/src/middlewares/validateRequest.ts), [browser parser](app/src/services/apis/tv-app/requestJson.ts); corresponding tests passed. |
 | F07 | Search state follows URL query changes, detail requests ignore stale responses, and arrow navigation leaves editable inputs alone and handles empty target lists. | This branch; [Search](app/src/pages/Search.tsx), [detail hook](app/src/hooks/useFetchTVProgram.ts), [keyboard hook](app/src/hooks/useArrowNavigation.ts); client tests and Cypress passed. |
 | F08 | Season artwork uses each season's poster, and date formatting explicitly uses UTC to avoid month shifts. | This branch; [TV mapper](server/src/entityMappers/tmdb/tvshow.entity.mapper.ts), [date helper](app/src/utils/formatReleaseDate.ts); mapper/date tests passed. |
+| F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
 
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
-- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits. **Still proposed:** React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
+- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
 
 ## Handoff
 
-- **Current:** `build/vite-and-test-runners`, based on scope 7 merged at `5c5bf25`; Vite/Jest/Cypress upgrades are separated into three commits, and client/server tests, build, lint, and Cypress pass. Awaiting maintainer review.
-- **Next, after approval and merge:** `build/react-and-router`.
+- **Current:** `build/react-and-router`, based on scope 8 merged at `06a6976`; React 19 and React Router 7 migration preserves the existing public paths. Client build/tests, lint, and Cypress pass. Awaiting maintainer review.
+- **Next, after approval and merge:** `build/tailwind-and-daisyui`.
 - **Open questions:** Which live and demo deployments should remain supported? Which browser versions or smart-TV devices need support? These affect production rollout and the styling upgrade, respectively.

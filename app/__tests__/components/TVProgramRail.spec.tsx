@@ -1,12 +1,11 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import renderer from 'react-test-renderer';
 import Movies from '../../__fixtures__/movies.json';
 import { TVProgram } from '../../src/types/TVProgram';
 import TVProgramRail from '../../src/components/TVProgramRail';
 
-const mockHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('../../src/services/apis/tv-app/tv-app.config.ts', () => ({
     tvAppApi: {
@@ -19,9 +18,7 @@ jest.mock('../../src/services/apis/tv-app/tv-app.config.ts', () => ({
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
-    useHistory: () => ({
-        push: mockHistoryPush,
-    }),
+    useNavigate: () => mockNavigate,
 }));
 
 // COMMENT: Just an example on how to test a component within the client-side app...
@@ -39,11 +36,6 @@ describe('TVProgramRail component', () => {
 
     afterAll(() => {
         jest.clearAllMocks();
-    });
-
-    it('should render the component correctly', () => {
-        const component = renderer.create(<TVProgramRail title="dummy-movies" tvPrograms={movieCollection} tvProgramType="movie" />);
-        expect(component).toBeDefined();
     });
 
     it('should render the skeleton if @isLoading prop is set to  === true', () => {
@@ -79,6 +71,6 @@ describe('TVProgramRail component', () => {
 
         fireEvent.click(tvProgramItemComponent as HTMLElement);
 
-        expect(mockHistoryPush).toHaveBeenCalledWith(`/movies/${id}`);
+        expect(mockNavigate).toHaveBeenCalledWith(`/movies/${id}`);
     });
 });

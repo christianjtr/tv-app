@@ -2,7 +2,7 @@ import React, { MutableRefObject } from 'react';
 import useArrowNavigation from '@hooks/useArrowNavigation';
 
 export interface ContainerInterface {
-    children: string | JSX.Element | JSX.Element[];
+    children: React.ReactNode;
 }
 
 const Container: React.FC<ContainerInterface> = ({ children }: ContainerInterface): React.ReactElement => {
