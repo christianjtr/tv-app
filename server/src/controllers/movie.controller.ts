@@ -40,11 +40,6 @@ export async function search(request: Request, response: Response, next: NextFun
 
         response.status(HTTPStatus.OK).send(movies);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting movies.',
-            },
-        });
         next(error);
     }
 }
@@ -57,11 +52,6 @@ export async function searchById(request: Request, response: Response, next: Nex
 
         response.status(HTTPStatus.OK).send(movie);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting the movie.',
-            },
-        });
         next(error);
     }
 }
@@ -75,11 +65,6 @@ export async function getTrendingMovies(request: Request, response: Response, ne
 
         response.status(HTTPStatus.OK).send(trendingMovies);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting trending movies.',
-            },
-        });
         next(error);
     }
 }

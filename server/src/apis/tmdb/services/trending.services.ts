@@ -14,8 +14,7 @@ export default {
         try {
             const queryString = language ? `?${qs.stringify({ language })}` : '';
 
-            const response = await HTTPClient.get(`/trending/movie/${timeWindow}${queryString}`);
-            const trendingMovies = await response.json();
+            const trendingMovies = await HTTPClient.get<{ page: number; results: Movie[] }>(`/trending/movie/${timeWindow}${queryString}`);
             return trendingMovies;
         } catch (error) {
             console.error('[TMDB API][ERROR] ::: getTrendingMovies', error);
@@ -26,8 +25,7 @@ export default {
         try {
             const queryString = language ? `?${qs.stringify({ language })}` : '';
 
-            const response = await HTTPClient.get(`/trending/tv/${timeWindow}${queryString}`);
-            const trendingTVShows = await response.json();
+            const trendingTVShows = await HTTPClient.get<{ page: number; results: TVShow[] }>(`/trending/tv/${timeWindow}${queryString}`);
             return trendingTVShows;
         } catch (error) {
             console.error('[TMDB API][ERROR] ::: getTrendingTVShows', error);

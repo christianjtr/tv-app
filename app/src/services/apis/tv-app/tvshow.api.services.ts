@@ -1,12 +1,12 @@
 import { stringify } from 'qs';
 import { tvAppApi } from './tv-app.config';
+import requestJson from './requestJson';
 import { TVShow, TVShowDetailed, TimeWindow } from '@tv-app-packages/shared-types';
 
 const {
     config: { baseURL, isAPIMocked },
 } = tvAppApi;
 
-// Just for mocking purposes...
 // Just for mocking purposes...
 const apiMock = (async () => {
     const { default: mocks } = await import('../../../../__mocks__/tv.api.service.mock');
@@ -26,45 +26,21 @@ export namespace TVShowResponse {
 }
 
 export const searchTVShow = async (criteria: string): Promise<TVShowResponse.TVShows> => {
-    try {
-        if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShows>;
+    if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShows>;
 
-        const queryString = `?${stringify({ query: criteria }, { format: 'RFC1738' })}`;
-        const response = await fetch(`${baseURL}/tv-shows/search${queryString}`);
-        const { page, results } = await response.json();
-        return {
-            page,
-            results,
-        };
-    } catch (error) {
-        throw new Error(error as string | undefined);
-    }
+    const queryString = `?${stringify({ query: criteria }, { format: 'RFC1738' })}`;
+    return requestJson<TVShowResponse.TVShows>(`${baseURL}/tv-shows/search${queryString}`);
 };
 
 export const searchTVShowById = async (id: number | string): Promise<TVShowDetailed> => {
-    try {
-        if (isAPIMocked) return (await apiMock).tvshowMock as unknown as Promise<TVShowDetailed>;
+    if (isAPIMocked) return (await apiMock).tvshowMock as unknown as Promise<TVShowDetailed>;
 
-        const response = await fetch(`${baseURL}/tv-shows/${id}`);
-        const tvshow = await response.json();
-        return tvshow;
-    } catch (error) {
-        throw new Error(error as string | undefined);
-    }
+    return requestJson<TVShowDetailed>(`${baseURL}/tv-shows/${id}`);
 };
 
 export const getTrendingTVShows = async (timeWindow: TimeWindow, language?: string): Promise<TVShowResponse.TVShowTrends> => {
-    try {
-        if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShowTrends>;
+    if (isAPIMocked) return (await apiMock).tvshowsMock as unknown as Promise<TVShowResponse.TVShowTrends>;
 
-        const queryString = `?${stringify({ timeWindow, language })}`;
-        const response = await fetch(`${baseURL}/tv-shows/trending${queryString}`);
-        const { page, results } = await response.json();
-        return {
-            page,
-            results,
-        };
-    } catch (error) {
-        throw new Error(error as string | undefined);
-    }
+    const queryString = `?${stringify({ timeWindow, language })}`;
+    return requestJson<TVShowResponse.TVShowTrends>(`${baseURL}/tv-shows/trending${queryString}`);
 };
