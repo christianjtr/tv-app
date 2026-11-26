@@ -1,4 +1,4 @@
-name: CI - Run tests dockerize and push to Docker Hub
+name: CI and deploy
 
 on:
     push:
@@ -10,7 +10,6 @@ on:
           - 'package.json'
           - 'package-lock.json'
           - 'tsconfig.json'
-          - 'docker-compose*.yml'
           - 'app/**'
           - 'server/**'
           - 'packages/shared-types/**'
@@ -24,11 +23,13 @@ on:
           - 'package.json'
           - 'package-lock.json'
           - 'tsconfig.json'
-          - 'docker-compose*.yml'
           - 'app/**'
           - 'server/**'
           - 'packages/shared-types/**'
           - 'scripts/**'
+
+permissions:
+    contents: read
 
 jobs:
     run-tests:
@@ -49,14 +50,13 @@ jobs:
             - run: npm run test:server
             - run: npm run test:client:cy
 
-    dockerize-build-and-push:
+    publish-demo:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         needs: run-tests
-
-        name: Dockerize application
+        name: Build and publish GitHub Pages demo
         runs-on: ubuntu-latest
-        env:
-            docker-images: "tv-app_react-webapp,tv-app_nodejs"
+        permissions:
+            contents: write
 
         steps:
             - uses: actions/checkout@v3
@@ -66,31 +66,54 @@ jobs:
                   node-version-file: .nvmrc
                   cache: "npm"
             - run: test "$(npm --version)" = "11.20.0"
-
-            - name: Create .env file
+            - run: npm ci
+            - run: npm run build:shared-types
+            - name: Build frontend for Render API
+              run: npm run build:prod --prefix app
               env:
-                  TV_APP_PROD_ENV: ${{ secrets.TV_APP_PROD_ENV }}
+                  VITE_API_BASE_URL: https://tv-app-nodejs-latest.onrender.com/api
+                  VITE_APP_BASE_PATH: /tv-app
+                  VITE_ENABLE_API_MOCK: "false"
+
+            - name: Checkout demo branch
+              uses: actions/checkout@v3
+              with:
+                  ref: demo
+                  path: demo
+
+            - name: Publish frontend build to demo branch
               run: |
-                  printf '%s' "$TV_APP_PROD_ENV" > .env
+                  rsync -a --delete --exclude='.git/' app/dist/ demo/
+                  git -C demo config user.name "github-actions[bot]"
+                  git -C demo config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git -C demo add --all
+                  if git -C demo diff --cached --quiet; then
+                    echo "Demo build is unchanged"
+                    exit 0
+                  fi
+                  git -C demo commit -m "Deploy frontend from ${GITHUB_SHA}"
+                  git -C demo push origin HEAD:demo
 
-            - name: Dockerize services
-              run: docker compose -f "docker-compose.prod.yml" up -d --build
+    dockerize-build-and-push:
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        needs: run-tests
+        name: Build and push backend image
+        runs-on: ubuntu-latest
+        env:
+            DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+            IMAGE_NAME: tv-app_nodejs
 
-            - name: Stop services
-              if: always()
-              run: docker compose -f "docker-compose.prod.yml" down
-
+        steps:
+            - uses: actions/checkout@v3
             - name: Login to Docker Hub
               uses: docker/login-action@v3
               with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  username: ${{ env.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-            - name: Push to Docker Hub
+            - name: Build and push backend image
               run: |
-                  IFS=',' read -r -a images <<< "${{ env.docker-images }}"
-                  for image in ${images[@]}
-                  do
-                    docker tag $image ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{ github.sha }}
-                    docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image:${{ github.sha }}
-                  done
+                  docker build \
+                    --file server/Dockerfile.prod \
+                    --tag "$DOCKERHUB_USERNAME/$IMAGE_NAME:$GITHUB_SHA" \
+                    .
+                  docker push "$DOCKERHUB_USERNAME/$IMAGE_NAME:$GITHUB_SHA"
