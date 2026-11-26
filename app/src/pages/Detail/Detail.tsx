@@ -6,6 +6,7 @@ import { useBasePathCheckerForDetailedPage } from '@hooks/useSearchQueryParams';
 import { Rating } from '@components/TVProgamItem/TVProgramItem';
 import SeasonCard from '@components/SeasonCard';
 import { Loading } from '@layout';
+import formatReleaseDate from '../../utils/formatReleaseDate';
 import ClockIcon from '@assets/clock.svg';
 import IMDb from '@assets/imdb.svg';
 import './Detail.css';
@@ -19,7 +20,7 @@ const Detail: React.FC = (): React.ReactElement => {
 
     const title = tvProgram?.title || tvProgram?.name;
     const releaseDate = tvProgram?.releaseDate || tvProgram?.firstAirDate;
-    const formattedReleaseDate = new Date(releaseDate!).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const formattedReleaseDate = releaseDate ? formatReleaseDate(releaseDate) : '';
 
     const isTVShow = tvProgram?.numberOfEpisodes && tvProgram?.numberOfSeasons;
 

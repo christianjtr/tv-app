@@ -7,19 +7,29 @@ const useFetchTVProgram = (id: number | string, tvProgramResourceType: AllowedTV
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
+        let isCurrentRequest = true;
+
         if (id && tvProgramResourceType) {
+            setTVProgram(null);
+            setIsLoading(true);
             (async () => {
                 try {
-                    setIsLoading(true);
                     const result = await TVProgramServices.getTVProgramById(id, tvProgramResourceType);
-                    setTVProgram(result);
+                    if (isCurrentRequest) setTVProgram(result);
                 } catch (error) {
-                    throw new Error(`Error fetching tv program, [Error]: ${error}`);
+                    if (isCurrentRequest) throw new Error(`Error fetching tv program, [Error]: ${error}`);
                 } finally {
-                    setIsLoading(false);
+                    if (isCurrentRequest) setIsLoading(false);
                 }
             })();
+        } else {
+            setTVProgram(null);
+            setIsLoading(false);
         }
+
+        return () => {
+            isCurrentRequest = false;
+        };
     }, [id, tvProgramResourceType]);
 
     return {
