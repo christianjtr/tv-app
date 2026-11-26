@@ -3,7 +3,7 @@ interface ApiErrorResponse {
 }
 
 const errorMessage = async (body: unknown, status: number): Promise<string> => {
-    const { default: Joi } = await import('@hapi/joi');
+    const { default: Joi } = await import('joi');
     const apiErrorSchema = Joi.object({
         error: Joi.object({ message: Joi.string().required() }).unknown(true).required(),
     }).unknown(true);
