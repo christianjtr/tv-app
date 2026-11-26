@@ -36,7 +36,7 @@ const Search: React.FC = (): React.ReactElement => {
             <h1 className="text-2xl text-left">
                 🔎 What you are looking for?<span className="text-5xl text-pink-400">.</span>
             </h1>
-            <SearchProgramForm onSearch={handleOnSearch} isLoading={isLoading} autoFocus />
+            <SearchProgramForm onSearch={handleOnSearch} isLoading={isLoading} />
             <h2 className="divider divider-start text-lg">
                 Search results for: <span className="text-white font-semibold">{searchCriteria || '-- Movie or TV Show --'}</span>
             </h2>

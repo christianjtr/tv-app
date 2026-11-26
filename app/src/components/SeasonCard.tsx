@@ -18,7 +18,6 @@ const SeasonCard: React.FC<SeasonCardProps> = (props: SeasonCardProps) => {
         <div
             className="card bg-base-200 shadow-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-base-300 duration-300"
             data-element="season-card"
-            tabIndex={0}
         >
             <figure>
                 <img src={info.images.w300} alt="Season poster" aria-label="Season poster" className="rounded-t-md md:w-full sm:w-fit xs:w-fit" />

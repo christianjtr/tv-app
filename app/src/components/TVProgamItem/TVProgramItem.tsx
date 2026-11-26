@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TVProgram } from '@app-types/TVProgram';
 import formatReleaseDate from '../../utils/formatReleaseDate';
 import './TVProgramItem.css';
@@ -24,7 +24,6 @@ export const Rating: React.FC<RatingProps> = (props: RatingProps): React.ReactEl
 };
 
 const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps): React.ReactElement => {
-    const [isPressed, setIsPressed] = useState<boolean>(false);
     const { info, onClick: onClickCallbackFn } = props;
 
     const programTitle = info.title || info.name;
@@ -33,37 +32,24 @@ const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps):
     const releaseDate = info.releaseDate || info.firstAirDate;
     const formattedReleaseDate = formatReleaseDate(releaseDate!);
 
-    const handleOnClickItem = (): void => {
-        onClickCallbackFn();
-    };
-
-    const handleOnKeyDownItem = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-        event.stopPropagation();
-        if (event.key === 'Enter') {
-            setIsPressed(true);
-            onClickCallbackFn();
-        }
-    };
-
     return (
-        <div
-            className="carousel-item tv-program-item relative cursor-pointer"
-            role="button"
-            onClick={handleOnClickItem}
-            onKeyDown={handleOnKeyDownItem}
-            aria-pressed={isPressed}
+        <button
+            type="button"
+            className="carousel-item tv-program-item relative cursor-pointer appearance-none border-0 bg-transparent p-0 text-left"
+            onClick={onClickCallbackFn}
+            aria-label={`View ${programTitle} details`}
             data-testid={`program_${programTitle}`}
             data-element="tv-program-rail-item"
             data-cy="tv-program-rail-item"
         >
-            <div tabIndex={0} className="bg-base-100 w-full h-full absolute opacity-0 tv-program-item__info text-sm text-left">
+            <div className="bg-base-100 w-full h-full absolute opacity-0 tv-program-item__info text-sm text-left">
                 <h4 className="block mb-1 text-base font-semibold">{programTitle}</h4>
-                <Rating value={info?.rating!} className="mb-1 text-xs" />
+                <Rating value={info.rating ?? 0} className="mb-1 text-xs" />
                 <span className="block mb-5">{formattedReleaseDate}</span>
                 <p className="text-ellipsis overflow-hidden max-h-40 description">{info.description}</p>
             </div>
-            <img src={info.images?.w185} className="rounded-md" alt={`${programTitle} poster`} aria-label={`${programTitle} poster`} />
-        </div>
+            <img src={info.images?.w185} className="rounded-md" alt={`${programTitle} poster`} />
+        </button>
     );
 };
 

@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Mock } from 'moq.ts';
 import Movies from '../../__fixtures__/trendingMovies.json';
 import TVShows from '../../__fixtures__/trendingTVShows.json';

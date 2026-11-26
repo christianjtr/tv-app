@@ -14,7 +14,7 @@ const NotFound: React.FC<NotFoundProps> = (props: NotFoundProps): React.ReactEle
 
     return (
         <div className="hero h-full flex flex-col mt-5" data-testid="not-found-component">
-            <img src={NotFoundStateImage} alt="Not found state image" aria-label="Not found state image" width="400" />
+            <img src={NotFoundStateImage} alt="" width="400" />
             <h1 className="text-xl my-10">{titleToDisplay}</h1>
             {showBackToHome && (
                 <Link to="/" title="Return to home" className="btn btn-neutral">

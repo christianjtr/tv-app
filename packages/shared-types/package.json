@@ -9,8 +9,5 @@
   "scripts": {
     "build": "tsc --build --verbose"
   },
-  "devDependencies": {
-    "typescript": "^5.4.2"
-  },
   "types": "./dist/index.d.ts"
 }

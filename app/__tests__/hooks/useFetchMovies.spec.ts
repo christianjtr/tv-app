@@ -42,7 +42,7 @@ describe('useFetchTrendingMovies custom hook', () => {
             getTrendingMovies: jest.fn().mockRejectedValue('ERROR'),
         }));
 
-        const MovieServices = require('@services/apis/tv-app/movie.api.services');
+        const MovieServices = jest.requireMock('@services/apis/tv-app/movie.api.services');
 
         const { unmount } = renderHook(() => useFetchTrendingMovies('day', 'en-US'));
 

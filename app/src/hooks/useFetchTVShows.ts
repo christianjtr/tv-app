@@ -18,7 +18,7 @@ const useFetchTrendingTVShows = (timeWindow: TimeWindow = 'day', language?: stri
                 setIsLoading(false);
             }
         })();
-    }, []);
+    }, [language, timeWindow]);
 
     return {
         tvShows,

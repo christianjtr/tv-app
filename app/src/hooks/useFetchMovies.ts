@@ -18,7 +18,7 @@ const useFetchTrendingMovies = (timeWindow: TimeWindow = 'day', language?: strin
                 setIsLoading(false);
             }
         })();
-    }, []);
+    }, [language, timeWindow]);
 
     return {
         movies,

@@ -30,3 +30,7 @@
     outline: 2px solid white;
     transition: outline 0.15s ease-in 0s;
 }
+
+.tv-program-item:focus .tv-program-item__info {
+    opacity: 0.9;
+}

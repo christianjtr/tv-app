@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import HTTPStatus from 'http-status';
 import supertest from 'supertest';
 import { UpstreamError } from '../../src/apis/tmdb/httpClient';
@@ -72,10 +71,7 @@ describe('Integration test ::: movie endpoint services', () => {
 
     it('keeps movie and TV search cache entries separate', async () => {
         const query = `cache-isolation-${Date.now()}`;
-        tmdbHTTPClient.get = jest
-            .fn()
-            .mockResolvedValueOnce(tmdbMoviesResponse)
-            .mockResolvedValueOnce(tmdbTVShowsResponse);
+        tmdbHTTPClient.get = jest.fn().mockResolvedValueOnce(tmdbMoviesResponse).mockResolvedValueOnce(tmdbTVShowsResponse);
 
         const movieResponse = await agent.get('/api/movies/search').query({ query });
         const tvResponse = await agent.get('/api/tv-shows/search').query({ query });
