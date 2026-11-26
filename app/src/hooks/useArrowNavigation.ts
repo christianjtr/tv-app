@@ -1,10 +1,10 @@
-import { useEffect, MutableRefObject, useRef } from 'react';
+import { useCallback, useEffect, MutableRefObject, useRef } from 'react';
 import { NavigationKeysOptions, NavigationKeys } from '@app-types/KeyboardNavigation';
 
 const useKeyboardNavigation = (selectors: string) => {
     const ref: MutableRefObject<Element | null> = useRef(null);
 
-    const handleOnKeyUp = (event: KeyboardEvent) => {
+    const handleOnKeyUp = useCallback((event: KeyboardEvent) => {
         const { key } = event;
         if (!NavigationKeysOptions.includes(key as NavigationKeys)) return;
 
@@ -27,7 +27,7 @@ const useKeyboardNavigation = (selectors: string) => {
 
         event.preventDefault();
         nextElement.focus();
-    };
+    }, [selectors]);
 
     useEffect(() => {
         document.addEventListener('keyup', handleOnKeyUp);
@@ -35,7 +35,7 @@ const useKeyboardNavigation = (selectors: string) => {
         return () => {
             document.removeEventListener('keyup', handleOnKeyUp);
         };
-    }, []);
+    }, [handleOnKeyUp]);
 
     return ref;
 };

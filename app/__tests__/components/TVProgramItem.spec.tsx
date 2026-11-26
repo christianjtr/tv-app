@@ -40,7 +40,7 @@ describe('TVProgramItem component', () => {
         expect(screen.getByText(`${formattedRating(rating!)} ★` as string)).toBeInTheDocument();
         expect(image).toHaveAttribute('src', images?.w185);
         expect(image).toHaveAttribute('alt', `${tvProgramTitle} poster`);
-        expect(image).toHaveAttribute('aria-label', `${tvProgramTitle} poster`);
+        expect(screen.getByRole('button', { name: `View ${tvProgramTitle} details` })).toBeInTheDocument();
     });
 
     it('should perform operation when clicked on', () => {

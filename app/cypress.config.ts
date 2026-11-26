@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'cypress';
-import vitePreprocessor from 'cypress-vite';
+import { vitePreprocessor } from 'cypress-vite';
 import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);

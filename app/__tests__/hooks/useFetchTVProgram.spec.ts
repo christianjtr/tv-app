@@ -8,7 +8,7 @@ jest.mock('@services/apis/tv-app/tvprogram.api.services', () => ({
 }));
 
 const deferred = <T,>() => {
-    let resolve!: (value: T) => void;
+    let resolve!: (_value: T) => void;
     const promise = new Promise<T>((complete) => {
         resolve = complete;
     });

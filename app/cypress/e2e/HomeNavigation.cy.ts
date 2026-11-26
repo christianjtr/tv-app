@@ -17,19 +17,19 @@ describe('Home view page navigation', () => {
         cy.get('[data-cy="skeleton"]').should('not.exist');
         cy.get('[data-cy="main_container"]').should('be.visible');
 
-        cy.waitUntil(() => cy.get('[tabindex="0"]').should('exist')).then(() => {
-            cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowDown' });
+        cy.get('[data-cy="tv-program-rail-item"]').should('be.visible');
+        cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowDown' });
 
-            for (let i = 0; i <= repeatNthTimes; i++) {
-                cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowRight' });
-            }
+        for (let i = 0; i <= repeatNthTimes; i++) {
+            cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowRight' });
+        }
 
-            for (let i = 0; i <= repeatNthTimes; i++) {
-                cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowLeft' });
-            }
+        for (let i = 0; i <= repeatNthTimes; i++) {
+            cy.get('[data-cy="main_container"]').trigger('keyup', { key: 'ArrowLeft' });
+        }
 
-            cy.get('[data-cy="tv-program-rail-item"]').first().trigger('keydown', { key: 'Enter' });
-            cy.url().should('match', new RegExp(urlPattern));
-        });
+        cy.focused().should('have.attr', 'data-cy', 'tv-program-rail-item');
+        cy.focused().click();
+        cy.url().should('match', new RegExp(urlPattern));
     });
 });

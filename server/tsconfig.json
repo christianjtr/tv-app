@@ -6,7 +6,6 @@
         "moduleResolution": "NodeNext",
         "outDir": "dist",
         "lib": ["ES2020"],
-        "baseUrl": "./src",
         "types": ["jest", "node"],
         "typeRoots": ["../node_modules/@types", "./node_modules/@types", "./src/apis/**/types", "./src/types"],
         "resolveJsonModule": true,
@@ -24,14 +23,14 @@
 
         /* Paths */
         "paths": {
-            "@apis": ["apis"],
-            "@apis/*": ["apis/*"],
-            "@services": ["services"],
-            "@services/*": ["services/*"],
-            "@cache": ["cache"],
-            "@controllers": ["controllers"],
-            "@controllers/*": ["controllers/*"],
-            "@entityMappers/*": ["entityMappers/*"]
+            "@apis": ["./src/apis"],
+            "@apis/*": ["./src/apis/*"],
+            "@services": ["./src/services"],
+            "@services/*": ["./src/services/*"],
+            "@cache": ["./src/cache"],
+            "@controllers": ["./src/controllers"],
+            "@controllers/*": ["./src/controllers/*"],
+            "@entityMappers/*": ["./src/entityMappers/*"]
         }
     },
     "typeAcquisition": { "include": ["jest"] },

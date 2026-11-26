@@ -2,12 +2,11 @@ import React, { useRef } from 'react';
 
 export interface SearchProgramFormProps {
     onSearch: (criteria: string) => void;
-    autoFocus?: boolean;
     isLoading?: boolean;
 }
 
 const SearchProgramForm: React.FC<SearchProgramFormProps> = (props: SearchProgramFormProps) => {
-    const { onSearch: onSearchCallbackFn, autoFocus = false, isLoading = false } = props;
+    const { onSearch: onSearchCallbackFn, isLoading = false } = props;
 
     const searchFormRef = useRef<HTMLFormElement | null>(null);
 
@@ -42,7 +41,6 @@ const SearchProgramForm: React.FC<SearchProgramFormProps> = (props: SearchProgra
                         placeholder="Search for a movie or tv show here..."
                         className="input input-bordered"
                         data-testid="search_input"
-                        autoFocus={autoFocus}
                         disabled={isLoading}
                         autoComplete="off"
                         required

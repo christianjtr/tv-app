@@ -29,7 +29,7 @@ const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React
         return () => {
             if (glide) glide.destroy();
         };
-    }, [imageSources]);
+    }, [imageSources, hasImageSources]);
 
     if (!hasImageSources) {
         return <div className="h-96 skeleton w-full flex justify-center items-center opacity-60"></div>;
@@ -41,7 +41,7 @@ const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React
                 <ul className="glide__slides">
                     {imageSources.map((item, key) => (
                         <li className="glide__slide relative" key={`image_item_${key}`}>
-                            <img src={item.source} alt={`poster image ${item.title}`} aria-label={`poster image ${item.title}`} />
+                            <img src={item.source} alt={`${item.title} poster`} />
                             <h1 className="block text-right md:text-4xl text-lg text-white title--centered">{item.title}</h1>
                         </li>
                     ))}
