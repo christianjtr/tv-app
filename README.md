@@ -114,6 +114,8 @@ npm run build:shared-types
 > npm run dev:docker:build-up
 ```
 
+The Cypress E2E script starts the client and Express API with a local fixture-backed TMDB stub; it does not require TMDB credentials.
+
 **Environment variables:**
 
 Each app's tier within the project has its own environment variables file, you **should create a .env file following the templates provided** in the corresponding directory.

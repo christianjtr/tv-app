@@ -32,21 +32,30 @@ const useSearchMovies = (criteria: string): { movies: Movie[]; isLoading: boolea
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const hasQueryCriteria = typeof criteria === 'string' && criteria.length > 0;
+        let isCurrentRequest = true;
+        const hasQueryCriteria = typeof criteria === 'string' && criteria.trim().length > 0;
 
         if (hasQueryCriteria) {
+            setMovies([]);
+            setIsLoading(true);
             (async () => {
                 try {
-                    setIsLoading(true);
                     const { results } = await MovieServices.searchMovie(criteria);
-                    setMovies(results);
+                    if (isCurrentRequest) setMovies(results);
                 } catch (error) {
-                    throw new Error(`Error fetching trending movies, [Error]: ${error}`);
+                    if (isCurrentRequest) throw new Error(`Error fetching movies, [Error]: ${error}`);
                 } finally {
-                    setIsLoading(false);
+                    if (isCurrentRequest) setIsLoading(false);
                 }
             })();
+        } else {
+            setMovies([]);
+            setIsLoading(false);
         }
+
+        return () => {
+            isCurrentRequest = false;
+        };
     }, [criteria]);
 
     return {

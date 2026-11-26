@@ -10,8 +10,6 @@ import TVProgramItem, { Rating } from '../../src/components/TVProgamItem/TVProgr
 
 describe('TVProgramItem component', () => {
     let movieItem: TVProgram;
-    // Consider import this from a utils...
-    const formattedDate = (releaseDate: string) => new Date(releaseDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     const hasDecilmalPlaces = (rating: number) => rating - Math.floor(rating) !== 0;
     const formattedRating = (rating: number) => (hasDecilmalPlaces(rating) ? rating.toFixed(1) : Math.ceil(rating));
 
@@ -29,7 +27,7 @@ describe('TVProgramItem component', () => {
     });
 
     it('should render the correct info', () => {
-        const { title, name, description, releaseDate, rating, images } = movieItem;
+        const { title, name, description, rating, images } = movieItem;
 
         render(<TVProgramItem info={movieItem} onClick={() => {}} />);
 
@@ -38,7 +36,7 @@ describe('TVProgramItem component', () => {
 
         expect(screen.getByText(tvProgramTitle as string)).toBeInTheDocument();
         expect(screen.getByText(description as string)).toBeInTheDocument();
-        expect(screen.getByText(formattedDate(releaseDate as unknown as string) as string)).toBeInTheDocument();
+        expect(screen.getByText('January 2024')).toBeInTheDocument();
         expect(screen.getByText(`${formattedRating(rating!)} ★` as string)).toBeInTheDocument();
         expect(image).toHaveAttribute('src', images?.w185);
         expect(image).toHaveAttribute('alt', `${tvProgramTitle} poster`);

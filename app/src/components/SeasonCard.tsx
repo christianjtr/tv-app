@@ -1,6 +1,7 @@
 import React from 'react';
 import { TVShowDetailed } from '@tv-app-packages/shared-types';
 import { Rating } from './TVProgamItem/TVProgramItem';
+import formatReleaseDate from '../utils/formatReleaseDate';
 
 export interface SeasonCardProps {
     info: TVShowDetailed['seasons'][number];
@@ -11,7 +12,7 @@ const SeasonCard: React.FC<SeasonCardProps> = (props: SeasonCardProps) => {
 
     // TODO: Consider extract this to utils...
     const releaseDate = info.firstAirDate;
-    const formattedReleaseDate = new Date(releaseDate!).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const formattedReleaseDate = formatReleaseDate(releaseDate!);
 
     return (
         <div

@@ -4,35 +4,29 @@ import { NavigationKeysOptions, NavigationKeys } from '@app-types/KeyboardNaviga
 const useKeyboardNavigation = (selectors: string) => {
     const ref: MutableRefObject<Element | null> = useRef(null);
 
-    const handleKeyboardNav = (event: KeyboardEvent, currentIndex: number, availableElements: NodeListOf<Element>) => {
-        let selectedElement;
-        const { key } = event;
-
-        if (currentIndex === -1) (Array.from(availableElements)?.[0] as HTMLElement).focus();
-
-        if (key === 'ArrowDown' || key === 'ArrowRight') {
-            selectedElement = availableElements[currentIndex + 1];
-        }
-
-        if (key === 'ArrowUp' || key === 'ArrowLeft') {
-            selectedElement = availableElements[currentIndex - 1];
-        }
-
-        (selectedElement as HTMLElement)?.focus();
-    };
-
     const handleOnKeyUp = (event: KeyboardEvent) => {
         const { key } = event;
-        if (!ref || !NavigationKeysOptions.includes(key as NavigationKeys)) return;
+        if (!NavigationKeysOptions.includes(key as NavigationKeys)) return;
+
+        const container = ref.current;
+        const availableElements = container?.querySelectorAll(selectors);
+        if (!container || !availableElements?.length) return;
 
         const activeElement = document.activeElement;
-
-        const availableElements: NodeListOf<Element> | undefined = ref.current?.querySelectorAll(selectors);
-        if (!availableElements) return;
+        const isEditableTarget = (target: EventTarget | null): boolean =>
+            target instanceof HTMLElement && (target.matches('input, textarea, select') || target.isContentEditable);
+        if (isEditableTarget(event.target) || isEditableTarget(activeElement)) return;
 
         const currentIndex = Array.from(availableElements).findIndex((availableElement) => availableElement === activeElement);
+        if (currentIndex === -1 && activeElement !== document.body && !container.contains(activeElement)) return;
 
-        handleKeyboardNav(event, currentIndex, availableElements);
+        const direction = key === 'ArrowDown' || key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = currentIndex === -1 ? 0 : currentIndex + direction;
+        const nextElement = availableElements[nextIndex] as HTMLElement | undefined;
+        if (!nextElement) return;
+
+        event.preventDefault();
+        nextElement.focus();
     };
 
     useEffect(() => {

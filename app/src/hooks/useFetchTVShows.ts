@@ -32,21 +32,30 @@ const useSearchTVShows = (criteria: string) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const hasQueryCriteria = typeof criteria === 'string' && criteria.length > 0;
+        let isCurrentRequest = true;
+        const hasQueryCriteria = typeof criteria === 'string' && criteria.trim().length > 0;
 
         if (hasQueryCriteria) {
+            setTVShows([]);
+            setIsLoading(true);
             (async () => {
                 try {
-                    setIsLoading(true);
                     const { results } = await TVShowServices.searchTVShow(criteria);
-                    setTVShows(results);
+                    if (isCurrentRequest) setTVShows(results);
                 } catch (error) {
-                    throw new Error(`Error fetching trending movies, [Error]: ${error}`);
+                    if (isCurrentRequest) throw new Error(`Error fetching TV shows, [Error]: ${error}`);
                 } finally {
-                    setIsLoading(false);
+                    if (isCurrentRequest) setIsLoading(false);
                 }
             })();
+        } else {
+            setTVShows([]);
+            setIsLoading(false);
         }
+
+        return () => {
+            isCurrentRequest = false;
+        };
     }, [criteria]);
 
     return {

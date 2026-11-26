@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TVProgram } from '@app-types/TVProgram';
+import formatReleaseDate from '../../utils/formatReleaseDate';
 import './TVProgramItem.css';
 
 export interface TVProgramItemProps {
@@ -30,7 +31,7 @@ const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps):
 
     // Consider extract this to a utils...
     const releaseDate = info.releaseDate || info.firstAirDate;
-    const formattedReleaseDate = new Date(releaseDate!).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const formattedReleaseDate = formatReleaseDate(releaseDate!);
 
     const handleOnClickItem = (): void => {
         onClickCallbackFn();

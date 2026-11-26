@@ -5,17 +5,7 @@ const useSearchQueryParams = () => {
     const history = useHistory();
     const { search } = useLocation();
     const searchParams = new URLSearchParams(search);
-
-    const getQueryParamValues = (params: string[]): Record<PropertyKey, unknown> => {
-        const values = params.reduce((acc, item) => {
-            return {
-                [item]: searchParams.get(item),
-                ...acc,
-            };
-        }, {});
-
-        return values;
-    };
+    const query = searchParams.get('query') ?? '';
 
     const setQueryParams = (pathname: string, params: Record<PropertyKey, unknown>): void => {
         history.push({
@@ -25,7 +15,7 @@ const useSearchQueryParams = () => {
     };
 
     return {
-        getQueryParamValues,
+        query,
         setQueryParams,
     };
 };
