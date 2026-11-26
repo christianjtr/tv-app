@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TVProgram, TVProgramType } from '@app-types/TVProgram';
 import TVProgramItem from './TVProgamItem/TVProgramItem';
 import { NotFound } from '@pages';
@@ -13,7 +13,7 @@ export interface TVProgramRailProps {
 
 const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps): React.ReactElement => {
     const { title, tvPrograms, tvProgramType, isLoading = false } = props;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const detailPath: Record<TVProgramType, string> = {
         movie: 'movies',
@@ -22,7 +22,7 @@ const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps):
 
     const Skeleton = <div className="skeleton w-full h-80" data-testid="skeleton" data-cy="skeleton"></div>;
     const TVPrograms = tvPrograms.map(({ id, ...tvProgram }) => (
-        <TVProgramItem key={id} info={tvProgram} onClick={() => history.push(`/${detailPath[tvProgramType]}/${id}`)} />
+        <TVProgramItem key={id} info={tvProgram} onClick={() => navigate(`/${detailPath[tvProgramType]}/${id}`)} />
     ));
 
     return (

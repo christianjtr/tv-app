@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useLocation, useHistory } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { AllowedTVProgramResource } from '@app-types/TVProgram';
 import { useFetchTVProgram } from '@hooks/useFetchTVProgram';
 import { useBasePathCheckerForDetailedPage } from '@hooks/useSearchQueryParams';
@@ -12,9 +12,9 @@ import IMDb from '@assets/imdb.svg';
 import './Detail.css';
 
 const Detail: React.FC = (): React.ReactElement => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { id } = useParams<{ id: string }>();
+    const { id = '' } = useParams<{ id: string }>();
     const basePath = useBasePathCheckerForDetailedPage(pathname);
     const { tvProgram, isLoading } = useFetchTVProgram(id, basePath as AllowedTVProgramResource);
 
@@ -36,7 +36,7 @@ const Detail: React.FC = (): React.ReactElement => {
                     id="btn_back"
                     name="btn_back"
                     data-testid="btn_back"
-                    onClick={() => history.goBack()}
+                    onClick={() => navigate(-1)}
                     className="btn btn-ghost absolute top-5 left-0"
                     aria-label="Back button"
                 >
