@@ -4,14 +4,14 @@ import 'cypress-wait-until';
 
 describe('Home view page navigation', () => {
     it('should visit home page', () => {
-        cy.visit(Cypress.env('APP_HOME_URL'));
+        cy.visit(Cypress.expose('APP_HOME_URL'));
     });
 
     it('should navigate the application using the keyboard', () => {
         const repeatNthTimes = 5;
-        const urlPattern = Cypress.env('APP_DETAIL_URL_REGEX_PATTERN');
+        const urlPattern = Cypress.expose('APP_DETAIL_URL_REGEX_PATTERN');
 
-        cy.visit(Cypress.env('APP_HOME_URL'));
+        cy.visit(Cypress.expose('APP_HOME_URL'));
 
         cy.get('[data-cy="loading"]').should('not.exist');
         cy.get('[data-cy="skeleton"]').should('not.exist');

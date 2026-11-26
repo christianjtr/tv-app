@@ -2,6 +2,8 @@ import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const appDirectory = import.meta.dirname;
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const isProduction = mode === 'production';
@@ -32,15 +34,15 @@ export default defineConfig(({ mode }) => {
         base: isProduction ? env.VITE_APP_BASE_PATH || '/' : '/tv-app',
         resolve: {
             alias: [
-                { find: '@services', replacement: resolve(__dirname, './src/services') },
-                { find: '@hooks', replacement: resolve(__dirname, './src/hooks') },
-                { find: '@pages', replacement: resolve(__dirname, './src/pages') },
-                { find: '@configuration', replacement: resolve(__dirname, './src/configuration') },
-                { find: '@app-types', replacement: resolve(__dirname, './src/types') },
-                { find: '@components', replacement: resolve(__dirname, './src/components') },
-                { find: '@assets', replacement: resolve(__dirname, './src/assets') },
-                { find: '@layout', replacement: resolve(__dirname, './src/layout') },
-                { find: '@routes', replacement: resolve(__dirname, './src/routes') },
+                { find: '@services', replacement: resolve(appDirectory, './src/services') },
+                { find: '@hooks', replacement: resolve(appDirectory, './src/hooks') },
+                { find: '@pages', replacement: resolve(appDirectory, './src/pages') },
+                { find: '@configuration', replacement: resolve(appDirectory, './src/configuration') },
+                { find: '@app-types', replacement: resolve(appDirectory, './src/types') },
+                { find: '@components', replacement: resolve(appDirectory, './src/components') },
+                { find: '@assets', replacement: resolve(appDirectory, './src/assets') },
+                { find: '@layout', replacement: resolve(appDirectory, './src/layout') },
+                { find: '@routes', replacement: resolve(appDirectory, './src/routes') },
             ],
         },
     };

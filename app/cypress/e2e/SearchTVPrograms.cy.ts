@@ -6,11 +6,11 @@ describe('Search view page', () => {
     const query = '__SOME__TV__PROGRAM__';
 
     it('should visit search page', () => {
-        cy.visit(Cypress.env('APP_SEARCH_URL'));
+        cy.visit(Cypress.expose('APP_SEARCH_URL'));
     });
 
     it('should search a tv program correctly', () => {
-        cy.visit(Cypress.env('APP_SEARCH_URL'));
+        cy.visit(Cypress.expose('APP_SEARCH_URL'));
 
         cy.get('[data-cy="search_input"]').type(query);
         cy.get('[data-cy="btn_search"]').click();
@@ -19,9 +19,9 @@ describe('Search view page', () => {
     });
 
     it('should search a tv program correctly and navigate to program detail', () => {
-        const urlPattern = Cypress.env('APP_DETAIL_URL_REGEX_PATTERN');
+        const urlPattern = Cypress.expose('APP_DETAIL_URL_REGEX_PATTERN');
 
-        cy.visit(Cypress.env('APP_SEARCH_URL'));
+        cy.visit(Cypress.expose('APP_SEARCH_URL'));
 
         cy.get('[data-cy="search_input"]').type(query);
         cy.get('[data-cy="btn_search"]').click();
@@ -35,7 +35,7 @@ describe('Search view page', () => {
     });
 
     it('follows search query changes from browser history and rejects unmatched queries', () => {
-        cy.visit(Cypress.env('APP_SEARCH_URL'));
+        cy.visit(Cypress.expose('APP_SEARCH_URL'));
         cy.get('[data-cy="search_input"]').type(query);
         cy.get('[data-cy="btn_search"]').click();
         cy.get('[data-cy="tv-program-rail-item"]').should('have.length', 1).and('contain.text', 'Game of Thrones');
