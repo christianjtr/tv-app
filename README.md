@@ -125,7 +125,7 @@ Each app's tier within the project has its own environment variables file, you *
 | client | .env.local   | /app      | .env                       |
 | server | .env.example | /server   | .env                       |
 
-The production client is a static build, so `VITE_API_BASE_URL` and `VITE_APP_BASE_PATH` are build-time settings supplied through the root `.env` file. `VITE_API_BASE_URL` is required; the base path defaults to `/`. For the mocked GitHub Pages demo, build with `VITE_APP_BASE_PATH=/tv-app` and `VITE_ENABLE_API_MOCK=true`.
+The production client is a static build, so `VITE_API_BASE_URL` and `VITE_APP_BASE_PATH` are build-time settings. `VITE_API_BASE_URL` is required and must include the backend `/api` prefix; the base path defaults to `/`. The GitHub Pages demo uses `VITE_API_BASE_URL=https://tv-app-nodejs-latest.onrender.com/api`, `VITE_APP_BASE_PATH=/tv-app`, and `VITE_ENABLE_API_MOCK=false`.
 
 <a name="005"></a>
 ### Samples
@@ -134,7 +134,7 @@ The production client is a static build, so `VITE_API_BASE_URL` and `VITE_APP_BA
 
 Click on the following link [GitHub page project](https://christianjtr.github.io/tv-app). 
 
-**Note:** It's a mocked version of the project, although we can deploy the front-end project and fetch data from our back-end services hosted.
+**Note:** The demo frontend fetches live data from the Render-hosted backend.
 
 ##### Preview
 

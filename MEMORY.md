@@ -35,6 +35,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
+- **Deployment direction:** on trusted `master` pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
 - **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including the planned BiomeJS migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
@@ -43,6 +44,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `fix/dependency-vulnerabilities`, based on scope 10 merged at `f44b3d4`; production audit is clean and tests/build/lint/Cypress pass. Awaiting maintainer review.
+- **Current:** `fix/dockerhub-image-push`, based on `master` at `448a1f0`; workflow YAML parses, and the latest frontend build embeds the Render `/api` URL with mocking disabled. Shared-types/client/server builds and client/server unit suites pass. Docker image publishing and GitHub branch publishing remain unverified without Docker and Actions secrets/permissions.
 - **Next, after approval and merge:** Stage 2 toolchain/library modernization, including BiomeJS, with a separately approved scope.
-- **Open questions:** Which live and demo deployments should remain supported? What product goals and user journeys should guide Stage 3 experience work?
+- **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
