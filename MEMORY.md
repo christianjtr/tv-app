@@ -12,10 +12,11 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | ID | Finding | Evidence |
 |---|---|---|
 | F06 | Some hook-test assertions remain unawaited; the Cypress search flow now verifies query-specific results against Express and the local TMDB stub. | [Hook test](app/__tests__/hooks/useFetchMovies.spec.ts), [browser test](app/cypress/e2e/SearchTVPrograms.cy.ts), [TMDB stub](scripts/mockTmdb.mjs); 6 Cypress tests passed on this branch. |
-| F09 | `npm install` reports 21 dependency vulnerabilities (1 critical, 8 high, 11 moderate, 1 low); remediation is outside the TypeScript/lint scope. | Root `package-lock.json`; npm 11.20.0 audit summary, 2026-11-26. |
+| F09 | `npm install` reports 30 dependency vulnerabilities (1 critical, 5 high, 23 moderate, 1 low); remediation is outside the toolchain scopes. | Root `package-lock.json`; npm 11.20.0 audit summary after scope 8 dependency updates, 2026-11-26. |
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F11 | Client production builds warn that `@glidejs/glide/dist/css/glide.core.min.css` is missing and leave it unresolved; slider styling needs a separate check. | `npm run build:prod --workspace=tv-app-client`, 2026-11-26. |
 | F12 | ESLint 9.39.5 is marked unsupported by npm; retained for this migration per maintainer direction, with a future BiomeJS migration planned. | `npm install` deprecation warning; current React, JSX accessibility, and import plugins do not declare ESLint 10 support. |
+| F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 
 ## Resolved findings
 
@@ -32,12 +33,12 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
-- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected in scope 7:** Express 5.3.0 and Supertest 7.3.2 with matching Express/Supertest types. **Still proposed:** Vite 8 with React plugin 6, Jest 30, and Cypress 16; React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
+- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits. **Still proposed:** React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
 
 ## Handoff
 
-- **Current:** `build/express-runtime`, based on scope 6 merged at `8f7b555`; Express 5.3.0/Supertest 7.3.2 are installed and server contract/unit tests, build, lint, and Cypress against compiled Express pass. Awaiting maintainer review.
-- **Next, after approval and merge:** `build/vite-and-test-runners`.
+- **Current:** `build/vite-and-test-runners`, based on scope 7 merged at `5c5bf25`; Vite/Jest/Cypress upgrades are separated into three commits, and client/server tests, build, lint, and Cypress pass. Awaiting maintainer review.
+- **Next, after approval and merge:** `build/react-and-router`.
 - **Open questions:** Which live and demo deployments should remain supported? Which browser versions or smart-TV devices need support? These affect production rollout and the styling upgrade, respectively.
