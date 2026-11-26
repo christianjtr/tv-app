@@ -32,12 +32,12 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
-- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Still proposed:** TypeScript 6, ESLint 9 and typescript-eslint 8; Express 5 and Supertest 7; Vite 8 with React plugin 6, Jest 30, and Cypress 16; React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
+- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected in scope 7:** Express 5.3.0 and Supertest 7.3.2 with matching Express/Supertest types. **Still proposed:** Vite 8 with React plugin 6, Jest 30, and Cypress 16; React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
 
 ## Handoff
 
-- **Current:** `build/typescript-and-lint`, based on merged scope 5; TypeScript is aligned at 6.0.3, ESLint 9.39.5 flat configs are in place, and lint/build/test/browser checks are complete. Awaiting maintainer review.
-- **Next, after approval and merge:** `build/express-runtime`.
+- **Current:** `build/express-runtime`, based on scope 6 merged at `8f7b555`; Express 5.3.0/Supertest 7.3.2 are installed and server contract/unit tests, build, lint, and Cypress against compiled Express pass. Awaiting maintainer review.
+- **Next, after approval and merge:** `build/vite-and-test-runners`.
 - **Open questions:** Which live and demo deployments should remain supported? Which browser versions or smart-TV devices need support? These affect production rollout and the styling upgrade, respectively.
