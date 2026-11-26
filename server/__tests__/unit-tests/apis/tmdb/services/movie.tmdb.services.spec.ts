@@ -5,9 +5,7 @@ import { default as HTTPClient } from '../../../../../src/apis/tmdb/httpClient';
 jest.mock('../../../../../src/apis/tmdb/httpClient', () => ({
     __esModule: true,
     default: {
-        get: jest.fn().mockResolvedValue({
-            json: jest.fn().mockResolvedValue(TMDBMovies),
-        }),
+        get: jest.fn().mockResolvedValue(TMDBMovies),
     },
 }));
 

@@ -54,12 +54,8 @@ describe('Movie controller', () => {
 
         await MovieController.search(request, response, next);
 
-        expect(response.status).toHaveBeenCalledWith(HTTPStatus.INTERNAL_SERVER_ERROR);
-        expect(response.send).toHaveBeenCalledWith({
-            error: {
-                message: 'Error occurred when getting movies.',
-            },
-        });
         expect(next).toHaveBeenCalledWith('ERROR');
+        expect(response.status).not.toHaveBeenCalled();
+        expect(response.send).not.toHaveBeenCalled();
     });
 });

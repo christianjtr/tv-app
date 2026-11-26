@@ -12,8 +12,7 @@ export default {
     search: async (criteria: string): Promise<{ page: number; results: Movie[] }> => {
         try {
             const queryString = qs.stringify({ query: criteria }, { format: 'RFC1738' });
-            const response = await HTTPClient.get(`/search/movie?${queryString}`);
-            const results = await response.json();
+            const results = await HTTPClient.get<{ page: number; results: Movie[] }>(`/search/movie?${queryString}`);
             return results;
         } catch (error) {
             console.error('[TMDB API][MOVIES][ERROR] ::: search', error);
@@ -22,8 +21,7 @@ export default {
     },
     searchById: async (id: number | string): Promise<MovieDetailed> => {
         try {
-            const response = await HTTPClient.get(`/movie/${id}`);
-            const result = await response.json();
+            const result = await HTTPClient.get<MovieDetailed>(`/movie/${id}`);
             return result;
         } catch (error) {
             console.error('[TMDB API][MOVIES][ERROR] ::: searchById', error);

@@ -13,7 +13,7 @@ const { services: tmdbAPIServices } = tmdbAPI;
 
 export default {
     search: async (criteria: string): Promise<{ page: number; results: Movie[] }> => {
-        const key = CacheServices.generateKey(['search', `criteria:${criteria}`]);
+        const key = CacheServices.generateKey(['movie', 'search', `criteria:${criteria}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<{ page: number; results: Movie[] }>;
@@ -34,7 +34,7 @@ export default {
         }
     },
     searchById: async (id: number | string): Promise<MovieDetailed> => {
-        const key = CacheServices.generateKey(['searchById', `id:${String(id)}`]);
+        const key = CacheServices.generateKey(['movie', 'searchById', `id:${String(id)}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<MovieDetailed>;
@@ -52,7 +52,7 @@ export default {
         }
     },
     getTrendingMovies: async (timeWindow: TMDB.TimeWindow, language?: string): Promise<{ page: number; results: Movie[] }> => {
-        const key = CacheServices.generateKey(['getTrendingMovies', `timeWindow:${timeWindow}`, `language:${language}` || 'language:default']);
+        const key = CacheServices.generateKey(['movie', 'getTrendingMovies', `timeWindow:${timeWindow}`, `language:${language || 'default'}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<{ page: number; results: Movie[] }>;

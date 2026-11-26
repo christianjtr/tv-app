@@ -36,15 +36,10 @@ export async function search(request: Request, response: Response, next: NextFun
     try {
         const { query } = request.query;
 
-        const movies = await TVShowServices.search(query as string);
+        const tvshows = await TVShowServices.search(query as string);
 
-        response.status(HTTPStatus.OK).send(movies);
+        response.status(HTTPStatus.OK).send(tvshows);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting TV shows.',
-            },
-        });
         next(error);
     }
 }
@@ -57,11 +52,6 @@ export async function searchById(request: Request, response: Response, next: Nex
 
         response.status(HTTPStatus.OK).send(tvshow);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting the tv show.',
-            },
-        });
         next(error);
     }
 }
@@ -75,11 +65,6 @@ export async function getTrendingTVShows(request: Request, response: Response, n
 
         response.status(HTTPStatus.OK).send(trendingTVShows);
     } catch (error) {
-        response.status(HTTPStatus.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: (error as Error).message || 'Error occurred when getting trending TV shows.',
-            },
-        });
         next(error);
     }
 }

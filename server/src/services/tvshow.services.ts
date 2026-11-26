@@ -13,7 +13,7 @@ const { services: tmdbAPIServices } = tmdbAPI;
 
 export default {
     search: async (criteria: string): Promise<{ page: number; results: TVShow[] }> => {
-        const key = CacheServices.generateKey(['search', `criteria:${criteria}`]);
+        const key = CacheServices.generateKey(['tv-show', 'search', `criteria:${criteria}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<{ page: number; results: TVShow[] }>;
@@ -34,7 +34,7 @@ export default {
         }
     },
     searchById: async (id: number | string): Promise<TVShowDetailed> => {
-        const key = CacheServices.generateKey(['searchById', `id:${String(id)}`]);
+        const key = CacheServices.generateKey(['tv-show', 'searchById', `id:${String(id)}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<TVShowDetailed>;
@@ -52,7 +52,7 @@ export default {
         }
     },
     getTrendingTVShows: async (timeWindow: TMDB.TimeWindow, language?: string): Promise<{ page: number; results: TVShow[] }> => {
-        const key = CacheServices.generateKey(['getTrendingTVShows', `timeWindow:${timeWindow}`, `language:${language}` || 'language:default']);
+        const key = CacheServices.generateKey(['tv-show', 'getTrendingTVShows', `timeWindow:${timeWindow}`, `language:${language || 'default'}`]);
         const data = CacheServices.retrieveDatFromCache(key);
 
         if (data) return data as Promise<{ page: number; results: TVShow[] }>;

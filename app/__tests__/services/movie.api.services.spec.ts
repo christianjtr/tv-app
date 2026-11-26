@@ -23,6 +23,7 @@ describe('API Movie services', () => {
 
     it('[search service] :: should get a movie given a search criteria', async () => {
         global.fetch = jest.fn().mockImplementation(() => ({
+            ok: true,
             json: () => Promise.resolve(Mocks.moviesMock),
         }));
 
@@ -40,6 +41,7 @@ describe('API Movie services', () => {
 
     it('[search by id service] :: should get a movie given an Id', async () => {
         global.fetch = jest.fn().mockImplementation(() => ({
+            ok: true,
             json: () => Promise.resolve(Mocks.movieMock),
         }));
 
@@ -54,6 +56,7 @@ describe('API Movie services', () => {
 
     it('[search trending movies service] :: should get trending movies default value', async () => {
         global.fetch = jest.fn().mockImplementation(() => ({
+            ok: true,
             json: () => Promise.resolve(Mocks.moviesMock),
         }));
 
@@ -70,8 +73,8 @@ describe('API Movie services', () => {
     });
 
     it('[sad path][search service] :: should fail when getting a movie given a search criteria', async () => {
-        global.fetch = jest.fn().mockRejectedValue('ERROR');
+        global.fetch = jest.fn().mockRejectedValue(new Error('ERROR'));
 
-        await expect(MovieServices.searchMovie('ANY_VALUE')).rejects.toStrictEqual(new Error('ERROR'));
+        await expect(MovieServices.searchMovie('ANY_VALUE')).rejects.toEqual(new Error('ERROR'));
     });
 });
