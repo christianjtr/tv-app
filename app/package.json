@@ -73,8 +73,8 @@
     },
     "dependencies": {
         "@glidejs/glide": "^3.6.0",
-        "@hapi/joi": "^17.1.1",
         "@tv-app-packages/shared-types": "^1.0.0",
+        "joi": "17.13.9",
         "qs": "^6.12.0",
         "react": "19.3.1",
         "react-dom": "19.3.1",

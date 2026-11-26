@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import HTTPStatus from 'http-status';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 
 import { MovieServices } from '@services';
 import { TimeWindow, TimeWindowOptions } from '@tv-app-packages/shared-types';

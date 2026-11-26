@@ -12,7 +12,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | ID | Finding | Evidence |
 |---|---|---|
 | F06 | Some hook-test assertions remain unawaited; the Cypress search flow now verifies query-specific results against Express and the local TMDB stub. | [Hook test](app/__tests__/hooks/useFetchMovies.spec.ts), [browser test](app/cypress/e2e/SearchTVPrograms.cy.ts), [TMDB stub](scripts/mockTmdb.mjs); 6 Cypress tests passed on this branch. |
-| F09 | `npm install` reports 30 dependency vulnerabilities (1 critical, 5 high, 23 moderate, 1 low); remediation is outside the toolchain scopes. | Root `package-lock.json`; npm 11.20.0 audit summary after scope 8 dependency updates, 2026-11-26. |
+| F09 | Full `npm audit` reports 24 development-dependency findings (23 moderate, 1 low); `npm audit --omit=dev` reports 0 production vulnerabilities. GitHub's last default-branch push notice reported 10 findings from its separate scan; alert-level details require authenticated GitHub access. | Root `package-lock.json`; npm 11.20.0 audit after Stage 1 fixes, 2026-11-27. |
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F11 | Client production builds warn that `@glidejs/glide/dist/css/glide.core.min.css` is missing and leave it unresolved; slider styling needs a separate check. | `npm run build:prod --workspace=tv-app-client`, 2026-11-26. |
 | F12 | ESLint 9.39.5 is marked unsupported by npm; retained for this migration per maintainer direction, with a future BiomeJS migration planned. | `npm install` deprecation warning; current React, JSX accessibility, and import plugins do not declare ESLint 10 support. |
@@ -30,17 +30,19 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F07 | Search state follows URL query changes, detail requests ignore stale responses, and arrow navigation leaves editable inputs alone and handles empty target lists. | This branch; [Search](app/src/pages/Search.tsx), [detail hook](app/src/hooks/useFetchTVProgram.ts), [keyboard hook](app/src/hooks/useArrowNavigation.ts); client tests and Cypress passed. |
 | F08 | Season artwork uses each season's poster, and date formatting explicitly uses UTC to avoid month shifts. | This branch; [TV mapper](server/src/entityMappers/tmdb/tvshow.entity.mapper.ts), [date helper](app/src/utils/formatReleaseDate.ts); mapper/date tests passed. |
 | F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
+| F15 | Stage 1 removed all production audit findings by replacing vulnerable `@hapi/joi`, moving/updating Nodemon as a development tool, removing unused `swagger-jsdoc`, and updating `concurrently`/`picomatch`. | `npm audit --omit=dev` reports 0; client/server tests, builds, lint, and Cypress passed. |
 
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
+- **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including the planned BiomeJS migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
 
 ## Handoff
 
-- **Current:** `build/tailwind-and-daisyui`, based on scope 9 merged at `2b8ad80`; Tailwind 4.3.5 and DaisyUI 5.8.3 are in place with the confirmed browser baseline. Client build, lint, and browser tests pass. Awaiting maintainer review.
-- **Next:** The planned 10-scope modernization sequence is complete after scope 10 is approved and merged. A separate BiomeJS migration remains planned but not yet authorized.
-- **Open questions:** Which live and demo deployments should remain supported?
+- **Current:** `fix/dependency-vulnerabilities`, based on scope 10 merged at `f44b3d4`; production audit is clean and tests/build/lint/Cypress pass. Awaiting maintainer review.
+- **Next, after approval and merge:** Stage 2 toolchain/library modernization, including BiomeJS, with a separately approved scope.
+- **Open questions:** Which live and demo deployments should remain supported? What product goals and user journeys should guide Stage 3 experience work?
