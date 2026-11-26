@@ -72,7 +72,7 @@ This conceptual test has been developed using the following technologies:
 
 The project requires:
 
--   [Node.js 26.13.1](https://nodejs.org/) and npm 11.11.1
+-   [Node.js 26.13.1](https://nodejs.org/) and npm 11.20.0
 -   [Docker](https://www.docker.com/)
 
 **Clone the repository:**

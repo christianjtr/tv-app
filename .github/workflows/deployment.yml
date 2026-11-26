@@ -42,7 +42,7 @@ jobs:
               with:
                   node-version-file: .nvmrc
                   cache: "npm"
-            - run: test "$(npm --version)" = "11.11.1"
+            - run: test "$(npm --version)" = "11.20.0"
             - run: npm ci
             - run: npm run build:shared-types
             - run: npm run test:client
@@ -65,7 +65,7 @@ jobs:
               with:
                   node-version-file: .nvmrc
                   cache: "npm"
-            - run: test "$(npm --version)" = "11.11.1"
+            - run: test "$(npm --version)" = "11.20.0"
 
             - name: Create .env file
               env:

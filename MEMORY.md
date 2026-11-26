@@ -5,13 +5,13 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Baseline
 
 - Source baseline: `master` at `555adc8` (reproducible-workspaces remediation, 2026-11-26). React/Vite browses, searches, and displays movie and TV details. Express reads from TMDB and caches mapped results in process. `packages/shared-types` holds the shared models. There is no database or account system.
-- The initial audit was primarily static; a read-only Compose check rejected the dev wrapper's `--env-file .`. The workspace scope verified clean install, shared-types build, app/server suites, and Cypress. Production Docker images remain unbuilt because the local daemon is unavailable.
+- The initial audit was primarily static; a read-only Compose check rejected the dev wrapper's `--env-file .`. The workspace scope verified clean install, shared-types build, app/server suites, and Cypress. This branch built and smoke-tested both production images locally with placeholder configuration.
 
 ## Open findings
 
 | ID | Finding | Evidence |
 |---|---|---|
-| F03 | This branch fixes Compose env loading/error propagation, builds the API bundle, passes browser config at Vite build time, and adds SPA fallback. The compiled API starts locally; container builds and Nginx deep-link smoke tests remain unverified without a Docker daemon. Rollup must emit ES modules for local imports and keep bare npm packages external. | [Compose wrapper](scripts/runDockerComposeBuildUpWithEnvs.mjs), [production Compose](docker-compose.prod.yml), [Rollup config](server/rollup.config.mjs), [server image](server/Dockerfile.prod), [client image](app/Dockerfile.prod), [Nginx config](app/nginx.conf) |
+| F03 | Compose env loading/error propagation is fixed; production builds the API bundle, passes Vite settings at build time, and serves SPA routes through Nginx. Both images built locally; API listened on port 3001 and `/` plus `/movies/123` returned 200 using placeholder config. Rollup must emit ES modules for local imports and keep bare npm packages external. | [Compose wrapper](scripts/runDockerComposeBuildUpWithEnvs.mjs), [production Compose](docker-compose.prod.yml), [Rollup config](server/rollup.config.mjs), [server image](server/Dockerfile.prod), [client image](app/Dockerfile.prod), [Nginx config](app/nginx.conf); local `docker compose build` and smoke test, 2026-11-26. |
 | F04 | Movie and TV search and detail share cache keys; the first cached result can be returned by the other resource. | [Movie service](server/src/services/movie.services.ts), [TV service](server/src/services/tvshow.services.ts) |
 | F05 | Route validation results are not checked. The API and browser parse upstream error responses as data, and the TMDB client has no explicit request deadline. | [Movie routes](server/src/routes/movie.route.ts), [TV routes](server/src/routes/tvshow.route.ts), [TMDB client](server/src/apis/tmdb/httpClient.ts), [browser movie client](app/src/services/apis/tv-app/movie.api.services.ts) |
 | F06 | The movie API failure test and some hook assertions aren't awaited. Cypress search can pass against canned results that don't depend on the query. | [API test](server/__tests__/integration/movie.e2e.spec.ts), [hook test](app/__tests__/hooks/useFetchMovies.spec.ts), [browser test](app/cypress/e2e/SearchTVPrograms.cy.ts) |
@@ -26,12 +26,12 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | ID | Resolution | Evidence |
 |---|---|---|
 | F01 | The production env is no longer printed, image build/publish runs only on pushes to `master`, and root Docker context excludes env files except tracked `app/.env.local` to preserve existing build defaults. | Commit `bd8ab10`; [workflow](.github/workflows/deployment.yml), [Docker ignore](.dockerignore). |
-| F02 | Node 26.13.1/npm 11.11.1 are pinned; app, server, and shared types use one root workspace lock; shared types are built explicitly and generated output is no longer tracked. The server's explicit `typeRoots` includes the workspace-root typings directory. | Commit `555adc8`; [toolchain](.nvmrc), [workspace](package.json), [workflow](.github/workflows/deployment.yml), [server TS config](server/tsconfig.json); clean install, builds, and tests passed. |
+| F02 | Node 26.13.1/npm 11.20.0 are pinned; app, server, and shared types use one root workspace lock; shared types are built explicitly and generated output is no longer tracked. Docker contexts exclude host `.tsbuildinfo` to prevent stale incremental state from skipping declaration output. | [Toolchain](.nvmrc), [workspace](package.json), [Docker ignore](.dockerignore), [workflow](.github/workflows/deployment.yml); clean installs, builds, and tests passed. |
 
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
-- **Installed and tested together at `555adc8`:** Node 26.13.1/npm 11.11.1. **Still proposed:** TypeScript 6, ESLint 9 and typescript-eslint 8; Express 5 and Supertest 7; Vite 8 with React plugin 6, Jest 30, and Cypress 16; React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
+- **In this branch, aligned with the official image:** Node 26.13.1/npm 11.20.0. The workstation npm shim was 11.11.1; `node:26.13.1` bundles 11.20.0. **Still proposed:** TypeScript 6, ESLint 9 and typescript-eslint 8; Express 5 and Supertest 7; Vite 8 with React plugin 6, Jest 30, and Cypress 16; React 19 and React Router 7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 
 ## Handoff
