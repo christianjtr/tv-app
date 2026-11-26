@@ -34,12 +34,13 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
-- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7. Tailwind 4 and DaisyUI 5 depend on browser requirements.
+- **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
+- **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
 
 ## Handoff
 
-- **Current:** `build/react-and-router`, based on scope 8 merged at `06a6976`; React 19 and React Router 7 migration preserves the existing public paths. Client build/tests, lint, and Cypress pass. Awaiting maintainer review.
-- **Next, after approval and merge:** `build/tailwind-and-daisyui`.
-- **Open questions:** Which live and demo deployments should remain supported? Which browser versions or smart-TV devices need support? These affect production rollout and the styling upgrade, respectively.
+- **Current:** `build/tailwind-and-daisyui`, based on scope 9 merged at `2b8ad80`; Tailwind 4.3.5 and DaisyUI 5.8.3 are in place with the confirmed browser baseline. Client build, lint, and browser tests pass. Awaiting maintainer review.
+- **Next:** The planned 10-scope modernization sequence is complete after scope 10 is approved and merged. A separate BiomeJS migration remains planned but not yet authorized.
+- **Open questions:** Which live and demo deployments should remain supported?

@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 
 const appDirectory = import.meta.dirname;
@@ -11,6 +12,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
+            tailwindcss(),
             react({
                 babel: {
                     plugins: [['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]],
