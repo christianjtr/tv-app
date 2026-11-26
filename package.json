@@ -5,10 +5,10 @@
     "author": "Christian Torrealba",
     "license": "ISC",
     "private": true,
-    "packageManager": "npm@11.11.1",
+    "packageManager": "npm@11.20.0",
     "engines": {
         "node": "26.13.1",
-        "npm": "11.11.1"
+        "npm": "11.20.0"
     },
     "scripts": {
         "dev:client": "npm run dev --prefix app",

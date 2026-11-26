@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
                 {} as Record<PropertyKey, string>
             ),
         },
-        base: isProduction ? '/' : '/tv-app',
+        base: isProduction ? env.VITE_APP_BASE_PATH || '/' : '/tv-app',
         resolve: {
             alias: [
                 { find: '@services', replacement: resolve(__dirname, './src/services') },

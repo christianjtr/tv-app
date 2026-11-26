@@ -72,7 +72,7 @@ This conceptual test has been developed using the following technologies:
 
 The project requires:
 
--   [Node.js 26.13.1](https://nodejs.org/) and npm 11.11.1
+-   [Node.js 26.13.1](https://nodejs.org/) and npm 11.20.0
 -   [Docker](https://www.docker.com/)
 
 **Clone the repository:**
@@ -122,6 +122,8 @@ Each app's tier within the project has its own environment variables file, you *
 | ------ | ------------ | --------- | -------------------------- |
 | client | .env.local   | /app      | .env                       |
 | server | .env.example | /server   | .env                       |
+
+The production client is a static build, so `VITE_API_BASE_URL` and `VITE_APP_BASE_PATH` are build-time settings supplied through the root `.env` file. `VITE_API_BASE_URL` is required; the base path defaults to `/`. For the mocked GitHub Pages demo, build with `VITE_APP_BASE_PATH=/tv-app` and `VITE_ENABLE_API_MOCK=true`.
 
 <a name="005"></a>
 ### Samples
