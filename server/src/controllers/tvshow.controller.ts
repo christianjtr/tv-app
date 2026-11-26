@@ -46,7 +46,7 @@ export async function search(request: Request, response: Response, next: NextFun
 
 export async function searchById(request: Request, response: Response, next: NextFunction): Promise<void> {
     try {
-        const { id } = request.params;
+        const id = request.params.id as string;
 
         const tvshow = await TVShowServices.searchById(id);
 
