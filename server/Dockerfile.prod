@@ -9,9 +9,11 @@ RUN test "$(npm --version)" = "11.11.1" && npm ci
 COPY packages/shared-types packages/shared-types
 RUN npm run build:shared-types
 
-ENV SERVER_PORT=$SERVER_PORT
+ARG SERVER_PORT=3001
+ENV SERVER_PORT=${SERVER_PORT}
 
 COPY server server
 WORKDIR /workspace/server
-EXPOSE $SERVER_PORT
-CMD [ "npm", "run", "dev" ]
+RUN npm run build
+EXPOSE ${SERVER_PORT}
+CMD ["node", "dist/bundle.js"]

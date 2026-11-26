@@ -10,9 +10,10 @@ COPY packages/shared-types packages/shared-types
 RUN npm run build:shared-types
 
 FROM builder AS server
-ENV SERVER_PORT=$SERVER_PORT
+ARG SERVER_PORT=3001
+ENV SERVER_PORT=${SERVER_PORT}
 
 COPY server server
 WORKDIR /workspace/server
-EXPOSE $SERVER_PORT
+EXPOSE ${SERVER_PORT}
 CMD [ "npm", "run", "dev" ]

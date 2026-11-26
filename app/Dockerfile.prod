@@ -9,11 +9,15 @@ RUN test "$(npm --version)" = "11.11.1" && npm ci
 COPY packages/shared-types packages/shared-types
 RUN npm run build:shared-types
 
+ARG VITE_API_BASE_URL
+ARG VITE_APP_BASE_PATH=/
+ARG VITE_ENABLE_API_MOCK=false
 COPY app app
 WORKDIR /workspace/app
 RUN npm run build:prod
 
 FROM nginx:stable-alpine
 
-COPY --from=installer /app/dist /usr/share/nginx/html
+COPY app/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /workspace/app/dist /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]

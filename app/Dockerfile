@@ -10,7 +10,8 @@ COPY packages/shared-types packages/shared-types
 RUN npm run build:shared-types
 
 FROM builder AS app
-ENV VITE_APP_SERVER_PORT=$VITE_APP_SERVER_PORT
+ARG VITE_APP_SERVER_PORT=3000
+ENV VITE_APP_SERVER_PORT=${VITE_APP_SERVER_PORT}
 
 COPY app app
 WORKDIR /workspace/app
