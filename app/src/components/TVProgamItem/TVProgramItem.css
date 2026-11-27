@@ -10,15 +10,17 @@
     overflow: hidden;
     position: relative;
     text-align: left;
-    transition: transform 180ms ease;
     width: 100%;
 }
 
 .tv-program-item img {
     display: block;
+    filter: brightness(1) saturate(1);
     height: 100%;
     object-fit: cover;
-    transition: transform 220ms ease;
+    transition:
+        filter 280ms ease,
+        transform 220ms ease;
     width: 100%;
 }
 
@@ -48,39 +50,38 @@
     -webkit-line-clamp: 2;
 }
 
-.tv-program-item:hover,
-.tv-program-item:focus-visible {
-    transform: translateY(-3px);
-}
-
-.tv-program-item:focus-visible {
-    outline: 2px solid #a78bfa;
-    outline-offset: 2px;
+.tv-program-item:focus {
+    outline: none;
     z-index: 2;
 }
 
-.tv-program-item:hover img,
-.tv-program-item:focus-visible img {
+.tv-program-item:hover img {
     transform: scale(1.035);
 }
 
+.tv-program-item:focus img {
+    filter: brightness(1.18) saturate(1.12) contrast(1.03);
+    transform: scale(1.075);
+}
+
 .tv-program-item:hover .tv-program-item__info,
-.tv-program-item:focus-visible .tv-program-item__info {
+.tv-program-item:focus .tv-program-item__info {
     opacity: 1;
     transform: translateY(0);
 }
 
+.program-rail__viewport:focus-within .tv-program-item:not(:focus) img {
+    filter: brightness(0.7) saturate(0.82);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .tv-program-item,
     .tv-program-item img,
     .tv-program-item__info {
         transition: none;
     }
 
-    .tv-program-item:hover,
-    .tv-program-item:focus-visible,
     .tv-program-item:hover img,
-    .tv-program-item:focus-visible img {
+    .tv-program-item:focus img {
         transform: none;
     }
 }

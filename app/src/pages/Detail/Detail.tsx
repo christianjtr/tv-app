@@ -39,7 +39,6 @@ const Detail: React.FC = (): React.ReactElement => {
                     data-testid="btn_back"
                     onClick={() => navigate(-1)}
                     className="btn btn-ghost detail-back absolute top-5 left-0"
-                    aria-label="Back button"
                 >
                     <svg className="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
@@ -110,14 +109,16 @@ const Detail: React.FC = (): React.ReactElement => {
                 </div>
             </div>
             {isTVShow && (
-                <>
-                    <div className="text-2xl divider divider-start mb-10">Seasons</div>
-                    <div className="grid md:grid-cols-5 gap-5 mb-10 sm:grid-cols-1 xs:grid-cols-1">
+                <section className="season-section" aria-labelledby="season-section-title">
+                    <h2 id="season-section-title" className="season-section__title">
+                        Seasons
+                    </h2>
+                    <div className="season-grid">
                         {tvProgram?.seasons?.map((season, index) => (
                             <SeasonCard info={season} key={`season_${id}_${index}`} />
                         ))}
                     </div>
-                </>
+                </section>
             )}
         </>
     );

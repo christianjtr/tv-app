@@ -54,7 +54,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `feat/home-experience-redesign`, based on `origin/main` at `c355651`; refreshes the shared header, Home and Search scenes, sections, and poster cards. Header category controls focus the first poster; Embla rails loop smoothly with a stationary first-slot focus frame; card overlays remain title-only. Hero/Detail imagery stays edge-to-edge with blurred/inset shadows.
-- **Checks:** app lint, 9 unit suites/28 tests, production build, title-only card tests, desktop/mobile previews, smooth rail-transition and wrap spot-checks, D-pad focus-position spot-checks, and Lighthouse Accessibility 100 for Home and Search passed. Chrome Cypress has not passed after the dependency change: the existing Vite server on port 3000 reports `504 Outdated Optimize Dep`.
-- **Next:** rerun Chrome Cypress with a clean Vite server, then maintainer review of the expanded Home/Search/hero scope.
+- **Current:** `feat/home-experience-redesign`, based on `origin/main` at `c355651`; refreshes the shared header, Home/Search scenes, poster rails, and TV season cards. Embla rails loop smoothly with the focused poster image emphasized at the first slot; no floating focus border. Card overlays remain title-only. Hero/Detail imagery stays edge-to-edge with blurred/inset shadows.
+- **Checks:** app lint, 10 unit suites/30 tests, production build, desktop/mobile previews, rail-transition/wrap and D-pad focus spot-checks, title-only card tests, and Lighthouse Accessibility 100 for Home, Search, and Detail passed. Chrome Cypress has not passed after the dependency change: the existing Vite server on port 3000 reports `504 Outdated Optimize Dep`.
+- **Next:** rerun Chrome Cypress with a clean Vite server, then maintainer review of the expanded Home/Search/Detail experience.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?

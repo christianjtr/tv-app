@@ -122,6 +122,19 @@
     max-width: 62ch;
 }
 
+.season-section {
+    margin: 2rem auto 3rem;
+    max-width: 80rem;
+}
+
+.season-section__title {
+    color: #f3f1f7;
+    font-size: 1.4rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 1023px) {
     .detail-container__wrapper {
         min-height: 0;

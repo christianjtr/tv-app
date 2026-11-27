@@ -14,25 +14,6 @@
 .program-rail__viewport {
     overflow: hidden;
     padding: 0.5rem;
-    position: relative;
-}
-
-.program-rail__viewport::after {
-    border-radius: 0.8rem;
-    content: '';
-    inset: 0.5rem auto 0.5rem 0.5rem;
-    outline: 2px solid #a78bfa;
-    outline-offset: 2px;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    transition: opacity 140ms ease;
-    width: clamp(8.5rem, 12vw, 11.5rem);
-    z-index: 2;
-}
-
-.program-rail__viewport:focus-within::after {
-    opacity: 1;
 }
 
 .program-rail__track {
@@ -47,15 +28,6 @@
     width: clamp(8.5rem, 12vw, 11.5rem);
 }
 
-.program-rail__viewport .tv-program-item:focus-visible {
-    outline: none;
-    transform: none;
-}
-
-.program-rail__viewport .tv-program-item:focus-visible img {
-    transform: none;
-}
-
 .program-rail__skeleton {
     aspect-ratio: 2 / 3;
     border-radius: 0.8rem;
@@ -68,11 +40,5 @@
 
     .program-rail__track {
         gap: 0.8rem;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .program-rail__viewport::after {
-        transition: none;
     }
 }

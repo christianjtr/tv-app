@@ -101,8 +101,11 @@ describe('Home view page navigation', () => {
                             expect($card).to.have.attr('aria-label', firstMovieLabel);
                             const card = $card[0];
                             const viewport = card.closest('.program-rail__viewport') as HTMLElement;
+                            const poster = card.querySelector('img') as HTMLImageElement;
                             const paddingLeft = Number.parseFloat(window.getComputedStyle(viewport).paddingLeft);
                             expect(card.getBoundingClientRect().left).to.be.closeTo(viewport.getBoundingClientRect().left + paddingLeft, 5);
+                            expect(window.getComputedStyle(card).outlineStyle).to.equal('none');
+                            expect(window.getComputedStyle(poster).filter).to.include('brightness');
                         });
                         cy.press('ArrowLeft');
                         cy.focused().should('have.attr', 'aria-label', lastMovieLabel);
