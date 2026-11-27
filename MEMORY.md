@@ -34,7 +34,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Decisions and proposed targets
 
-- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest default branch, keeping task commits off it, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
+- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest `origin/main`, keeping task commits off `main`, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
 - [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md) records the proposed Stage 2 toolchain work and exit gate before Stage 3 feature development.
 - **Deployment direction:** on trusted default-branch pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
@@ -45,6 +45,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `chore/rename-master-to-main`, based on `origin/master` at `5c54e8e`; workflow triggers support `master` and `main` during the transition. The GitHub default-branch setting still needs to change after this PR is reviewed and merged.
-- **Next, after default-branch rename:** create the BiomeJS scope from `origin/main`; keep Stage 3 feature work gated on the Stage 2 exit criteria.
+- **Current:** `chore/complete-main-branch-cleanup`, based on `origin/main` at `8f257e9`; workflow and guidance now use `main`, the obsolete remote ref was deleted, and `origin/HEAD` points to `main`. Only the active cleanup branch and local `main` remain.
+- **Next, after this cleanup is merged:** start the BiomeJS scope from `origin/main`; keep Stage 3 feature work gated on the Stage 2 exit criteria.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
