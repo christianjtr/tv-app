@@ -13,14 +13,15 @@ const Search: React.FC = (): React.ReactElement => {
     const navigate = useNavigate();
     const { query: searchCriteria, setQueryParams } = useSearchQueryParams();
 
-    const { movies, isLoading: isLoadingMovies } = useSearchMovies(searchCriteria);
-    const { tvShows, isLoading: isLoadingTVShows } = useSearchTVShows(searchCriteria);
+    const { movies, isLoading: isLoadingMovies, hasError: hasMoviesError } = useSearchMovies(searchCriteria);
+    const { tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError } = useSearchTVShows(searchCriteria);
 
     const results: (TVProgram & { tvProgramType: TVProgramType })[] = [
         ...movies.map((movie) => ({ ...movie, tvProgramType: 'movie' as TVProgramType })),
         ...tvShows.map((tvshow) => ({ ...tvshow, tvProgramType: 'tv-show' as TVProgramType })),
     ];
     const isLoading = isLoadingMovies || isLoadingTVShows;
+    const hasError = hasMoviesError || hasTVShowsError;
 
     const detailPath: Record<TVProgramType, string> = {
         movie: 'movies',
@@ -42,7 +43,8 @@ const Search: React.FC = (): React.ReactElement => {
             </h2>
             <div className="hero h-full flex flex-col mt-10">
                 {isLoading && <Loading />}
-                {results.length === 0 && !isLoading && <NotFound title="Please, try searching for something" />}
+                {hasError && <p role="alert">Some search results could not be loaded. Reload the page to try again.</p>}
+                {results.length === 0 && !isLoading && !hasError && <NotFound title="Please, try searching for something" />}
                 <div className="grid md:grid-cols-5 gap-5 mb-10 sm:grid-cols-3 xs:grid-cols-2">
                     {results.map(({ id, tvProgramType, ...item }, index) => (
                         <TVProgramItem info={item} key={`program_${index}`} onClick={() => navigate(`/${detailPath[tvProgramType]}/${id}`)} />

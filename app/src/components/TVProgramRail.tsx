@@ -9,10 +9,11 @@ export interface TVProgramRailProps {
     tvPrograms: TVProgram[];
     tvProgramType: TVProgramType;
     isLoading?: boolean;
+    hasError?: boolean;
 }
 
 const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps): React.ReactElement => {
-    const { title, tvPrograms, tvProgramType, isLoading = false } = props;
+    const { title, tvPrograms, tvProgramType, isLoading = false, hasError = false } = props;
     const navigate = useNavigate();
 
     const detailPath: Record<TVProgramType, string> = {
@@ -28,7 +29,8 @@ const TVProgramRail: React.FC<TVProgramRailProps> = (props: TVProgramRailProps):
     return (
         <div className="my-1" data-element="tv-program-rail" data-cy="tv-program-rail">
             <h2 className="divider divider-start text-lg">{title}</h2>
-            {tvPrograms.length === 0 && !isLoading && <NotFound title="Ups, nothing here..." />}
+            {hasError && <p role="alert">Could not load {title.toLowerCase()}. Reload the page to try again.</p>}
+            {!hasError && tvPrograms.length === 0 && !isLoading && <NotFound title="Ups, nothing here..." />}
             <div className="carousel w-full p-4 space-x-4 rounded-box">{isLoading ? Skeleton : TVPrograms}</div>
         </div>
     );

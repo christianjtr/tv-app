@@ -9,16 +9,17 @@ export type TVProgramRail = {
     title: string;
     source: TVProgram[];
     isLoading: boolean;
+    hasError: boolean;
     tvProgramType: TVProgramType;
 };
 
 const Home: React.FC = (): React.ReactElement => {
-    const { movies, isLoading: isLoadingMovies } = useFetchTrendingMovies();
-    const { tvShows, isLoading: isLoadingTVShows } = useFetchTrendingTVShows();
+    const { movies, isLoading: isLoadingMovies, hasError: hasMoviesError } = useFetchTrendingMovies();
+    const { tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError } = useFetchTrendingTVShows();
 
     const tvProgramRails: TVProgramRail[] = [
-        { title: 'Movies', source: movies, isLoading: isLoadingMovies, tvProgramType: 'movie' },
-        { title: 'TV Shows', source: tvShows, isLoading: isLoadingTVShows, tvProgramType: 'tv-show' },
+        { title: 'Movies', source: movies, isLoading: isLoadingMovies, hasError: hasMoviesError, tvProgramType: 'movie' },
+        { title: 'TV Shows', source: tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError, tvProgramType: 'tv-show' },
     ];
 
     const images = tvProgramRails.reduce((acc: { source: string; title: string }[], obj: TVProgramRail) => {
@@ -40,11 +41,12 @@ const Home: React.FC = (): React.ReactElement => {
                 <h1 className="text-2xl text-left mb-5">
                     🍿 Top picks to watch<span className="text-5xl text-pink-400">.</span>
                 </h1>
-                {tvProgramRails.map(({ title, source, isLoading, tvProgramType }, index) => (
+                {tvProgramRails.map(({ title, source, isLoading, hasError, tvProgramType }, index) => (
                     <TVProgramRail
                         title={title}
                         tvPrograms={source}
                         isLoading={isLoading}
+                        hasError={hasError}
                         key={`tv-program-rail_${index}`}
                         tvProgramType={tvProgramType}
                     />

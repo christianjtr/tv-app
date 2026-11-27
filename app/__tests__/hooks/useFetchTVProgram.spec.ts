@@ -7,6 +7,8 @@ jest.mock('@services/apis/tv-app/tvprogram.api.services', () => ({
     getTVProgramById: jest.fn(),
 }));
 
+const getProgram = getTVProgramById as jest.MockedFunction<typeof getTVProgramById>;
+
 const deferred = <T>() => {
     let resolve!: (_value: T) => void;
     const promise = new Promise<T>((complete) => {
@@ -16,10 +18,13 @@ const deferred = <T>() => {
 };
 
 describe('useFetchTVProgram', () => {
+    beforeEach(() => {
+        getProgram.mockReset();
+    });
+
     it('ignores an older detail response after the route id changes', async () => {
         const oldRequest = deferred<TVProgramDetailed>();
         const newRequest = deferred<TVProgramDetailed>();
-        const getProgram = getTVProgramById as jest.MockedFunction<typeof getTVProgramById>;
 
         getProgram.mockImplementation((id) => (id === 'old' ? oldRequest.promise : newRequest.promise));
 
@@ -41,6 +46,16 @@ describe('useFetchTVProgram', () => {
             await newRequest.promise;
         });
         expect(result.current.tvProgram?.name).toBe('New result');
+        expect(result.current.isLoading).toBe(false);
+    });
+
+    it('exposes a detail request failure as state', async () => {
+        getProgram.mockRejectedValueOnce(new Error('offline'));
+
+        const { result } = renderHook(() => useFetchTVProgram('1399', 'tv-shows'));
+
+        await waitFor(() => expect(result.current.hasError).toBe(true));
+
         expect(result.current.isLoading).toBe(false);
     });
 });

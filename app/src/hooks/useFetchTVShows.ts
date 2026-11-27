@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
-import { TimeWindow, TVShow, TVShowDetailed } from '@tv-app-packages/shared-types';
+import { TimeWindow, TVShow } from '@tv-app-packages/shared-types';
 import * as TVShowServices from '@services/apis/tv-app/tvshow.api.services';
 
 const useFetchTrendingTVShows = (timeWindow: TimeWindow = 'day', language?: string) => {
     const [tvShows, setTVShows] = useState<TVShow[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         (async () => {
             try {
                 setIsLoading(true);
+                setHasError(false);
                 const { results } = await TVShowServices.getTrendingTVShows(timeWindow, language);
                 setTVShows(results);
-            } catch (error) {
-                throw new Error(`Error fetching trending tv shows, [Error]: ${error}`);
+            } catch {
+                setHasError(true);
             } finally {
                 setIsLoading(false);
             }
@@ -24,12 +26,14 @@ const useFetchTrendingTVShows = (timeWindow: TimeWindow = 'day', language?: stri
         tvShows,
         isLoading,
         hasTVShows: tvShows.length > 0,
+        hasError,
     };
 };
 
 const useSearchTVShows = (criteria: string) => {
     const [tvShows, setTVShows] = useState<TVShow[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         let isCurrentRequest = true;
@@ -37,19 +41,21 @@ const useSearchTVShows = (criteria: string) => {
 
         if (hasQueryCriteria) {
             setTVShows([]);
+            setHasError(false);
             setIsLoading(true);
             (async () => {
                 try {
                     const { results } = await TVShowServices.searchTVShow(criteria);
                     if (isCurrentRequest) setTVShows(results);
-                } catch (error) {
-                    if (isCurrentRequest) throw new Error(`Error fetching TV shows, [Error]: ${error}`);
+                } catch {
+                    if (isCurrentRequest) setHasError(true);
                 } finally {
                     if (isCurrentRequest) setIsLoading(false);
                 }
             })();
         } else {
             setTVShows([]);
+            setHasError(false);
             setIsLoading(false);
         }
 
@@ -62,33 +68,8 @@ const useSearchTVShows = (criteria: string) => {
         tvShows,
         isLoading,
         hasTVShows: tvShows.length > 0,
+        hasError,
     };
 };
 
-const useSearchTVShowById = (id: number | string) => {
-    const [tvshow, setTVShow] = useState<TVShowDetailed | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (id) {
-            (async () => {
-                try {
-                    setIsLoading(true);
-                    const result = await TVShowServices.searchTVShowById(id);
-                    setTVShow(result);
-                } catch (error) {
-                    throw new Error(`Error fetching TV show, [Error]: ${error}`);
-                } finally {
-                    setIsLoading(false);
-                }
-            })();
-        }
-    }, [id]);
-
-    return {
-        tvshow,
-        isLoading,
-    };
-};
-
-export { useFetchTrendingTVShows, useSearchTVShows, useSearchTVShowById };
+export { useFetchTrendingTVShows, useSearchTVShows };

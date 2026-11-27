@@ -1,55 +1,54 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import * as MovieServices from '@services/apis/tv-app/movie.api.services';
-import { useFetchTrendingMovies } from '@hooks/useFetchMovies';
-
-// COMMENT: Just an example on how to test a custom hook within the client-side app...
+import { useFetchTrendingMovies, useSearchMovies } from '@hooks/useFetchMovies';
 
 jest.mock('@services/apis/tv-app/movie.api.services', () => ({
-    getTrendingMovies: jest.fn().mockResolvedValue({ results: [] }),
+    getTrendingMovies: jest.fn(),
+    searchMovie: jest.fn(),
 }));
 
-describe('useFetchTrendingMovies custom hook', () => {
-    it('should has the proper props and functions and get trending movies', () => {
-        const {
-            result: { current },
-            unmount,
-        } = renderHook(() => useFetchTrendingMovies('day', 'en-US'));
+const getTrendingMovies = MovieServices.getTrendingMovies as jest.MockedFunction<typeof MovieServices.getTrendingMovies>;
+const searchMovie = MovieServices.searchMovie as jest.MockedFunction<typeof MovieServices.searchMovie>;
 
-        const { movies, isLoading, hasMovies } = current;
-
-        // First state change...
-        waitFor(() => {
-            expect(movies).toStrictEqual([]);
-            expect(isLoading).toBe(true);
-            expect(hasMovies).toBe(false);
-        });
-
-        // Last state change...
-        waitFor(() => {
-            expect(movies).toStrictEqual([]);
-            expect(isLoading).toBe(false);
-            expect(hasMovies).toBe(false);
-
-            expect(MovieServices.getTrendingMovies).toHaveBeenCalledWith('day', 'en-US');
-        });
-
-        unmount();
+describe('movie catalog hooks', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        getTrendingMovies.mockResolvedValue({ page: 1, results: [] });
+        searchMovie.mockResolvedValue({ page: 1, results: [] });
     });
 
-    it('[sad path] should fail at getting trending movies', async () => {
-        jest.resetModules();
-        jest.doMock('@services/apis/tv-app/movie.api.services', () => ({
-            getTrendingMovies: jest.fn().mockRejectedValue('ERROR'),
-        }));
+    it('loads trending movies', async () => {
+        const { result } = renderHook(() => useFetchTrendingMovies('day', 'en-US'));
 
-        const MovieServices = jest.requireMock('@services/apis/tv-app/movie.api.services');
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        const { unmount } = renderHook(() => useFetchTrendingMovies('day', 'en-US'));
+        expect(getTrendingMovies).toHaveBeenCalledWith('day', 'en-US');
+        expect(result.current).toMatchObject({ movies: [], hasMovies: false, hasError: false });
+    });
 
-        await waitFor(() => {
-            expect(MovieServices.getTrendingMovies).rejects.toBe('ERROR');
-        });
+    it('exposes a trending request failure as state', async () => {
+        getTrendingMovies.mockRejectedValueOnce(new Error('offline'));
 
-        unmount();
+        const { result } = renderHook(() => useFetchTrendingMovies());
+
+        await waitFor(() => expect(result.current.hasError).toBe(true));
+
+        expect(result.current.isLoading).toBe(false);
+    });
+
+    it('clears search errors when the query changes', async () => {
+        searchMovie.mockRejectedValueOnce(new Error('offline'));
+
+        const { result, rerender } = renderHook(({ criteria }) => useSearchMovies(criteria), { initialProps: { criteria: 'first' } });
+
+        await waitFor(() => expect(result.current.hasError).toBe(true));
+        expect(result.current.isLoading).toBe(false);
+
+        rerender({ criteria: 'second' });
+
+        await waitFor(() => expect(searchMovie).toHaveBeenCalledTimes(2));
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        expect(result.current.hasError).toBe(false);
     });
 });

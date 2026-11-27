@@ -5,25 +5,28 @@ import * as TVProgramServices from '@services/apis/tv-app/tvprogram.api.services
 const useFetchTVProgram = (id: number | string, tvProgramResourceType: AllowedTVProgramResource) => {
     const [tvProgram, setTVProgram] = useState<TVProgramDetailed | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         let isCurrentRequest = true;
 
         if (id && tvProgramResourceType) {
             setTVProgram(null);
+            setHasError(false);
             setIsLoading(true);
             (async () => {
                 try {
                     const result = await TVProgramServices.getTVProgramById(id, tvProgramResourceType);
                     if (isCurrentRequest) setTVProgram(result);
-                } catch (error) {
-                    if (isCurrentRequest) throw new Error(`Error fetching tv program, [Error]: ${error}`);
+                } catch {
+                    if (isCurrentRequest) setHasError(true);
                 } finally {
                     if (isCurrentRequest) setIsLoading(false);
                 }
             })();
         } else {
             setTVProgram(null);
+            setHasError(false);
             setIsLoading(false);
         }
 
@@ -35,6 +38,7 @@ const useFetchTVProgram = (id: number | string, tvProgramResourceType: AllowedTV
     return {
         tvProgram,
         isLoading,
+        hasError,
     };
 };
 

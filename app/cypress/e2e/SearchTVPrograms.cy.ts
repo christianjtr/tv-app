@@ -20,6 +20,19 @@ describe('Search view page', () => {
         cy.get('[data-cy="tv-program-rail-item"]').should('have.length', 1).and('contain.text', 'Game of Thrones');
     });
 
+    it('shows an error when a search request fails', () => {
+        cy.visit(`${Cypress.expose('APP_SEARCH_URL')}?query=__API_ERROR__`);
+
+        cy.get('[role="alert"]').should('contain.text', 'Some search results could not be loaded');
+        cy.get('[data-cy="tv-program-rail-item"]').should('not.exist');
+    });
+
+    it('shows an error when a detail request fails', () => {
+        cy.visit(`${Cypress.expose('APP_HOME_URL')}/tv-shows/999999`);
+
+        cy.get('[role="alert"]').should('contain.text', 'Could not load this title');
+    });
+
     it('should search a tv program correctly', () => {
         cy.visit(Cypress.expose('APP_SEARCH_URL'));
 
