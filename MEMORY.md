@@ -12,9 +12,9 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | ID | Finding | Evidence |
 |---|---|---|
 | F06 | Some hook-test assertions remain unawaited; the Cypress search flow now verifies query-specific results against Express and the local TMDB stub. | [Hook test](app/__tests__/hooks/useFetchMovies.spec.ts), [browser test](app/cypress/e2e/SearchTVPrograms.cy.ts), [TMDB stub](scripts/mockTmdb.mjs); 6 Cypress tests passed on this branch. |
-| F09 | Full `npm audit` reports 24 development-dependency findings (23 moderate, 1 low); `npm audit --omit=dev` reports 0 production vulnerabilities. GitHub's last default-branch push notice reported 10 findings from its separate scan; alert-level details require authenticated GitHub access. | Root `package-lock.json`; npm 11.20.0 audit after Stage 1 fixes, 2026-11-27. |
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
+| F17 | GitHub's separate security alert count/details remain unverified because the CLI session is unauthenticated; the prior default-branch push notice reported 10 findings. | `gh` authentication unavailable during the November 2026 audit. |
 
 ## Resolved findings
 
@@ -30,7 +30,8 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
 | F15 | Stage 1 removed all production audit findings by replacing vulnerable `@hapi/joi`, moving/updating Nodemon as a development tool, removing unused `swagger-jsdoc`, and updating `concurrently`/`picomatch`. | `npm audit --omit=dev` reports 0; client/server tests, builds, lint, and Cypress passed. |
 | F12 | ESLint and Prettier were removed from both workspaces in favor of Biome 2.6.9; app/server lint, builds, unit suites, and Cypress pass. Biome's unresolved-import rule is disabled because it misresolves existing module formats and asset declarations; TypeScript and bundler builds remain the resolution checks. | `package.json`, `app/package.json`, `server/package.json`, `biome.jsonc`; all listed checks passed on `build/biomejs-migration`. |
-| F16 | Replaced the server Rollup build with esbuild 0.28.2 while retaining an explicit TypeScript check and Node CommonJS bundle output. | Server build/tests, Cypress, production Docker image build, and container `/api/docs/` smoke test passed on `build/esbuild-server`. |
+| F09 | Aligned Jest, Babel-Jest, Jest's jsdom environment, and Jest types on 29.x; removed unused or misplaced dependencies that pulled in vulnerable Jest 30/glob paths. Both full and production-only npm audits now report 0 vulnerabilities. | Root and workspace manifests plus `package-lock.json`; clean `npm ci`, Jest suites, and npm 11.20.0 audits passed on `fix/dev-audit-remediation`, 2026-11-27. |
+| F16 | Replaced the server Rollup build with esbuild 0.28.2 while retaining an explicit TypeScript check and Node CommonJS bundle output. | Merged in PR #18 at `d940f9d`; server build/tests, Cypress, production Docker image build, and container `/api/docs/` smoke test passed. |
 | F11 | Glide core CSS is imported at the Vite entrypoint so it is emitted as a production asset instead of referenced through a `node_modules` URL in HTML. | `app/src/main.tsx`, `app/index.html`; host and Docker production builds emit Glide CSS without the unresolved-path warning. |
 
 ## Decisions and proposed targets
@@ -46,6 +47,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `build/esbuild-server`, based on `origin/main` at `77478e1`; Rollup is replaced by esbuild and strict TypeScript checking remains explicit.
-- **Next, after this scope is reviewed and merged:** complete remaining Stage 2 gates before Stage 3 feature work.
+- **Current:** `fix/dev-audit-remediation`, based on `origin/main` at `d940f9d`; development and production audits both report zero vulnerabilities. The esbuild migration is merged in PR #18. Final checks: clean install, lint, client/server tests and builds, six Cypress tests, and server Docker build passed; Pages and Render `/api/docs/` returned HTTP 200.
+- **Next:** maintainer review and merge of the focused dependency-remediation scope; only then continue remaining Stage 2 gates before Stage 3 feature work.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
