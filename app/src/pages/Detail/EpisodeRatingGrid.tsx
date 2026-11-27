@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { createElement, useEffect, useMemo, useState } from 'react';
 import type { EpisodeRating, TVShowDetailed } from '@tv-app-packages/shared-types';
 import { getEpisodeRatings } from '@services/apis/tv-app/tvshow.api.services';
 import SeasonCard from '@components/SeasonCard';
@@ -130,7 +130,26 @@ export default function EpisodeRatingGrid({ showId, seasons }: { showId: number;
             <div className="episode-ratings__layout">
                 <aside className="episode-ratings__seasons" aria-labelledby="episode-ratings-seasons-title">
                     <h3 id="episode-ratings-seasons-title">Seasons</h3>
-                    <div className="episode-ratings__season-list">
+                    {selectedSeason && (
+                        <select
+                            className="episode-ratings__season-select"
+                            aria-labelledby="episode-ratings-seasons-title"
+                            value={selectedSeason.seasonNumber}
+                            onChange={(event) => setSelectedSeasonNumber(Number(event.currentTarget.value))}
+                        >
+                            <button>{createElement('selectedcontent')}</button>
+                            {regularSeasons.map((season) => (
+                                <option key={season.id} value={season.seasonNumber}>
+                                    <img src={season.images.w185} alt="" loading="lazy" />
+                                    <span className="episode-ratings__option-copy">
+                                        <span className="episode-ratings__option-name">{season.name}</span>
+                                        <span className="episode-ratings__option-count">{season.numberOfEpisodes} episodes</span>
+                                    </span>
+                                </option>
+                            ))}
+                        </select>
+                    )}
+                    <div className={`episode-ratings__season-list${selectedSeason ? ' episode-ratings__season-list--selectable' : ''}`}>
                         {seasons.map((season) => (
                             <SeasonCard
                                 info={season}

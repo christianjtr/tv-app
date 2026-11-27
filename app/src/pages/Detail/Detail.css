@@ -1,13 +1,17 @@
+main:has(.detail-container__wrapper) {
+    container-type: inline-size;
+}
+
 .detail-container__wrapper {
     --background-image: unset;
 
     isolation: isolate;
     min-height: 38rem;
-    margin-left: calc(50% - 50vw);
+    margin-left: calc(50% - 50cqw);
     overflow: hidden;
     position: relative;
     background: #050608;
-    width: 100vw;
+    width: 100cqw;
 }
 
 .detail-container__wrapper::before {

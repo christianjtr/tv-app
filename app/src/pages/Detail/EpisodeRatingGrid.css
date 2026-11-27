@@ -59,6 +59,10 @@
     gap: 0.85rem;
 }
 
+.episode-ratings__season-select {
+    display: none;
+}
+
 .episode-ratings__season-list .season-card {
     background: transparent;
     border-radius: 0.75rem;
@@ -297,19 +301,128 @@
 
 @media (max-width: 900px) {
     .episode-ratings__layout {
+        gap: 1.25rem;
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .episode-ratings__season-list {
-        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    .episode-ratings__season-list--selectable {
+        display: none;
+    }
+
+    .episode-ratings__season-select {
+        appearance: auto;
+        background: #151720;
+        border: 0;
+        border-radius: 0.5rem;
+        color: inherit;
+        display: block;
+        font: inherit;
+        min-height: 2.75rem;
+        padding: 0.4rem 0.7rem;
+        width: 100%;
+    }
+}
+
+@supports (appearance: base-select) {
+    @media (max-width: 900px) {
+        .episode-ratings__season-select,
+        .episode-ratings__season-select::picker(select) {
+            appearance: base-select;
+        }
+
+        .episode-ratings__season-select {
+            align-items: center;
+            background: #151720;
+            color: #f3f1f7;
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.5rem;
+        }
+
+        .episode-ratings__season-select > button {
+            align-items: center;
+            background: transparent;
+            border: 0;
+            color: inherit;
+            cursor: pointer;
+            display: flex;
+            flex: 1 1 auto;
+            font: inherit;
+            gap: 0.75rem;
+            min-width: 0;
+            text-align: left;
+            width: auto;
+        }
+
+        .episode-ratings__season-select selectedcontent {
+            align-items: center;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .episode-ratings__season-select selectedcontent img,
+        .episode-ratings__season-select option img {
+            aspect-ratio: 2 / 3;
+            border-radius: 0.3rem;
+            height: 4.25rem;
+            object-fit: cover;
+            width: 2.85rem;
+        }
+
+        .episode-ratings__option-copy {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .episode-ratings__option-name {
+            font-size: 1rem;
+            font-weight: 650;
+        }
+
+        .episode-ratings__option-count {
+            color: var(--ratings-muted);
+            font-size: 0.8rem;
+        }
+
+        .episode-ratings__season-select::picker(select) {
+            background: #151720;
+            border: 0;
+            border-radius: 0.5rem;
+            color: #f3f1f7;
+            padding: 0.3rem;
+        }
+
+        .episode-ratings__season-select option {
+            align-items: center;
+            background: transparent;
+            border-radius: 0.35rem;
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.4rem;
+        }
+
+        .episode-ratings__season-select option:checked {
+            background: rgb(247 168 212 / 12%);
+        }
+
+        .episode-ratings__season-select::picker-icon {
+            color: #f7a8d4;
+            flex: 0 0 auto;
+            margin-inline-start: auto;
+            transition: rotate 160ms ease;
+        }
+
+        .episode-ratings__season-select:open::picker-icon {
+            rotate: 180deg;
+        }
+
+        .episode-ratings__season-select option::checkmark {
+            color: #f7a8d4;
+        }
     }
 }
 
 @media (max-width: 639px) {
-    .episode-ratings__season-list {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
     .episode-ratings__grid {
         gap: 1.1rem 0.75rem;
         grid-template-columns: repeat(2, minmax(0, 1fr));
