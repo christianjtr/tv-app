@@ -4,7 +4,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Baseline
 
-- Source baseline: `master` at `8265cfd` (catalog API contract remediation, 2026-11-26). React/Vite browses, searches, and displays movie and TV details. Express reads from TMDB and caches mapped results in process. `packages/shared-types` holds the shared models. There is no database or account system.
+- Source baseline: commit `8265cfd` (catalog API contract remediation, 2026-11-26). React/Vite browses, searches, and displays movie and TV details. Express reads from TMDB and caches mapped results in process. `packages/shared-types` holds the shared models. There is no database or account system.
 - The initial audit was primarily static; a read-only Compose check rejected the dev wrapper's `--env-file .`. The workspace scope verified clean install, shared-types build, app/server suites, and Cypress. Production images and SPA deep links were later verified locally with placeholder configuration. This branch's browser flows passed against compiled Express with a fixture-backed TMDB stub.
 
 ## Open findings
@@ -22,7 +22,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 | ID | Resolution | Evidence |
 |---|---|---|
-| F01 | The production env is no longer printed, image build/publish runs only on pushes to `master`, and root Docker context excludes env files except tracked `app/.env.local` to preserve existing build defaults. | Commit `bd8ab10`; [workflow](.github/workflows/deployment.yml), [Docker ignore](.dockerignore). |
+| F01 | The production env is no longer printed, image build/publish runs only on pushes to the default branch, and root Docker context excludes env files except tracked `app/.env.local` to preserve existing build defaults. | Commit `bd8ab10`; [workflow](.github/workflows/deployment.yml), [Docker ignore](.dockerignore). |
 | F02 | Node 26.13.1/npm 11.20.0 are pinned; app, server, and shared types use one root workspace lock; shared types are built explicitly and generated output is no longer tracked. Docker contexts exclude host `.tsbuildinfo` to prevent stale incremental state from skipping declaration output. | Commit `609de49`; [toolchain](.nvmrc), [workspace](package.json), [Docker ignore](.dockerignore), [workflow](.github/workflows/deployment.yml); clean installs, builds, and tests passed. |
 | F03 | Dev Compose loads the tier env files and propagates command status. Production builds and runs the compiled API, injects client settings at build time, and uses Nginx SPA fallback. | Commit `609de49`; local `docker compose build`, API startup, and `/` plus `/movies/123` smoke tests passed with placeholder settings. |
 | F04 | Movie and TV service cache keys have distinct resource namespaces for search, detail, and trending calls. | Commit `8265cfd`; cache-isolation API regression. |
@@ -34,9 +34,9 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Decisions and proposed targets
 
-- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest `origin/master`, keeping task commits off `master`, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
+- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest default branch, keeping task commits off it, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
 - [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md) records the proposed Stage 2 toolchain work and exit gate before Stage 3 feature development.
-- **Deployment direction:** on trusted `master` pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
+- **Deployment direction:** on trusted default-branch pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
 - **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including the planned BiomeJS migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
@@ -45,6 +45,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `docs/branch-off-master-only`, based on `origin/master` at `60974cc`; documents the branch-base and local/remote cleanup rule. Nine merged local topic branches were removed, merged remote topic refs were deleted or pruned, and local `master` was fast-forwarded to `origin/master`.
-- **Next, after ADR review:** implement one approved Stage 2 scope per branch/PR; defer Stage 3 feature work until the Stage 2 exit criteria are met.
+- **Current:** `chore/rename-master-to-main`, based on `origin/master` at `5c54e8e`; workflow triggers support `master` and `main` during the transition. The GitHub default-branch setting still needs to change after this PR is reviewed and merged.
+- **Next, after default-branch rename:** create the BiomeJS scope from `origin/main`; keep Stage 3 feature work gated on the Stage 2 exit criteria.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
