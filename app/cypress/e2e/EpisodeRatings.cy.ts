@@ -44,7 +44,7 @@ describe('Episode ratings', () => {
                 expect(Number.parseFloat(getComputedStyle($score[0]).fontSize)).to.be.greaterThan(24);
                 expect(getComputedStyle($score[0]).backgroundColor).to.equal('rgba(172, 229, 183, 0.15)');
                 expect(getComputedStyle($score[0]).color).to.equal('rgb(172, 229, 183)');
-        });
+            });
         cy.get('.episode-ratings__episode-score').then(($scores) => {
             const rows = new Map<number, number[]>();
             $scores.toArray().forEach((score) => {
