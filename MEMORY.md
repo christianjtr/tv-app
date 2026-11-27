@@ -35,8 +35,9 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F18 | GitHub Pages direct visits and refreshes now load the SPA and restore the requested route. | PR #20 at `b6eda32`; Chrome loaded `/tv-app/search?query=Game%20of%20Thrones` after the 404 fallback redirected through the site root, 2026-11-27. |
 | F19 | Active trending, search, and detail flows now retain request failures as state and show an accessible alert instead of misreporting an empty result or blank detail page. | Hook/component tests and Cypress search/detail failure scenarios passed, merged in PR #21 at `69a30d1`. |
 | F20 | Detail page identifies TV programs from the route, not nonzero episode/season counts, so announced shows are not rendered as movies. | Cypress case for a TV show with zero seasons and episodes passes; merged in PR #22 at `a7e966c`. |
-| F10 | Pull requests now run CI regardless of changed paths, including docs-only changes; the workflow validates syntax, lints both apps, builds both clients and server, and runs unit/E2E tests. | `.github/workflows/deployment.yml`; actionlint 1.7.12 and local CI-equivalent checks passed on `build/ci-readiness`, 2026-11-27. |
-| F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | `app/package.json`; 10 E2E tests passed in headless Chrome 158 on `build/ci-readiness`, 2026-11-27. |
+| F10 | Pull requests now run CI regardless of changed paths, including docs-only changes; the workflow validates syntax, lints both apps, builds both clients and server, and runs unit/E2E tests. | Merged in PR #23 at `af56141`; actionlint 1.7.12 and local CI-equivalent checks passed. |
+| F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | Merged in PR #23 at `af56141`; 10 E2E tests passed in headless Chrome 158. |
+| F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Cache unit tests and server build pass on `fix/cache-safety`, 2026-11-27. |
 
 ## Decisions and proposed targets
 
@@ -51,6 +52,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `build/ci-readiness`, based on `origin/main` at `a7e966c`; upgrades workflow actions, validates workflow syntax, adds PR lint/build checks, and runs Cypress in Chrome.
-- **Next:** review and merge this CI scope. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
+- **Current:** `fix/cache-safety`, based on `origin/main` at `af56141`; validates and bounds the in-process server cache.
+- **Next:** review and merge this cache fix. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
