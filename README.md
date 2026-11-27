@@ -139,7 +139,7 @@ Click on the following link [GitHub page project](https://christianjtr.github.io
 ##### Preview
 
 <p align="center">
-    <img src="https://github.com/christianjtr/tv-app/blob/master/samples/showcase.gif" alt="gif-demo"/>
+    <img src="https://github.com/christianjtr/tv-app/blob/main/samples/showcase.gif" alt="gif-demo"/>
 </p>
 
 ##### Home page preview
@@ -177,7 +177,7 @@ Both services have some examples of how to develop unit tests and e2e tests (inc
 
 
 <p align="center">
-    <img src="https://github.com/christianjtr/tv-app/blob/master/samples/cy.gif" alt="gif-demo-cy"/>
+    <img src="https://github.com/christianjtr/tv-app/blob/main/samples/cy.gif" alt="gif-demo-cy"/>
 </p>
 
 -   **Server-side:**

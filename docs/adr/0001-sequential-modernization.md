@@ -9,12 +9,19 @@ TV App has correctness and release gaps alongside an aging toolchain. Fixing beh
 
 ## Decision
 
-- Work on one branch and PR at a time, starting from the latest merged `master`. Agree on the scope and checks before editing.
-- Create each task branch from the latest `origin/master` before making changes. Do all task edits and commits on that branch; never commit task work directly to `master`.
-- Before starting, check whether the requested scope is already in `origin/master`. If a commit lands on `master` directly or the scope has already merged, stop and reconcile against the updated base; do not recreate or cherry-pick the same work onto another branch without maintainer direction.
+- Work on one branch and PR at a time, starting from the latest GitHub default branch. Agree on the scope and checks before editing.
+- Create each task branch from the latest `origin/<default-branch>` before making changes. Do all task edits and commits on that branch; never commit task work directly to the default branch.
+- Before starting, check whether the requested scope is already in `origin/<default-branch>`. If a commit lands directly on the default branch or the scope has already merged, stop and reconcile against the updated base; do not recreate or cherry-pick the same work onto another branch without maintainer direction.
 - Name branches `<type>/<short-kebab-name>` and commits and PR titles `type(scope): summary`, using Conventional Commits. Separate dependency changes from behavior changes where possible.
 - Hand off a focused diff with verification results and known gaps. Green CI supports review; it is not approval. The maintainer owns approval and merge. The next branch starts only after the preceding PR is approved and merged and the maintainer authorizes the next effort.
-- After a topic branch is merged and confirmed in `origin/master`, delete both its local and remote topic branches; retain `master` and deployment branches such as `demo`.
+- After a topic branch is merged and confirmed in `origin/<default-branch>`, delete both its local and remote topic branches; retain the default branch and deployment branches such as `demo`.
+- The repository's default branch is being renamed from `master` to `main`. During the transition, keep CI and deployment triggers working for both names. After this change is reviewed and merged, the maintainer changes the GitHub default-branch setting; then use `main` for new work and update local tracking with GitHub's branch-rename instructions. Remove the temporary `master` workflow compatibility after `main` deployments are verified.
+  ```sh
+  git branch -m master main
+  git fetch origin
+  git branch -u origin/main main
+  git remote set-head origin -a
+  ```
 - Keep decisions in ADRs and verified findings, constraints, and handoff state in [`MEMORY.md`](../../MEMORY.md). Update the memory in the same PR that changes the facts. Keep personal agent skills local and out of Git.
 
 ## Agreed sequence for review
