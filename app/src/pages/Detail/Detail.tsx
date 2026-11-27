@@ -22,7 +22,7 @@ const Detail: React.FC = (): React.ReactElement => {
     const releaseDate = tvProgram?.releaseDate || tvProgram?.firstAirDate;
     const formattedReleaseDate = releaseDate ? formatReleaseDate(releaseDate) : '';
 
-    const isTVShow = tvProgram?.numberOfEpisodes && tvProgram?.numberOfSeasons;
+    const isTVShow = basePath === 'tv-shows';
 
     if (isLoading) return <Loading />;
     if (hasError) return <p role="alert">Could not load this title. Reload the page to try again.</p>;

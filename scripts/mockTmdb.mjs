@@ -30,6 +30,9 @@ const server = createServer((request, response) => {
     }
 
     if (pathname === '/3/movie/999999' || pathname === '/3/tv/999999') return send(503, { status_message: 'Unavailable' });
+    if (pathname === '/3/tv/999998') {
+        return send(200, { ...tvShowDetailed, number_of_episodes: 0, number_of_seasons: 0, seasons: [] });
+    }
     if (/^\/3\/movie\/\d+$/.test(pathname)) return send(200, movieDetailed);
     if (/^\/3\/tv\/\d+$/.test(pathname)) return send(200, tvShowDetailed);
 
