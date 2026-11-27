@@ -15,6 +15,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 | F17 | GitHub's separate security alert count/details remain unverified because the CLI session is unauthenticated; the prior default-branch push notice reported 10 findings. | `gh` authentication unavailable during the November 2026 audit. |
+| F18 | GitHub Pages returned 404 for direct visits or refreshes of client-side routes; a Pages fallback and route restoration are implemented, pending deployment verification. | `/tv-app/search` and `/tv-app/movies/550` returned HTTP 404 on `main` at `a576ea2`; the Cypress regression and production build pass on `fix/pages-deep-links`, 2026-11-27. |
 
 ## Resolved findings
 
@@ -47,6 +48,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `fix/dev-audit-remediation`, based on `origin/main` at `d940f9d`; development and production audits both report zero vulnerabilities. The esbuild migration is merged in PR #18. Final checks: clean install, lint, client/server tests and builds, six Cypress tests, and server Docker build passed; Pages and Render `/api/docs/` returned HTTP 200.
-- **Next:** maintainer review and merge of the focused dependency-remediation scope; only then continue remaining Stage 2 gates before Stage 3 feature work.
+- **Current:** `fix/pages-deep-links`, based on `origin/main` at `a576ea2`; adds a GitHub Pages SPA route fallback and path restoration.
+- **Next:** review and merge this focused fix before starting the next approved scope. Complete the remaining Stage 2 gates before Stage 3 feature work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
