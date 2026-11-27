@@ -14,7 +14,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 | F17 | GitHub's separate security alert count/details remain unverified because the CLI session is unauthenticated; the prior default-branch push notice reported 10 findings. | `gh` authentication unavailable during the November 2026 audit. |
-| F18 | GitHub Pages direct-route fallback is merged but still awaiting deployment verification. | PR #20 at `b6eda32`; live `/tv-app/search` and `/tv-app/movies/550` still returned HTTP 404 while the Pages deployment workflow was in progress, 2026-11-27. |
 
 ## Resolved findings
 
@@ -33,8 +32,10 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F09 | Aligned Jest, Babel-Jest, Jest's jsdom environment, and Jest types on 29.x; removed unused or misplaced dependencies that pulled in vulnerable Jest 30/glob paths. Both full and production-only npm audits now report 0 vulnerabilities. | Root and workspace manifests plus `package-lock.json`; clean `npm ci`, Jest suites, and npm 11.20.0 audits passed on `fix/dev-audit-remediation`, 2026-11-27. |
 | F16 | Replaced the server Rollup build with esbuild 0.28.2 while retaining an explicit TypeScript check and Node CommonJS bundle output. | Merged in PR #18 at `d940f9d`; server build/tests, Cypress, production Docker image build, and container `/api/docs/` smoke test passed. |
 | F11 | Glide core CSS is imported at the Vite entrypoint so it is emitted as a production asset instead of referenced through a `node_modules` URL in HTML. | `app/src/main.tsx`, `app/index.html`; host and Docker production builds emit Glide CSS without the unresolved-path warning. |
-| F06 | Hook tests now await async assertions and explicitly verify failed requests settle into error state instead of rejecting outside React. | `app/__tests__/hooks/useFetchMovies.spec.ts`; client unit suite passes on `fix/catalog-error-states`, 2026-11-27. |
-| F19 | Active trending, search, and detail flows now retain request failures as state and show an accessible alert instead of misreporting an empty result or blank detail page. | Hook/component tests and Cypress search/detail failure scenarios pass on `fix/catalog-error-states`, 2026-11-27. |
+| F06 | Hook tests now await async assertions and explicitly verify failed requests settle into error state instead of rejecting outside React. | `app/__tests__/hooks/useFetchMovies.spec.ts`; client tests passed, merged in PR #21 at `69a30d1`. |
+| F18 | GitHub Pages direct visits and refreshes now load the SPA and restore the requested route. | PR #20 at `b6eda32`; Chrome loaded `/tv-app/search?query=Game%20of%20Thrones` after the 404 fallback redirected through the site root, 2026-11-27. |
+| F19 | Active trending, search, and detail flows now retain request failures as state and show an accessible alert instead of misreporting an empty result or blank detail page. | Hook/component tests and Cypress search/detail failure scenarios passed, merged in PR #21 at `69a30d1`. |
+| F20 | Detail page identifies TV programs from the route, not nonzero episode/season counts, so announced shows are not rendered as movies. | Cypress case for a TV show with zero seasons and episodes passes on `fix/tv-show-detail-kind`, 2026-11-27. |
 
 ## Decisions and proposed targets
 
@@ -49,6 +50,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `fix/catalog-error-states`, based on `origin/main` at `b6eda32`; surfaces failed catalog requests in the active home, search, and detail flows.
-- **Next:** review and merge this focused fix before starting the next approved scope. Complete the remaining Stage 2 gates before Stage 3 feature work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
+- **Current:** `fix/tv-show-detail-kind`, based on `origin/main` at `69a30d1`; classifies detail pages from the route even when a TV show has zero counts.
+- **Next:** review and merge this focused bug fix, then complete the remaining Stage 2 gates before Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?

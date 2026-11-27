@@ -33,6 +33,14 @@ describe('Search view page', () => {
         cy.get('[role="alert"]').should('contain.text', 'Could not load this title');
     });
 
+    it('renders a TV show correctly when its episode and season counts are zero', () => {
+        cy.visit(`${Cypress.expose('APP_HOME_URL')}/tv-shows/999998`);
+
+        cy.contains('Duration: 0 Seasons, 0 Episodes').should('be.visible');
+        cy.get('#imdb_link').should('not.exist');
+        cy.contains('undefined min.').should('not.exist');
+    });
+
     it('should search a tv program correctly', () => {
         cy.visit(Cypress.expose('APP_SEARCH_URL'));
 
