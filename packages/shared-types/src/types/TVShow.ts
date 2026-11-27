@@ -12,6 +12,13 @@ export type TVShow = {
     };
 };
 
+export type EpisodeRating = {
+    episodeNumber: number;
+    name: string;
+    airDate: string | null;
+    rating: number | null;
+};
+
 export type TVShowDetailed = TVShow & {
     inProduction: boolean;
     numberOfEpisodes: number;

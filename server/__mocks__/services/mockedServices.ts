@@ -23,6 +23,7 @@ tmdbAPIMock.services = {
     TVShowServices: {
         search: jest.fn().mockResolvedValue(TVShows),
         searchById: jest.fn().mockResolvedValue(tvShowDetailed),
+        getEpisodeRatings: jest.fn().mockResolvedValue([]),
     },
     TrendingServices: {
         getTrendingMovies: jest.fn().mockResolvedValue(Movies),

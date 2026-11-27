@@ -4,7 +4,7 @@ import { AllowedTVProgramResource } from '@app-types/TVProgram';
 import { useFetchTVProgram } from '@hooks/useFetchTVProgram';
 import { useBasePathCheckerForDetailedPage } from '@hooks/useSearchQueryParams';
 import { Rating } from '@components/TVProgamItem/TVProgramItem';
-import SeasonCard from '@components/SeasonCard';
+import EpisodeRatingGrid from './EpisodeRatingGrid';
 import { Loading } from '@layout';
 import formatReleaseDate from '../../utils/formatReleaseDate';
 import ClockIcon from '@assets/clock.svg';
@@ -46,7 +46,7 @@ const Detail: React.FC = (): React.ReactElement => {
                     Return
                 </button>
                 <div className="hero-content detail-content flex-col lg:flex-row mt-16">
-                    <img src={tvProgram?.images?.w300} className="detail-poster" alt={`${title} poster`} />
+                    <img src={tvProgram?.images?.w500} className="detail-poster" alt={`${title} poster`} />
                     <div className="detail-copy">
                         {tvProgram?.tagLine && <p className="detail-tagline">{tvProgram.tagLine}</p>}
                         <h1 className="detail-title">{title}</h1>
@@ -108,18 +108,7 @@ const Detail: React.FC = (): React.ReactElement => {
                     </div>
                 </div>
             </div>
-            {isTVShow && (
-                <section className="season-section" aria-labelledby="season-section-title">
-                    <h2 id="season-section-title" className="season-section__title">
-                        Seasons
-                    </h2>
-                    <div className="season-grid">
-                        {tvProgram?.seasons?.map((season, index) => (
-                            <SeasonCard info={season} key={`season_${id}_${index}`} />
-                        ))}
-                    </div>
-                </section>
-            )}
+            {isTVShow && tvProgram?.id && <EpisodeRatingGrid key={id} showId={tvProgram.id} seasons={tvProgram.seasons} />}
         </>
     );
 };

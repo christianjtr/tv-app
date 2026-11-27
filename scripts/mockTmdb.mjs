@@ -33,6 +33,32 @@ const server = createServer((request, response) => {
     if (pathname === '/3/tv/999998') {
         return send(200, { ...tvShowDetailed, number_of_episodes: 0, number_of_seasons: 0, seasons: [] });
     }
+    const seasonMatch = /^\/3\/tv\/1399\/season\/(\d+)$/.exec(pathname);
+    if (seasonMatch) {
+        const [, season] = seasonMatch;
+        if (season === '3') return send(503, { status_message: 'Unavailable' });
+        if (season === '1') {
+            const episodes = Array.from({ length: 12 }, (_, index) => ({
+                episode_number: index + 1,
+                name:
+                    ['Winter Is Coming', 'The Kingsroad', 'A Very Long Episode Title That Wraps Across Multiple Lines', 'Lord Snow'][index] ??
+                    `Episode ${index + 1}`,
+                air_date: index === 3 ? null : '2011-04-17',
+                vote_average: 9.1,
+                vote_count: 100,
+            }));
+            return send(200, { episodes });
+        }
+        if (season === '2') {
+            return send(200, {
+                episodes: [
+                    { episode_number: 1, name: 'The North Remembers', air_date: null, vote_average: 0, vote_count: 0 },
+                    { episode_number: 2, name: 'The Night Lands', air_date: '2099-01-01', vote_average: 0, vote_count: 0 },
+                ],
+            });
+        }
+        return send(200, { episodes: [] });
+    }
     if (/^\/3\/movie\/\d+$/.test(pathname)) return send(200, movieDetailed);
     if (/^\/3\/tv\/\d+$/.test(pathname)) return send(200, tvShowDetailed);
 

@@ -1,4 +1,4 @@
-import { TVShow, TVShowDetailed } from '@tv-app-packages/shared-types';
+import { EpisodeRating, TVShow, TVShowDetailed } from '@tv-app-packages/shared-types';
 import { tmdbAPI } from '@apis';
 import { tvshowMapper, tvshowDetailedMapper } from '@entityMappers/tmdb/tvshow.entity.mapper';
 import { default as CacheServices } from './cache.services';
@@ -6,6 +6,7 @@ import { default as CacheServices } from './cache.services';
 export interface TVShowServiceInterface {
     search: (criteria: string) => Promise<{ page: number; results: TVShow[] }>;
     searchById: (id: number | string) => Promise<TVShowDetailed>;
+    getEpisodeRatings: (id: number, seasonNumber: number) => Promise<EpisodeRating[]>;
     getTrendingTVShows: (timeWindow: TMDB.TimeWindow, language?: string) => Promise<{ page: number; results: TVShow[] }>;
 }
 
@@ -50,6 +51,15 @@ export default {
             console.error('[TV APP][TV][ERROR] ::: searchById', error);
             throw error;
         }
+    },
+    getEpisodeRatings: async (id: number, seasonNumber: number): Promise<EpisodeRating[]> => {
+        const key = CacheServices.generateKey(['tv-show', 'episode-ratings', `id:${id}`, `season:${seasonNumber}`]);
+        const cached = CacheServices.retrieveDatFromCache(key) as EpisodeRating[] | undefined;
+        if (cached !== undefined) return cached;
+
+        const ratings = await tmdbAPIServices.TVShowServices.getEpisodeRatings(id, seasonNumber);
+        CacheServices.performCacheStorage(key, ratings);
+        return ratings;
     },
     getTrendingTVShows: async (timeWindow: TMDB.TimeWindow, language?: string): Promise<{ page: number; results: TVShow[] }> => {
         const key = CacheServices.generateKey(['tv-show', 'getTrendingTVShows', `timeWindow:${timeWindow}`, `language:${language || 'default'}`]);
