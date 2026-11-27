@@ -2,7 +2,7 @@ name: CI and deploy
 
 on:
     push:
-        branches: ["master", "main"]
+        branches: ["main"]
         paths:
           - '.dockerignore'
           - '.nvmrc'
@@ -15,7 +15,7 @@ on:
           - 'packages/shared-types/**'
           - 'scripts/**'
     pull_request:
-        branches: ["master", "main"]
+        branches: ["main"]
         paths:
           - '.dockerignore'
           - '.nvmrc'
@@ -51,7 +51,7 @@ jobs:
             - run: npm run test:client:cy
 
     publish-demo:
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         needs: run-tests
         name: Build and publish GitHub Pages demo
         runs-on: ubuntu-latest
@@ -95,7 +95,7 @@ jobs:
                   git -C demo push origin HEAD:demo
 
     dockerize-build-and-push:
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         needs: run-tests
         name: Build and push backend image
         runs-on: ubuntu-latest
