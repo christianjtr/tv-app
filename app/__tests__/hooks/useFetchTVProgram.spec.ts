@@ -7,7 +7,7 @@ jest.mock('@services/apis/tv-app/tvprogram.api.services', () => ({
     getTVProgramById: jest.fn(),
 }));
 
-const deferred = <T,>() => {
+const deferred = <T>() => {
     let resolve!: (_value: T) => void;
     const promise = new Promise<T>((complete) => {
         resolve = complete;

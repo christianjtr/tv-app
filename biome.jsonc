@@ -1,0 +1,195 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.6.9/schema.json",
+    "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+    "files": {
+        "ignoreUnknown": true,
+        "includes": ["**/*.{js,jsx,ts,tsx}", "!!**/node_modules", "!!**/dist", "!!**/coverage"]
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 150,
+        "attributePosition": "auto",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "expand": "auto",
+        "useEditorconfig": true
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "preset": "none",
+            "a11y": {
+                "noAccessKey": "error",
+                "noAmbiguousAnchorText": "off",
+                "noAriaUnsupportedElements": "error",
+                "noAutofocus": "error",
+                "noDistractingElements": "error",
+                "noHeaderScope": "error",
+                "noInteractiveElementToNoninteractiveRole": "error",
+                "noLabelWithoutControl": "error",
+                "noNoninteractiveElementInteractions": "error",
+                "noNoninteractiveElementToInteractiveRole": "error",
+                "noNoninteractiveTabindex": "error",
+                "noPositiveTabindex": "error",
+                "noRedundantAlt": "error",
+                "noRedundantRoles": "error",
+                "noStaticElementInteractions": "error",
+                "useAltText": "error",
+                "useAnchorContent": "error",
+                "useAriaActivedescendantWithTabindex": "error",
+                "useAriaPropsForRole": "error",
+                "useAriaPropsSupportedByRole": "error",
+                "useFocusableInteractive": "error",
+                "useHeadingContent": "error",
+                "useHtmlLang": "error",
+                "useIframeTitle": "error",
+                "useKeyWithClickEvents": "error",
+                "useKeyWithMouseEvents": "error",
+                "useMediaCaption": "error",
+                "useValidAnchor": "error",
+                "useValidAriaProps": "error",
+                "useValidAriaRole": "error",
+                "useValidAriaValues": "error",
+                "useValidAutocomplete": "error"
+            },
+            "complexity": {
+                "noAdjacentSpacesInRegex": "error",
+                "noArguments": "error",
+                "noBannedTypes": "error",
+                "noExtraBooleanCast": "error",
+                "noUselessCatch": "error",
+                "noUselessEscapeInRegex": "error",
+                "noUselessThisAlias": "error",
+                "noUselessTypeConstraint": "error"
+            },
+            "correctness": {
+                "noChildrenProp": "error",
+                "noConstAssign": "off",
+                "noConstantCondition": "error",
+                "noEmptyCharacterClassInRegex": "error",
+                "noEmptyPattern": "error",
+                "noGlobalObjectCalls": "off",
+                "noInvalidBuiltinInstantiation": "off",
+                "noInvalidConstructorSuper": "off",
+                "noNonoctalDecimalEscape": "error",
+                "noPrecisionLoss": "error",
+                "noRenderReturnValue": "error",
+                "noSelfAssign": "error",
+                "noSetterReturn": "off",
+                "noSwitchDeclarations": "error",
+                "noUndeclaredVariables": "off",
+                "noUnreachable": "off",
+                "noUnreachableSuper": "off",
+                // shortcut: Biome misreads CommonJS exports and declaration-backed assets; TS/Vite/Rollup builds validate imports.
+                "noUnresolvedImports": "off",
+                "noUnsafeFinally": "error",
+                "noUnsafeOptionalChaining": "error",
+                "noUnusedLabels": "error",
+                "noUnusedPrivateClassMembers": "error",
+                "noUnusedImports": "error",
+                "noUnusedVariables": { "level": "error", "options": { "ignoreRestSiblings": true, "ignoreUsingDeclarations": false } },
+                "useExhaustiveDependencies": {
+                    "level": "warn",
+                    "options": { "reportUnnecessaryDependencies": false }
+                },
+                "useHookAtTopLevel": "error",
+                "useIsNan": "error",
+                "useJsxKeyInIterable": "error",
+                "useValidForDirection": "error",
+                "useValidTypeof": "error",
+                "useYield": "error"
+            },
+            "performance": { "noDelete": "error" },
+            "security": { "noBlankTarget": "error", "noDangerouslySetInnerHtmlWithChildren": "error" },
+            "style": {
+                "noCommonJs": "error",
+                // shortcut: Biome flags valid global declaration merging used by server type augmentations.
+                "noNamespace": "off",
+                "noNestedTernary": "off",
+                "useArrayLiterals": "error",
+                "useAsConstAssertion": "error",
+                "useBlockStatements": "off",
+                "useConst": "error",
+                "useSpreadOverApply": "error"
+            },
+            "suspicious": {
+                "noAssignInExpressions": "error",
+                "noAsyncPromiseExecutor": "error",
+                "noCatchAssign": "error",
+                "noClassAssign": "off",
+                "noCommentText": "error",
+                "noCompareNegZero": "error",
+                "noConstantBinaryExpressions": "error",
+                "noControlCharactersInRegex": "error",
+                "noDebugger": "error",
+                "noDuplicateCase": "error",
+                "noDuplicateClassMembers": "off",
+                "noDuplicateElseIf": "error",
+                "noDuplicateEnumValues": "error",
+                "noDuplicateJsxProps": "error",
+                "noDuplicateObjectKeys": "off",
+                "noDuplicateParameters": "off",
+                "noEmptyBlockStatements": "error",
+                "noExplicitAny": "error",
+                "noExtraNonNullAssertion": "error",
+                "noFallthroughSwitchClause": "error",
+                "noFunctionAssign": "off",
+                "noGlobalAssign": "error",
+                "noImportAssign": "off",
+                "noIrregularWhitespace": "error",
+                "noMisleadingCharacterClass": "error",
+                "noMisleadingInstantiator": "error",
+                "noNonNullAssertedOptionalChain": "error",
+                "noPrototypeBuiltins": "error",
+                "noReactStringRefs": "error",
+                "noRedeclare": "off",
+                "noShadowRestrictedNames": "error",
+                "noSparseArray": "error",
+                "noTsIgnore": "error",
+                "noUnknownAttribute": "error",
+                "noUnsafeDeclarationMerging": "error",
+                "noUnsafeNegation": "off",
+                "noUnusedExpressions": "off",
+                "noUselessRegexBackrefs": "error",
+                "noVar": "error",
+                "noWith": "off",
+                "useGetterReturn": "off",
+                "useNamespaceKeyword": "error"
+            }
+        }
+    },
+    "javascript": {
+        "jsxRuntime": "reactClassic",
+        "formatter": {
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "trailingCommas": "es5",
+            "semicolons": "always",
+            "arrowParentheses": "always",
+            "bracketSameLine": false,
+            "quoteStyle": "single",
+            "attributePosition": "auto",
+            "bracketSpacing": true
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["app/src/**/*.{js,jsx,ts,tsx}"],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "useComponentExportOnlyModules": {
+                            "level": "warn",
+                            "options": { "allowConstantExport": true }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "assist": { "enabled": false }
+}

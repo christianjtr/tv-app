@@ -8,7 +8,7 @@
     "license": "ISC",
     "scripts": {
         "dev": "nodemon src/main.ts",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "lint": "biome check .",
         "precommit": "lint-staged",
         "prepare": "husky install",
         "build": "rollup --config rollup.config.mjs",
@@ -16,7 +16,7 @@
     },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
-            "eslint --fix"
+            "biome check --write"
         ]
     },
     "husky": {
@@ -77,20 +77,12 @@
         "@types/supertest": "7.2.1",
         "@types/swagger-ui-express": "^4.1.6",
         "@types/yamljs": "^0.2.34",
-        "@eslint/eslintrc": "3.3.7",
-        "@eslint/js": "9.39.5",
-        "@typescript-eslint/eslint-plugin": "8.74.0",
-        "@typescript-eslint/parser": "8.74.0",
-        "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-import": "2.32.0",
-        "eslint-plugin-prettier": "5.5.7",
         "husky": "^9.0.11",
         "jest": "30.5.2",
         "lint-staged": "^15.2.2",
         "moq.ts": "^10.0.8",
         "node-mocks-http": "^1.14.1",
         "nodemon": "3.1.14",
-        "prettier": "^3.2.5",
         "rollup": "^4.12.1",
         "rollup-plugin-dts": "^6.1.0",
         "supertest": "7.3.2",

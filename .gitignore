@@ -29,3 +29,7 @@ videos
 # Environment variables
 .env
 .env.production
+
+# Local development
+.agents
+skills-lock.json

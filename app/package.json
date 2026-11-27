@@ -14,7 +14,7 @@
         "dev:e2e": "NODE_ENV=e2e vite",
         "build": "tsc && vite build",
         "build:prod": "tsc && vite build --mode production",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "lint": "biome check .",
         "preview": "vite preview",
         "precommit": "lint-staged",
         "prepare": "husky install",
@@ -27,7 +27,7 @@
     },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
-            "eslint --fix"
+            "biome check --write"
         ]
     },
     "husky": {
@@ -93,10 +93,6 @@
         "@types/qs": "^6.9.12",
         "@types/react": "19.3.3",
         "@types/react-dom": "19.3.0",
-        "@eslint/eslintrc": "3.3.7",
-        "@eslint/js": "9.39.5",
-        "@typescript-eslint/eslint-plugin": "8.74.0",
-        "@typescript-eslint/parser": "8.74.0",
         "@vitejs/plugin-react": "6.3.0",
         "@tailwindcss/vite": "4.3.5",
         "babel-jest": "30.5.2",
@@ -105,13 +101,6 @@
         "cypress-wait-until": "^3.0.1",
         "daisyui": "5.8.3",
         "dotenv": "^16.4.5",
-        "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-import": "2.32.0",
-        "eslint-plugin-jsx-a11y": "6.10.2",
-        "eslint-plugin-react": "7.37.5",
-        "eslint-plugin-react-hooks": "7.1.1",
-        "eslint-plugin-react-refresh": "0.5.8",
-        "eslint-import-resolver-typescript": "4.4.5",
         "http-status": "^1.7.3",
         "husky": "^9.0.11",
         "jest": "30.5.2",
@@ -119,7 +108,6 @@
         "jest-transform-stub": "^2.0.0",
         "jest-transformer-svg": "^2.0.2",
         "lint-staged": "^15.2.2",
-        "prettier": "^3.2.5",
         "start-server-and-test": "^2.0.3",
         "tailwindcss": "4.3.5",
         "ts-jest": "29.4.15",

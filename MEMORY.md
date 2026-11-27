@@ -15,7 +15,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F09 | Full `npm audit` reports 24 development-dependency findings (23 moderate, 1 low); `npm audit --omit=dev` reports 0 production vulnerabilities. GitHub's last default-branch push notice reported 10 findings from its separate scan; alert-level details require authenticated GitHub access. | Root `package-lock.json`; npm 11.20.0 audit after Stage 1 fixes, 2026-11-27. |
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
 | F11 | Client production builds warn that `@glidejs/glide/dist/css/glide.core.min.css` is missing and leave it unresolved; slider styling needs a separate check. | `npm run build:prod --workspace=tv-app-client`, 2026-11-26. |
-| F12 | ESLint 9.39.5 is marked unsupported by npm; retained for this migration per maintainer direction, with a future BiomeJS migration planned. | `npm install` deprecation warning; current React, JSX accessibility, and import plugins do not declare ESLint 10 support. |
 | F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 
 ## Resolved findings
@@ -31,6 +30,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F08 | Season artwork uses each season's poster, and date formatting explicitly uses UTC to avoid month shifts. | This branch; [TV mapper](server/src/entityMappers/tmdb/tvshow.entity.mapper.ts), [date helper](app/src/utils/formatReleaseDate.ts); mapper/date tests passed. |
 | F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
 | F15 | Stage 1 removed all production audit findings by replacing vulnerable `@hapi/joi`, moving/updating Nodemon as a development tool, removing unused `swagger-jsdoc`, and updating `concurrently`/`picomatch`. | `npm audit --omit=dev` reports 0; client/server tests, builds, lint, and Cypress passed. |
+| F12 | ESLint and Prettier were removed from both workspaces in favor of Biome 2.6.9; app/server lint, builds, unit suites, and Cypress pass. Biome's unresolved-import rule is disabled because it misresolves existing module formats and asset declarations; TypeScript and bundler builds remain the resolution checks. | `package.json`, `app/package.json`, `server/package.json`, `biome.jsonc`; all listed checks passed on `build/biomejs-migration`. |
 
 ## Decisions and proposed targets
 
@@ -41,10 +41,10 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
 - **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including the planned BiomeJS migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
-- **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status, then plan a separate migration to BiomeJS. BiomeJS is not part of scope 6.
+- **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status; BiomeJS was explicitly a separate Stage 2 effort.
 
 ## Handoff
 
-- **Current:** `chore/complete-main-branch-cleanup`, based on `origin/main` at `8f257e9`; workflow and guidance now use `main`, the obsolete remote ref was deleted, and `origin/HEAD` points to `main`. Only the active cleanup branch and local `main` remain.
-- **Next, after this cleanup is merged:** start the BiomeJS scope from `origin/main`; keep Stage 3 feature work gated on the Stage 2 exit criteria.
+- **Current:** `build/biomejs-migration`, based on `origin/main` at `071be68`; ESLint/Prettier configs and dependencies are replaced by Biome 2.6.9. App/server lint, client/server builds and unit tests, and Cypress pass.
+- **Next, after this migration is merged:** evaluate a separate server Rollup-to-esbuild scope; complete the remaining Stage 2 gates before Stage 3 feature work.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?

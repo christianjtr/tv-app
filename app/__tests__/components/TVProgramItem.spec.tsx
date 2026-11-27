@@ -23,7 +23,7 @@ describe('TVProgramItem component', () => {
     it('should render the correct info', () => {
         const { title, name, description, rating, images } = movieItem;
 
-        render(<TVProgramItem info={movieItem} onClick={() => {}} />);
+        render(<TVProgramItem info={movieItem} onClick={() => undefined} />);
 
         const tvProgramTitle = title || name;
         const image = screen.getByRole('img');

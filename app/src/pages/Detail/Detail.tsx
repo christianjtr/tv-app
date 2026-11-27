@@ -123,7 +123,9 @@ const Detail: React.FC = (): React.ReactElement => {
                 <>
                     <div className="text-2xl divider divider-start mb-10">Seasons</div>
                     <div className="grid md:grid-cols-5 gap-5 mb-10 sm:grid-cols-1 xs:grid-cols-1">
-                        {tvProgram?.seasons?.map((season, index) => <SeasonCard info={season} key={`season_${id}_${index}`} />)}
+                        {tvProgram?.seasons?.map((season, index) => (
+                            <SeasonCard info={season} key={`season_${id}_${index}`} />
+                        ))}
                     </div>
                 </>
             )}
