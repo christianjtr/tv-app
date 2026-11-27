@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TV app</title>
+        <!-- shortcut: assumes the GitHub Pages project path is /tv-app; update if the deployment base changes. -->
+        <script>
+            const basePath = '/tv-app';
+            const pathname = window.location.pathname;
+            const routePath = pathname.startsWith(`${basePath}/`) ? pathname.slice(basePath.length) : pathname;
+            const route = `${routePath}${window.location.search}${window.location.hash}`;
+
+            window.location.replace(`${basePath}/?__spa_route=${encodeURIComponent(route)}`);
+        </script>
+    </head>
+    <body></body>
+</html>
