@@ -16,7 +16,7 @@ const Detail: React.FC = (): React.ReactElement => {
     const { pathname } = useLocation();
     const { id = '' } = useParams<{ id: string }>();
     const basePath = useBasePathCheckerForDetailedPage(pathname);
-    const { tvProgram, isLoading } = useFetchTVProgram(id, basePath as AllowedTVProgramResource);
+    const { tvProgram, isLoading, hasError } = useFetchTVProgram(id, basePath as AllowedTVProgramResource);
 
     const title = tvProgram?.title || tvProgram?.name;
     const releaseDate = tvProgram?.releaseDate || tvProgram?.firstAirDate;
@@ -25,6 +25,7 @@ const Detail: React.FC = (): React.ReactElement => {
     const isTVShow = tvProgram?.numberOfEpisodes && tvProgram?.numberOfSeasons;
 
     if (isLoading) return <Loading />;
+    if (hasError) return <p role="alert">Could not load this title. Reload the page to try again.</p>;
 
     return (
         <>

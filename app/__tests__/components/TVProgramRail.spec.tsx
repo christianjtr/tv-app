@@ -50,6 +50,13 @@ describe('TVProgramRail component', () => {
         expect(component.queryByTestId('not-found-component')).toBeInTheDocument();
     });
 
+    it('should render a request error instead of an empty state', () => {
+        render(<TVProgramRail title="Movies" tvPrograms={[]} tvProgramType="movie" hasError />);
+
+        expect(screen.getByRole('alert')).toHaveTextContent('Could not load movies');
+        expect(screen.queryByTestId('not-found-component')).not.toBeInTheDocument();
+    });
+
     it('should render the N elements within the rail', () => {
         const component = render(<TVProgramRail title="dummy-movies" tvPrograms={movieCollection} tvProgramType="movie" />);
 
