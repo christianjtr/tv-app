@@ -56,6 +56,15 @@ export async function searchById(request: Request, response: Response, next: Nex
     }
 }
 
+export async function getEpisodeRatings(request: Request, response: Response, next: NextFunction): Promise<void> {
+    try {
+        const ratings = await TVShowServices.getEpisodeRatings(Number(request.params.id), Number(request.params.seasonNumber));
+        response.status(HTTPStatus.OK).json(ratings);
+    } catch (error) {
+        next(error);
+    }
+}
+
 export async function getTrendingTVShows(request: Request, response: Response, next: NextFunction): Promise<void> {
     try {
         const { safeFields } = request;

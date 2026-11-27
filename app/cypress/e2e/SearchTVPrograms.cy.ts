@@ -65,6 +65,11 @@ describe('Search view page', () => {
                 cy.url().should('match', new RegExp(urlPattern));
             });
         cy.get('h1').should('contain.text', 'Game of Thrones');
+        cy.get('.detail-poster').should(($poster) => {
+            expect($poster.attr('src')).to.include('/w500/');
+            expect($poster[0].getBoundingClientRect().width).to.be.greaterThan(310);
+            expect(getComputedStyle($poster[0]).filter).to.not.equal('none');
+        });
     });
 
     it('follows search query changes from browser history and rejects unmatched queries', () => {

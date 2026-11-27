@@ -1,7 +1,7 @@
 import { stringify } from 'qs';
 import { tvAppApi } from './tv-app.config';
 import requestJson from './requestJson';
-import { TVShow, TVShowDetailed, TimeWindow } from '@tv-app-packages/shared-types';
+import { EpisodeRating, TVShow, TVShowDetailed, TimeWindow } from '@tv-app-packages/shared-types';
 
 const {
     config: { baseURL, isAPIMocked },
@@ -36,6 +36,12 @@ export const searchTVShowById = async (id: number | string): Promise<TVShowDetai
     if (isAPIMocked) return (await apiMock).tvshowMock as unknown as Promise<TVShowDetailed>;
 
     return requestJson<TVShowDetailed>(`${baseURL}/tv-shows/${id}`);
+};
+
+export const getEpisodeRatings = async (id: number, seasonNumber: number, signal: AbortSignal): Promise<EpisodeRating[]> => {
+    if (isAPIMocked) return (await apiMock).episodeRatingsMock[seasonNumber] ?? [];
+
+    return requestJson<EpisodeRating[]>(`${baseURL}/tv-shows/${id}/seasons/${seasonNumber}/episode-ratings`, signal);
 };
 
 export const getTrendingTVShows = async (timeWindow: TimeWindow, language?: string): Promise<TVShowResponse.TVShowTrends> => {

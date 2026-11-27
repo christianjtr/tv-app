@@ -116,6 +116,8 @@ npm run build:shared-types
 
 The Cypress E2E script starts the client and Express API with a local fixture-backed TMDB stub; it does not require TMDB credentials.
 
+To preview **Episode ratings** without the API server, run `VITE_ENABLE_API_MOCK=true npm run dev:client` and open `/tv-app/tv-shows/1429`. Select a season to see its episode titles, air dates, and ratings beside the season list; the [client fixture](./app/__fixtures__/episodeRatings.json) contains sample titles, scores, an unrated episode, and an upcoming episode.
+
 **Environment variables:**
 
 Each app's tier within the project has its own environment variables file, you **should create a .env file following the templates provided** in the corresponding directory.
@@ -233,5 +235,5 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 ### Next steps
 
 -   Review dependency and action versions manually; revisit automation if update volume grows.
--   Improve spatial D-pad navigation and accessibility.
--   Refine hero imagery and review the carousel library.
+-   Expand the movie and TV catalogs beyond trending titles.
+-   Add regional watch providers, then use saved preferences and trends for Top Picks.

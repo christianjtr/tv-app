@@ -82,6 +82,58 @@ paths:
                     description: A tv show
                 '500':
                     description: Server error
+    /tv-shows/{tvShowId}/seasons/{seasonNumber}/episode-ratings:
+        get:
+            summary: Return TMDB episode ratings for one season
+            tags:
+                - TV Shows
+            parameters:
+                - name: tvShowId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                - name: seasonNumber
+                  in: path
+                  required: true
+                  description: Season number. Zero selects specials.
+                  schema:
+                      type: integer
+                      format: int32
+                      minimum: 0
+            responses:
+                '200':
+                    description: Episode titles, air dates, and TMDB ratings. An unrated episode has a null rating.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    required: [episodeNumber, name, airDate, rating]
+                                    properties:
+                                        episodeNumber:
+                                            type: integer
+                                            minimum: 1
+                                        name:
+                                            type: string
+                                        airDate:
+                                            type: string
+                                            format: date
+                                            nullable: true
+                                        rating:
+                                            type: number
+                                            minimum: 0
+                                            maximum: 10
+                                            nullable: true
+                '400':
+                    description: Invalid TV show ID or season number
+                '502':
+                    description: Catalog provider unavailable or returned invalid season data
+                '500':
+                    description: Server error
     /tv-shows/trending:
         get:
             summary: Returns a collection of trending tv shows
