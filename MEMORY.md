@@ -11,9 +11,8 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 | ID | Finding | Evidence |
 |---|---|---|
-| F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
-| F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 | F17 | GitHub's separate security alert count/details remain unverified because the CLI session is unauthenticated; the prior default-branch push notice reported 10 findings. | `gh` authentication unavailable during the November 2026 audit. |
+| F21 | Automated dependency/action update grouping and immutable action SHA pinning policy have not been agreed; no update bot has been added. | [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md); workflow currently uses major-version action tags. |
 
 ## Resolved findings
 
@@ -35,7 +34,9 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F06 | Hook tests now await async assertions and explicitly verify failed requests settle into error state instead of rejecting outside React. | `app/__tests__/hooks/useFetchMovies.spec.ts`; client tests passed, merged in PR #21 at `69a30d1`. |
 | F18 | GitHub Pages direct visits and refreshes now load the SPA and restore the requested route. | PR #20 at `b6eda32`; Chrome loaded `/tv-app/search?query=Game%20of%20Thrones` after the 404 fallback redirected through the site root, 2026-11-27. |
 | F19 | Active trending, search, and detail flows now retain request failures as state and show an accessible alert instead of misreporting an empty result or blank detail page. | Hook/component tests and Cypress search/detail failure scenarios passed, merged in PR #21 at `69a30d1`. |
-| F20 | Detail page identifies TV programs from the route, not nonzero episode/season counts, so announced shows are not rendered as movies. | Cypress case for a TV show with zero seasons and episodes passes on `fix/tv-show-detail-kind`, 2026-11-27. |
+| F20 | Detail page identifies TV programs from the route, not nonzero episode/season counts, so announced shows are not rendered as movies. | Cypress case for a TV show with zero seasons and episodes passes; merged in PR #22 at `a7e966c`. |
+| F10 | Pull requests now run CI regardless of changed paths, including docs-only changes; the workflow validates syntax, lints both apps, builds both clients and server, and runs unit/E2E tests. | `.github/workflows/deployment.yml`; actionlint 1.7.12 and local CI-equivalent checks passed on `build/ci-readiness`, 2026-11-27. |
+| F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | `app/package.json`; 10 E2E tests passed in headless Chrome 158 on `build/ci-readiness`, 2026-11-27. |
 
 ## Decisions and proposed targets
 
@@ -50,6 +51,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `fix/tv-show-detail-kind`, based on `origin/main` at `69a30d1`; classifies detail pages from the route even when a TV show has zero counts.
-- **Next:** review and merge this focused bug fix, then complete the remaining Stage 2 gates before Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
+- **Current:** `build/ci-readiness`, based on `origin/main` at `a7e966c`; upgrades workflow actions, validates workflow syntax, adds PR lint/build checks, and runs Cypress in Chrome.
+- **Next:** review and merge this CI scope. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
