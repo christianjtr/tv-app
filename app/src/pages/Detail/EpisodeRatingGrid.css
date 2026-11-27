@@ -61,9 +61,9 @@
 
 .episode-ratings__season-list .season-card {
     background: transparent;
-    border-radius: 0;
+    border-radius: 0.75rem;
     gap: 1rem;
-    padding: 0.5rem 0;
+    padding: 0.75rem;
 }
 
 .episode-ratings__season-list .season-card--selectable {
@@ -80,8 +80,6 @@
 
 .episode-ratings__season-list .season-card--selected {
     background: rgb(247 168 212 / 12%);
-    border-radius: 0.75rem;
-    padding: 0.75rem;
 }
 
 .episode-ratings__season-list .season-card__poster {

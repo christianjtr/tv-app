@@ -44,19 +44,40 @@ describe('Episode ratings', () => {
                 expect(Number.parseFloat(getComputedStyle($score[0]).fontSize)).to.be.greaterThan(24);
                 expect(getComputedStyle($score[0]).backgroundColor).to.equal('rgba(172, 229, 183, 0.15)');
                 expect(getComputedStyle($score[0]).color).to.equal('rgb(172, 229, 183)');
-            });
+        });
         cy.get('.episode-ratings__episode-score').then(($scores) => {
-            const columns = getComputedStyle($scores[0].closest('.episode-ratings__grid') as HTMLElement)
-                .gridTemplateColumns.trim()
-                .split(/\s+/).length;
-            const items = $scores.toArray();
-            for (let index = 0; index < items.length; index += columns) {
-                const positions = items.slice(index, index + columns).map((score) => score.getBoundingClientRect().top);
+            const rows = new Map<number, number[]>();
+            $scores.toArray().forEach((score) => {
+                const card = score.closest('.episode-ratings__episode') as HTMLElement;
+                const rowTop = Math.round(card.getBoundingClientRect().top);
+                const positions = rows.get(rowTop) ?? [];
+                positions.push(score.getBoundingClientRect().top);
+                rows.set(rowTop, positions);
+            });
+            for (const positions of rows.values()) {
+                if (positions.length < 2) continue;
                 expect(Math.max(...positions) - Math.min(...positions)).to.be.lessThan(1);
             }
         });
 
-        cy.contains('button.season-card--selectable', 'Season 2').click();
+        cy.contains('button.season-card--selectable', 'Season 2')
+            .find('.season-card__body')
+            .then(($body) => {
+                const card = $body[0].closest('button') as HTMLButtonElement;
+                const before = $body[0].getBoundingClientRect();
+                const beforeCard = card.getBoundingClientRect();
+                const beforeOffset = { x: before.x - beforeCard.x, y: before.y - beforeCard.y };
+                cy.contains('button.season-card--selectable', 'Season 2').click();
+                cy.contains('button.season-card--selectable', 'Season 2')
+                    .find('.season-card__body')
+                    .should(($selectedBody) => {
+                        const after = $selectedBody[0].getBoundingClientRect();
+                        const selectedCard = $selectedBody[0].closest('button') as HTMLButtonElement;
+                        const afterCard = selectedCard.getBoundingClientRect();
+                        expect(after.x - afterCard.x).to.equal(beforeOffset.x);
+                        expect(after.y - afterCard.y).to.equal(beforeOffset.y);
+                    });
+            });
         cy.wait('@seasonRatings');
         cy.contains('button.season-card--selectable', 'Season 2').should('have.attr', 'aria-pressed', 'true');
         cy.contains('.episode-ratings__comparison-heading h3', 'Season 2').should('be.visible');
