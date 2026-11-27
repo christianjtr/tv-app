@@ -12,7 +12,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | ID | Finding | Evidence |
 |---|---|---|
 | F17 | GitHub's separate security alert count/details remain unverified because the CLI session is unauthenticated; the prior default-branch push notice reported 10 findings. | `gh` authentication unavailable during the November 2026 audit. |
-| F21 | Automated dependency/action update grouping and immutable action SHA pinning policy have not been agreed; no update bot has been added. | [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md); workflow currently uses major-version action tags. |
 
 ## Resolved findings
 
@@ -38,6 +37,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F10 | Pull requests now run CI regardless of changed paths, including docs-only changes; the workflow validates syntax, lints both apps, builds both clients and server, and runs unit/E2E tests. | Merged in PR #23 at `af56141`; actionlint 1.7.12 and local CI-equivalent checks passed. |
 | F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | Merged in PR #23 at `af56141`; 10 E2E tests passed in headless Chrome 158. |
 | F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Merged in PR #24 at `8c34c95`; cache tests, server build/tests, and Cypress passed. |
+| F21 | Dependency and GitHub Action versions will be reviewed manually; no bot or immutable SHA pins for now. Revisit if update volume or security requirements change. | Maintainer-confirmed policy recorded in [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md), 2026-11-27. |
 
 ## Decisions and proposed targets
 
@@ -52,6 +52,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `docs/stage2-status`, based on `origin/main` at `8c34c95`; refreshes the README, ADR 0002 status, and merged handoff.
-- **Next:** review and merge this docs update. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
+- **Current:** `docs/dependency-update-policy`, based on `origin/main` at `bd9f1be`; records the manual dependency-update policy and accepts ADR 0002.
+- **Next:** review and merge this policy update, then start the authorized Stage 3 D-pad navigation scope on its own branch.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
