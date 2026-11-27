@@ -38,7 +38,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | Merged in PR #23 at `af56141`; 10 E2E tests passed in headless Chrome 158. |
 | F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Merged in PR #24 at `8c34c95`; cache tests, server build/tests, and Cypress passed. |
 | F21 | Dependency and GitHub Action versions will be reviewed manually; no bot or immutable SHA pins for now. Revisit if update volume or security requirements change. | Maintainer-confirmed policy recorded in [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md), 2026-11-27. |
-| F23 | Arrow navigation moves spatially across the header, rails, and grids while skipping hidden/disabled items; poster rails now loop horizontally, with wrapping kept local to each rail. | PR #27 at `c355651` established spatial navigation; this branch adds rail-loop tests and a Home navigation E2E assertion. |
+| F23 | Arrow navigation moves spatially across the header, rails, and grids while skipping hidden/disabled items; poster rails now loop horizontally, with wrapping kept local to each rail. | PR #27 at `c355651` established spatial navigation; this branch adds rail-loop tests and Home navigation coverage; all 11 Chrome Cypress tests passed. |
 
 ## Decisions and proposed targets
 
@@ -55,6 +55,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 ## Handoff
 
 - **Current:** `feat/home-experience-redesign`, based on `origin/main` at `c355651`; refreshes the shared header, Home/Search scenes, poster rails, and TV season cards. Embla rails loop smoothly with the focused poster image emphasized at the first slot; no floating focus border. Card overlays remain title-only. Hero/Detail imagery stays edge-to-edge with blurred/inset shadows.
-- **Checks:** app lint, 10 unit suites/30 tests, production build, desktop/mobile previews, rail-transition/wrap and D-pad focus spot-checks, title-only card tests, and Lighthouse Accessibility 100 for Home, Search, and Detail passed. Chrome Cypress has not passed after the dependency change: the existing Vite server on port 3000 reports `504 Outdated Optimize Dep`.
-- **Next:** rerun Chrome Cypress with a clean Vite server, then maintainer review of the expanded Home/Search/Detail experience.
+- **Checks:** app lint, 10 unit suites/30 tests, production build, all 11 Chrome Cypress tests, desktop/mobile previews, smooth rail-transition/wrap and D-pad focus spot-checks, title-only card tests, and desktop/mobile Lighthouse Accessibility 100 passed.
+- **Next:** maintainer review of the expanded Home/Search/Detail experience.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?

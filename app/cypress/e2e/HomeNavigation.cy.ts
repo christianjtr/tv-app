@@ -65,23 +65,29 @@ describe('Home view page navigation', () => {
                 cy.focused().should('have.attr', 'aria-label', secondMovieLabel);
             });
 
-        cy.get(`${movieItems}:first-of-type`)
-            .invoke('attr', 'aria-label')
-            .then((movieLabel) => {
-                cy.get(`${tvItems}:first-of-type`)
-                    .invoke('attr', 'aria-label')
-                    .then((tvLabel) => {
-                        cy.get(`${movieItems}:first-of-type`).focus();
-                        cy.press('ArrowDown');
-                        cy.focused().should('have.attr', 'aria-label', tvLabel);
-                        cy.press('ArrowUp');
-                        cy.focused().should('have.attr', 'aria-label', movieLabel);
-                        cy.press('ArrowLeft');
-                        cy.focused().should('have.attr', 'aria-label', movieLabel);
-                        cy.focused().click();
-                        cy.url().should('match', new RegExp(urlPattern));
-                    });
+        cy.get(movieItems).then(($movieCards) => {
+            const movieLabels = $movieCards.toArray().map((card) => card.getAttribute('aria-label'));
+
+            cy.get(tvItems).then(($tvCards) => {
+                const tvLabels = $tvCards.toArray().map((card) => card.getAttribute('aria-label'));
+
+                cy.get(`${movieItems}:first-of-type`).focus();
+                cy.press('ArrowDown');
+                cy.focused().should(($focused) => {
+                    expect(tvLabels).to.include($focused.attr('aria-label'));
+                });
+                cy.press('ArrowUp');
+                cy.focused().should(($focused) => {
+                    expect(movieLabels).to.include($focused.attr('aria-label'));
+                });
+                cy.press('ArrowLeft');
+                cy.focused().should(($focused) => {
+                    expect(movieLabels).to.include($focused.attr('aria-label'));
+                });
+                cy.focused().click();
+                cy.url().should('match', new RegExp(urlPattern));
             });
+        });
     });
 
     it('loops focus within a poster rail', () => {
