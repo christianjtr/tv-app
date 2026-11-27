@@ -38,20 +38,21 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | Merged in PR #23 at `af56141`; 10 E2E tests passed in headless Chrome 158. |
 | F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Merged in PR #24 at `8c34c95`; cache tests, server build/tests, and Cypress passed. |
 | F21 | Dependency and GitHub Action versions will be reviewed manually; no bot or immutable SHA pins for now. Revisit if update volume or security requirements change. | Maintainer-confirmed policy recorded in [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md), 2026-11-27. |
+| F23 | Arrow navigation now moves to the nearest focusable item in the requested direction across the header, rails, and grids, skips hidden/disabled items, and does not wrap at boundaries. | Unit tests cover four directions and edge behavior; Cypress exercises header, rail, and row navigation on `feat/spatial-dpad-navigation`, 2026-11-27. |
 
 ## Decisions and proposed targets
 
 - [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest `origin/main`, keeping task commits off `main`, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
-- [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md) records the proposed Stage 2 toolchain work and exit gate before Stage 3 feature development.
+- [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md) records the accepted Stage 2 gate; the required toolchain work is complete, and Stage 3 UX work may now proceed one reviewed scope at a time.
 - **Deployment direction:** on trusted default-branch pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
-- **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including BiomeJS and the server esbuild migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
+- **Post-sequence stages:** Stage 1 dependency vulnerability mitigation and Stage 2 toolchain readiness are complete. Stage 3 product experience improvements proceed one reviewed branch at a time.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status; BiomeJS was explicitly a separate Stage 2 effort.
 
 ## Handoff
 
-- **Current:** `docs/dependency-update-policy`, based on `origin/main` at `bd9f1be`; records the manual dependency-update policy and accepts ADR 0002.
-- **Next:** review and merge this policy update, then start the authorized Stage 3 D-pad navigation scope on its own branch.
+- **Current:** `feat/spatial-dpad-navigation`, based on `origin/main` at `8db8dbc`; implements geometry-based arrow-key focus movement and adds the main landmark.
+- **Next:** review and merge this focused navigation scope, then proceed to the separate hero/carousel visual scope.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
