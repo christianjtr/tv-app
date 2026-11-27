@@ -4,6 +4,7 @@ import { SliderImage } from '@layout';
 import { useFetchTrendingMovies } from '@hooks/useFetchMovies';
 import { useFetchTrendingTVShows } from '@hooks/useFetchTVShows';
 import { TVProgram, TVProgramType } from '@app-types/TVProgram';
+import './Home.css';
 
 export type TVProgramRail = {
     title: string;
@@ -18,8 +19,8 @@ const Home: React.FC = (): React.ReactElement => {
     const { tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError } = useFetchTrendingTVShows();
 
     const tvProgramRails: TVProgramRail[] = [
-        { title: 'Movies', source: movies, isLoading: isLoadingMovies, hasError: hasMoviesError, tvProgramType: 'movie' },
-        { title: 'TV Shows', source: tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError, tvProgramType: 'tv-show' },
+        { title: 'Trending movies', source: movies, isLoading: isLoadingMovies, hasError: hasMoviesError, tvProgramType: 'movie' },
+        { title: 'Trending TV shows', source: tvShows, isLoading: isLoadingTVShows, hasError: hasTVShowsError, tvProgramType: 'tv-show' },
     ];
 
     const images = tvProgramRails.reduce((acc: { source: string; title: string }[], obj: TVProgramRail) => {
@@ -35,12 +36,10 @@ const Home: React.FC = (): React.ReactElement => {
     }, []);
 
     return (
-        <div className="flex flex-col w-full">
-            <SliderImage imageSources={images} hasOverlay />
-            <div className="relative -top-16">
-                <h1 className="text-2xl text-left mb-5">
-                    🍿 Top picks to watch<span className="text-5xl text-pink-400">.</span>
-                </h1>
+        <div className="home-page flex w-full flex-col">
+            <SliderImage imageSources={images} />
+            <div className="home-page__catalog">
+                <h1 className="home-page__heading">Popular right now</h1>
                 {tvProgramRails.map(({ title, source, isLoading, hasError, tvProgramType }, index) => (
                     <TVProgramRail
                         title={title}

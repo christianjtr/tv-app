@@ -20,21 +20,24 @@ describe('TVProgramItem component', () => {
         cleanup();
     });
 
-    it('should render the correct info', () => {
+    it('keeps movie and series cards title-only on hover and focus', () => {
         const { title, name, description, rating, images } = movieItem;
 
         render(<TVProgramItem info={movieItem} onClick={() => undefined} />);
 
         const tvProgramTitle = title || name;
         const image = screen.getByRole('img');
+        const card = screen.getByRole('button', { name: `View ${tvProgramTitle} details` });
+
+        fireEvent.mouseEnter(card);
+        fireEvent.focus(card);
 
         expect(screen.getByText(tvProgramTitle as string)).toBeInTheDocument();
-        expect(screen.getByText(description as string)).toBeInTheDocument();
-        expect(screen.getByText('January 2024')).toBeInTheDocument();
-        expect(screen.getByText(`${formattedRating(rating!)} ★` as string)).toBeInTheDocument();
+        expect(screen.queryByText(description as string)).not.toBeInTheDocument();
+        expect(screen.queryByText('January 2024')).not.toBeInTheDocument();
+        expect(screen.queryByText(`${formattedRating(rating!)} ★` as string)).not.toBeInTheDocument();
         expect(image).toHaveAttribute('src', images?.w185);
         expect(image).toHaveAttribute('alt', `${tvProgramTitle} poster`);
-        expect(screen.getByRole('button', { name: `View ${tvProgramTitle} details` })).toBeInTheDocument();
     });
 
     it('should perform operation when clicked on', () => {

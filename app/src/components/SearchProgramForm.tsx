@@ -24,22 +24,29 @@ const SearchProgramForm: React.FC<SearchProgramFormProps> = (props: SearchProgra
     };
 
     return (
-        <div className="card shrink-0 w-full shadow-2xl bg-neutral my-7 rounded">
+        <div className="search-form-shell">
             <form
                 id="search_form"
                 name="search_form"
                 data-testid="search_form"
-                className="card-body flex flex-row p-3"
+                className="search-form"
                 ref={searchFormRef}
                 onSubmit={handleOnSubmitForm}
             >
-                <div className="form-control flex-1">
+                <label className="sr-only" htmlFor="search_input">
+                    Search movies and TV shows
+                </label>
+                <div className="search-form__field">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="10.8" cy="10.8" r="6.8" />
+                        <path d="m16 16 5 5" />
+                    </svg>
                     <input
                         id="search_input"
                         name="search_input"
                         type="text"
-                        placeholder="Search for a movie or tv show here..."
-                        className="input input-bordered"
+                        placeholder="Search by title"
+                        className="search-form__input"
                         data-testid="search_input"
                         disabled={isLoading}
                         autoComplete="off"
@@ -47,22 +54,17 @@ const SearchProgramForm: React.FC<SearchProgramFormProps> = (props: SearchProgra
                         data-cy="search_input"
                     />
                 </div>
-                <div className="form-control flex">
-                    <button
-                        id="btn_search"
-                        name="btn_search"
-                        data-testid="btn_search"
-                        type="submit"
-                        disabled={isLoading}
-                        className="btn btn-ghost"
-                        data-cy="btn_search"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        Search
-                    </button>
-                </div>
+                <button
+                    id="search_submit"
+                    name="search_submit"
+                    data-testid="search_submit"
+                    type="submit"
+                    disabled={isLoading}
+                    className="search-form__submit"
+                    data-cy="btn_search"
+                >
+                    Search
+                </button>
             </form>
         </div>
     );

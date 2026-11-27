@@ -6,8 +6,8 @@ export interface ContainerInterface {
 
 const Container: React.FC<ContainerInterface> = ({ children }: ContainerInterface): React.ReactElement => {
     return (
-        <div className="hero min-h-screen bg-base-100 text-center text-neutral-content flex items-start justify-center">
-            <div className="px-4 container md:max-w-6xl">{children}</div>
+        <div className="min-h-screen bg-[#08090d] text-white">
+            <div className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">{children}</div>
         </div>
     );
 };

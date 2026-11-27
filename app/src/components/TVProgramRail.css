@@ -1,0 +1,44 @@
+.program-rail {
+    margin-top: 2.5rem;
+    scroll-margin-top: 5.5rem;
+}
+
+.program-rail__heading {
+    color: #f3f1f7;
+    font-size: 1.2rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.9rem;
+}
+
+.program-rail__viewport {
+    overflow: hidden;
+    padding: 0.5rem;
+}
+
+.program-rail__track {
+    display: flex;
+    gap: 1rem;
+    touch-action: pan-y pinch-zoom;
+}
+
+.program-rail__track .tv-program-item,
+.program-rail__skeleton {
+    flex: 0 0 clamp(8.5rem, 12vw, 11.5rem);
+    width: clamp(8.5rem, 12vw, 11.5rem);
+}
+
+.program-rail__skeleton {
+    aspect-ratio: 2 / 3;
+    border-radius: 0.8rem;
+}
+
+@media (max-width: 640px) {
+    .program-rail {
+        margin-top: 2rem;
+    }
+
+    .program-rail__track {
+        gap: 0.8rem;
+    }
+}

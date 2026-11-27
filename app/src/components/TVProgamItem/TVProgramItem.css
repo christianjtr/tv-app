@@ -1,36 +1,87 @@
 .tv-program-item {
-    & img {
-        padding: 3px;
-    }
-
-    & .tv-program-item__info {
-        display: flex;
-        flex-flow: column;
-        align-items: flex-start;
-        padding: 10px;
-
-        & p.description {
-            display: -webkit-box;
-            -webkit-line-clamp: 7;
-            -webkit-box-orient: vertical;
-        }
-    }
-
-    & .tv-program-item__info:hover,
-    .tv-program-item__info:focus {
-        opacity: 0.9;
-        border-radius: 5px;
-        transition: opacity 0.15s ease;
-    }
+    aspect-ratio: 2 / 3;
+    background: #17161e;
+    border: 0;
+    border-radius: 0.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    width: 100%;
 }
 
-.tv-program-item:hover,
+.tv-program-item img {
+    display: block;
+    filter: brightness(1) saturate(1);
+    height: 100%;
+    object-fit: cover;
+    transition:
+        filter 280ms ease,
+        transform 220ms ease;
+    width: 100%;
+}
+
+.tv-program-item__info {
+    align-items: flex-end;
+    background: linear-gradient(0deg, rgb(0 0 0 / 92%), transparent);
+    display: flex;
+    inset: auto 0 0;
+    min-height: 42%;
+    opacity: 0;
+    padding: 1rem 0.85rem 0.85rem;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(0.35rem);
+    transition:
+        opacity 160ms ease,
+        transform 160ms ease;
+}
+
+.tv-program-item__title {
+    display: -webkit-box;
+    font-size: 0.95rem;
+    font-weight: 650;
+    line-height: 1.2;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
 .tv-program-item:focus {
-    border-radius: 5px;
-    outline: 2px solid white;
-    transition: outline 0.15s ease-in 0s;
+    outline: none;
+    z-index: 2;
 }
 
+.tv-program-item:hover img {
+    transform: scale(1.035);
+}
+
+.tv-program-item:focus img {
+    filter: brightness(1.18) saturate(1.12) contrast(1.03);
+    transform: scale(1.075);
+}
+
+.tv-program-item:hover .tv-program-item__info,
 .tv-program-item:focus .tv-program-item__info {
-    opacity: 0.9;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.program-rail__viewport:focus-within .tv-program-item:not(:focus) img {
+    filter: brightness(0.7) saturate(0.82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tv-program-item img,
+    .tv-program-item__info {
+        transition: none;
+    }
+
+    .tv-program-item:hover img,
+    .tv-program-item:focus img {
+        transform: none;
+    }
 }

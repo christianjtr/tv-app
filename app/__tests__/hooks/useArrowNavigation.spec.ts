@@ -74,6 +74,40 @@ describe('useArrowNavigation', () => {
         expect(document.activeElement).toBe(topLeft);
     });
 
+    it('loops left and right within a TV program rail', () => {
+        const { result } = renderHook(() => useArrowNavigation('button'));
+        const container = document.createElement('div');
+        container.innerHTML = `
+            <section data-element="tv-program-rail">
+                <button data-element="tv-program-rail-item">First</button>
+                <button data-element="tv-program-rail-item">Second</button>
+                <button data-element="tv-program-rail-item">Last</button>
+            </section>
+            <button>Outside rail</button>
+        `;
+        document.body.append(container);
+        result.current.current = container;
+
+        const [first, second, last, outside] = Array.from(container.querySelectorAll('button'));
+        setBounds(first, 0, 0);
+        setBounds(second, 100, 0);
+        setBounds(last, 200, 0);
+        setBounds(outside, 300, 0);
+
+        first.focus();
+        fireEvent.keyUp(first, { key: 'ArrowLeft' });
+        expect(document.activeElement).toBe(last);
+
+        fireEvent.keyUp(last, { key: 'ArrowRight' });
+        expect(document.activeElement).toBe(first);
+
+        fireEvent.keyUp(first, { key: 'ArrowRight' });
+        expect(document.activeElement).toBe(second);
+
+        fireEvent.keyUp(second, { key: 'ArrowLeft' });
+        expect(document.activeElement).toBe(first);
+    });
+
     it('does nothing when the navigation container has no targets', () => {
         const { result } = renderHook(() => useArrowNavigation('button'));
         result.current.current = document.createElement('div');

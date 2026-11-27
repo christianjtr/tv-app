@@ -7,6 +7,11 @@ import TVProgramRail from '../../src/components/TVProgramRail';
 
 const mockNavigate = jest.fn();
 
+jest.mock('embla-carousel-react', () => ({
+    __esModule: true,
+    default: () => [jest.fn()],
+}));
+
 jest.mock('../../src/services/apis/tv-app/tv-app.config.ts', () => ({
     tvAppApi: {
         config: {

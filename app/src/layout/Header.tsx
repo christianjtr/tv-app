@@ -1,57 +1,58 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import './Header.css';
 
 const Header: React.FC = (): React.ReactElement => {
-    const navigate = useNavigate();
-
-    const handleOnClickNavBtn = (path: string): void => {
-        navigate(path);
+    const { pathname } = useLocation();
+    const focusFirstRailItem = (railId: string): void => {
+        requestAnimationFrame(() => document.getElementById(railId)?.querySelector<HTMLElement>('[data-element="tv-program-rail-item"]')?.focus());
     };
 
     return (
-        <header>
-            <div className="navbar bg-base-100 text-neutral-content p-4">
-                <div className="navbar-start">
-                    <button
-                        id="btn_home"
-                        name="btn_home"
-                        data-testid="btn_home"
-                        onClick={() => handleOnClickNavBtn('/')}
-                        className="btn btn-ghost text-lg"
-                    >
-                        <svg
-                            className="h-8 w-8 text-pink-400"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <rect x="3" y="7" width="18" height="13" rx="2" />
-                            <polyline points="16 3 12 7 8 3" />
-                        </svg>
-                        TV app
-                    </button>
+        <header className="site-header">
+            <div className="site-header__inner">
+                <div className="site-brand">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="7" width="18" height="13" rx="2" />
+                        <path d="m8 3 4 4 4-4" />
+                    </svg>
+                    <span>TV app</span>
                 </div>
-                <div className="navbar-end">
-                    <button
-                        id="btn_search"
-                        name="btn_search"
-                        data-testid="btn_search"
-                        type="submit"
-                        className="btn btn-ghost"
-                        onClick={() => handleOnClickNavBtn('/search')}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <nav className="site-navigation" aria-label="Main navigation">
+                    <NavLink id="btn_home" data-testid="btn_home" to="/" end className="site-navigation__link">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" />
                         </svg>
-                        Search
-                    </button>
-                </div>
+                        <span>Home</span>
+                    </NavLink>
+                    {pathname === '/' && (
+                        <>
+                            <button
+                                type="button"
+                                className="site-navigation__link site-navigation__section-link"
+                                data-testid="btn_movies"
+                                onClick={() => focusFirstRailItem('movies')}
+                            >
+                                Movies
+                            </button>
+                            <button
+                                type="button"
+                                className="site-navigation__link site-navigation__section-link"
+                                data-testid="btn_tv_shows"
+                                onClick={() => focusFirstRailItem('tv-shows')}
+                            >
+                                TV Shows
+                            </button>
+                        </>
+                    )}
+                    <NavLink id="btn_search" data-testid="btn_search" to="/search" className="site-navigation__link">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="10.8" cy="10.8" r="6.8" />
+                            <path d="m16 16 5 5" />
+                        </svg>
+                        <span>Search</span>
+                    </NavLink>
+                </nav>
             </div>
         </header>
     );

@@ -1,0 +1,78 @@
+.season-card {
+    align-items: center;
+    background: #13121a;
+    border-radius: 0.85rem;
+    display: flex;
+    gap: 1rem;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0.75rem;
+}
+
+.season-card__poster {
+    aspect-ratio: 2 / 3;
+    border-radius: 0.55rem;
+    display: block;
+    flex: 0 0 clamp(5rem, 8vw, 6.5rem);
+    object-fit: cover;
+    width: clamp(5rem, 8vw, 6.5rem);
+}
+
+.season-card__body {
+    flex: 1;
+    min-width: 0;
+    padding: 0.25rem 0;
+}
+
+.season-card__heading {
+    align-items: flex-start;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.season-card__title {
+    color: #f7f5fb;
+    font-size: 0.98rem;
+    font-weight: 650;
+    line-height: 1.25;
+    min-width: 0;
+}
+
+.season-card__rating {
+    background: #282139;
+    border: 0;
+    color: #d7c8ff;
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.5rem;
+}
+
+.season-card__metadata {
+    color: #aaa6b5;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.82rem;
+    gap: 0.4rem;
+    line-height: 1.4;
+    margin-top: 0.75rem;
+}
+
+.season-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+    .season-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    .season-grid {
+        gap: 1.25rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
