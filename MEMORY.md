@@ -14,7 +14,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F06 | Some hook-test assertions remain unawaited; the Cypress search flow now verifies query-specific results against Express and the local TMDB stub. | [Hook test](app/__tests__/hooks/useFetchMovies.spec.ts), [browser test](app/cypress/e2e/SearchTVPrograms.cy.ts), [TMDB stub](scripts/mockTmdb.mjs); 6 Cypress tests passed on this branch. |
 | F09 | Full `npm audit` reports 24 development-dependency findings (23 moderate, 1 low); `npm audit --omit=dev` reports 0 production vulnerabilities. GitHub's last default-branch push notice reported 10 findings from its separate scan; alert-level details require authenticated GitHub access. | Root `package-lock.json`; npm 11.20.0 audit after Stage 1 fixes, 2026-11-27. |
 | F10 | Workflow path filters skip docs-only changes; if the workflow check is required by branch protection, those PRs may remain pending and blocked. | [Workflow triggers](.github/workflows/deployment.yml); check repository branch-protection settings. |
-| F11 | Client production builds warn that `@glidejs/glide/dist/css/glide.core.min.css` is missing and leave it unresolved; slider styling needs a separate check. | `npm run build:prod --workspace=tv-app-client`, 2026-11-26. |
 | F13 | Cypress 16.4.0 passes the E2E suite but warns that Electron 150 is deprecated as a test browser and will be removed in a future Cypress release. | `npm run test:client:cy`, 2026-11-26. |
 
 ## Resolved findings
@@ -31,6 +30,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
 | F15 | Stage 1 removed all production audit findings by replacing vulnerable `@hapi/joi`, moving/updating Nodemon as a development tool, removing unused `swagger-jsdoc`, and updating `concurrently`/`picomatch`. | `npm audit --omit=dev` reports 0; client/server tests, builds, lint, and Cypress passed. |
 | F12 | ESLint and Prettier were removed from both workspaces in favor of Biome 2.6.9; app/server lint, builds, unit suites, and Cypress pass. Biome's unresolved-import rule is disabled because it misresolves existing module formats and asset declarations; TypeScript and bundler builds remain the resolution checks. | `package.json`, `app/package.json`, `server/package.json`, `biome.jsonc`; all listed checks passed on `build/biomejs-migration`. |
+| F11 | Glide core CSS is imported at the Vite entrypoint so it is emitted as a production asset instead of referenced through a `node_modules` URL in HTML. | `app/src/main.tsx`, `app/index.html`; host and Docker production builds emit Glide CSS without the unresolved-path warning. |
 
 ## Decisions and proposed targets
 
@@ -45,6 +45,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `build/biomejs-migration`, based on `origin/main` at `071be68`; ESLint/Prettier configs and dependencies are replaced by Biome 2.6.9. App/server lint, client/server builds and unit tests, and Cypress pass.
-- **Next, after this migration is merged:** evaluate a separate server Rollup-to-esbuild scope; complete the remaining Stage 2 gates before Stage 3 feature work.
+- **Current:** `fix/glide-css-import`, based on `origin/main` at `232cbec`; fix the Vite asset path before any server bundler evaluation.
+- **Next, after this fix is merged:** evaluate the server Rollup-to-esbuild scope; complete remaining Stage 2 gates before Stage 3 feature work.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
