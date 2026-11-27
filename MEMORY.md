@@ -30,6 +30,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F14 | React Router 7's peer dependencies initially resolved React 18 alongside the app's React 19; root workspace pins now ensure one React runtime. | `npm ls react react-dom` shows only 19.3.1; client build, tests, and Cypress passed. |
 | F15 | Stage 1 removed all production audit findings by replacing vulnerable `@hapi/joi`, moving/updating Nodemon as a development tool, removing unused `swagger-jsdoc`, and updating `concurrently`/`picomatch`. | `npm audit --omit=dev` reports 0; client/server tests, builds, lint, and Cypress passed. |
 | F12 | ESLint and Prettier were removed from both workspaces in favor of Biome 2.6.9; app/server lint, builds, unit suites, and Cypress pass. Biome's unresolved-import rule is disabled because it misresolves existing module formats and asset declarations; TypeScript and bundler builds remain the resolution checks. | `package.json`, `app/package.json`, `server/package.json`, `biome.jsonc`; all listed checks passed on `build/biomejs-migration`. |
+| F16 | Replaced the server Rollup build with esbuild 0.28.2 while retaining an explicit TypeScript check and Node CommonJS bundle output. | Server build/tests, Cypress, production Docker image build, and container `/api/docs/` smoke test passed on `build/esbuild-server`. |
 | F11 | Glide core CSS is imported at the Vite entrypoint so it is emitted as a production asset instead of referenced through a `node_modules` URL in HTML. | `app/src/main.tsx`, `app/index.html`; host and Docker production builds emit Glide CSS without the unresolved-path warning. |
 
 ## Decisions and proposed targets
@@ -39,12 +40,12 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 - **Deployment direction:** on trusted default-branch pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
 - **Maintainer-confirmed browser baseline for scope 10:** Chrome 111+, Safari 16.4+, Firefox 128+. Older browsers and smart-TV browser compatibility are not promised by this upgrade.
-- **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including the planned BiomeJS migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
+- **Post-sequence stages requested:** Stage 1 dependency vulnerability mitigation (prioritize production critical/high); Stage 2 toolchain/library modernization, including BiomeJS and the server esbuild migration; Stage 3 product experience improvements. Continue one reviewed branch at a time.
 - At planning time, the selected typescript-eslint and Jest adapter peer ranges excluded TypeScript 7, and the existing React, accessibility, and import lint plugins did not advertise ESLint 10 support. Recheck peer ranges and pin exact versions on the relevant branch.
 - **Maintainer direction for scope 6:** finish the ESLint 9 flat-config migration despite its unsupported status; BiomeJS was explicitly a separate Stage 2 effort.
 
 ## Handoff
 
-- **Current:** `fix/glide-css-import`, based on `origin/main` at `232cbec`; fix the Vite asset path before any server bundler evaluation.
-- **Next, after this fix is merged:** evaluate the server Rollup-to-esbuild scope; complete remaining Stage 2 gates before Stage 3 feature work.
+- **Current:** `build/esbuild-server`, based on `origin/main` at `77478e1`; Rollup is replaced by esbuild and strict TypeScript checking remains explicit.
+- **Next, after this scope is reviewed and merged:** complete remaining Stage 2 gates before Stage 3 feature work.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
