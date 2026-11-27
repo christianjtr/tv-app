@@ -37,7 +37,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 | F20 | Detail page identifies TV programs from the route, not nonzero episode/season counts, so announced shows are not rendered as movies. | Cypress case for a TV show with zero seasons and episodes passes; merged in PR #22 at `a7e966c`. |
 | F10 | Pull requests now run CI regardless of changed paths, including docs-only changes; the workflow validates syntax, lints both apps, builds both clients and server, and runs unit/E2E tests. | Merged in PR #23 at `af56141`; actionlint 1.7.12 and local CI-equivalent checks passed. |
 | F13 | Cypress E2E now runs in installed Chrome instead of deprecated Electron. | Merged in PR #23 at `af56141`; 10 E2E tests passed in headless Chrome 158. |
-| F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Cache unit tests and server build pass on `fix/cache-safety`, 2026-11-27. |
+| F22 | Cache TTL now defaults to a finite value, rejects invalid values, caps entries at 500, skips storage when full, and logs keys without response payloads. | Merged in PR #24 at `8c34c95`; cache tests, server build/tests, and Cypress passed. |
 
 ## Decisions and proposed targets
 
@@ -52,6 +52,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `fix/cache-safety`, based on `origin/main` at `af56141`; validates and bounds the in-process server cache.
-- **Next:** review and merge this cache fix. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
+- **Current:** `docs/stage2-status`, based on `origin/main` at `8c34c95`; refreshes the README, ADR 0002 status, and merged handoff.
+- **Next:** review and merge this docs update. Resolve F21's automation/pinning policy before treating Stage 2 as complete or beginning Stage 3 work, per [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md).
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?

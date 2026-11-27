@@ -53,7 +53,7 @@ This conceptual test has been developed using the following technologies:
 -   **Back-end**
     -   [Express](https://expressjs.com/)
     -   [Node Cache](https://www.npmjs.com/package/node-cache)
-    -   [Hapi Joi](https://github.com/hapijs/joi#readme)
+    -   [Joi](https://github.com/hapijs/joi#readme)
     -   [Swagger](https://swagger.io/)
 -   **Tests (Unit test and E2E)**
     -   [Jest](https://jestjs.io/)
@@ -191,50 +191,32 @@ Both services have some examples of how to develop unit tests and e2e tests (inc
 
 ```mermaid
 flowchart LR
-    step0["`Developer pushes/merges code into the repository`"]
-    step1["`GitHub actions are triggered`"]
-    step2["`Tests are triggered, and Docker images are built`"]
-    step3["`Docker images are pushed to Docker Hub`"]
-    step4["`**Optional** Render cloud service should deploy the images by latest reference provided`"]
-    step0 --> step1 --> step2 --> step3 --> step4
+    pr["Pull request to main"] --> checks["CI: actionlint, lint, builds, unit tests, Cypress on Chrome"]
+    push["Relevant code push to main"] --> checks
+    checks -->|main push only| pages["Publish static frontend to demo branch"]
+    checks -->|main push only| image["Build and push backend image"]
+    image --> render["Render deploys backend image"]
 ```
 
-The strategy followed to deploy the application implies:
+The production frontend is a static Vite build published to the `demo` branch for GitHub Pages. The Express API is bundled with esbuild, built into a Docker image, and deployed through Render.
 
-##### Containerization of each application
+##### Production containers
 
--   Create **Dockerfiles per environment (dev, prod)** to build each application service (client-side, server-side).
--   Every Dockerfile perform a **multi-stage image build**.
--   Consider **workspaces and shared packages** when building images.
--   Create **parametrized docker-compose.yml file per environment (dev, prod)**. (At root folder level only - main Docker context).
--   Create **.dockerignore** files.
--   Create a docker-compose run and build script.
-    -   Obtain **production environment variables given the application's source files**.
-    -   Provide every docker-compose.yml file with those variables to parametrize them.
-    -   **Note:** Google Bard supported me on this.
+- Production Dockerfiles account for npm workspaces and shared types.
+- The frontend production image serves the static Vite build from Nginx.
+- The server production image runs the esbuild bundle on Node.js.
+- Docker Compose files support local development and production builds.
+    - Use the tier-specific env files described above.
 
-##### GitHub actions
+##### GitHub Actions
 
--   Implement a **GitHub action workflow** which is going to be dispatched whenever a pull-request or merge is performed.
--   Create the repository's project secrets.
-    -   Environment variables for production.
-    -   Docker credentials
-        -   Username.
-        -   Docker TOKEN API. (Read, Write permissions).
--   Include jobs:
-    -   Run tests.
-    -   Containerize applications.
-    -   Push applications to Docker Hub.
-        -   You must have a **Docker Hub account**.
+- Pull requests to `main` run actionlint, client/server lint and builds, unit tests, and Cypress in Chrome.
+- Relevant code pushes to `main` publish the frontend to `demo` and push the backend image to Docker Hub.
+- Docker Hub credentials are provided through repository secrets.
 
-##### Render (Optional)
+##### Render
 
-> [!IMPORTANT]
->
-> - At this point, the services are merged into the repository, tested, containerized, and published on Docker Hub (either as public or private images).
-> - Now, you should decide which **Cloud provider service to host your application**. (Azure, Amazon Web Services, Digital Ocean, Google Cloud Platform, and others).
-
-**Choice:** I decided to use [Render](https://render.com/) because it's free for hobby projects (under certain conditions, of course).
+Render hosts the production API from the backend image published by GitHub Actions. The frontend demo is a static GitHub Pages site.
 
 ![](./samples/render.png)
 
@@ -243,16 +225,13 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 -   [TV application](https://tv-app-react-webapp-latest.onrender.com/)
 -   [API service docs](https://tv-app-nodejs-latest.onrender.com/api/docs)
 
-    **Note:** The application should consume API services published and provided by our back-end, which is intended to obtain data from the TMDB Movie service).
+    **Note:** The frontend uses the Render API, which proxies TMDB catalog requests.
 
 ![](./samples/cdci.png)
 
 <a name="009"></a>
 ### Next steps
 
--   Extend this documentation to the applications (client-side, server-side, GitHub actions).
--   Enhance Dockerfiles and multi-stage builds.
--   Better use of npm workspaces (mono-repos).
--   Improve overall CD/CI process.
--   Build back-end codebase.
--   Polish up user experience and responsiveness.
+-   Decide the dependency-update and action-pinning policy before adding an update bot.
+-   Improve spatial D-pad navigation and accessibility.
+-   Refine hero imagery and review the carousel library.
