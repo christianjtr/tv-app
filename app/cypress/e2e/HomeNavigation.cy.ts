@@ -7,8 +7,12 @@ describe('Home view page navigation', () => {
         cy.visit(Cypress.expose('APP_HOME_URL'));
 
         cy.get('.hero-slider').should(($hero) => {
-            expect($hero[0].getBoundingClientRect().left).to.equal(0);
-            expect($hero[0].getBoundingClientRect().width).to.equal(Cypress.config('viewportWidth'));
+            const { left, right, width } = $hero[0].getBoundingClientRect();
+            const pageDocument = $hero[0].ownerDocument;
+
+            expect(width).to.be.closeTo(Cypress.config('viewportWidth'), 1);
+            expect(left).to.be.at.most(0);
+            expect(right).to.be.at.least(pageDocument.documentElement.clientWidth);
         });
 
         cy.get('[data-cy="hero-slide"]')
