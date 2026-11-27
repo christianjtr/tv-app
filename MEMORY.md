@@ -34,7 +34,7 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Decisions and proposed targets
 
-- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence. Keep the existing architecture; use the current in-memory cache and test tools during remediation.
+- [ADR 0001](docs/adr/0001-sequential-modernization.md) records the maintainer review gate and branch sequence, including creating every task branch from the latest `origin/master`, keeping task commits off `master`, reconciling accidental direct commits before proceeding, and deleting merged local/remote topic branches.
 - [ADR 0002](docs/adr/0002-toolchain-readiness-before-stage-3.md) records the proposed Stage 2 toolchain work and exit gate before Stage 3 feature development.
 - **Deployment direction:** on trusted `master` pushes, build the live frontend for `/tv-app` against `https://tv-app-nodejs-latest.onrender.com/api` and publish only its static output to `demo`; build and push only the backend Docker image to Docker Hub.
 - **Merged at `609de49`:** Node 26.13.1/npm 11.20.0, aligned with the official Docker image. The workstation npm shim was 11.11.1. **Selected:** scope 7 uses Express 5.3.0/Supertest 7.3.2; scope 8 uses Vite 8.4.0/plugin-react 6.3.0, Jest 30.5.2, and Cypress 16.4.0 in separate commits; scope 9 uses React/ReactDOM 19.3.1 and React Router 7.18.7; scope 10 uses Tailwind 4.3.5, DaisyUI 5.8.3, and @tailwindcss/vite 4.3.5.
@@ -45,6 +45,6 @@ Keep this file concise: record verified facts, durable constraints, decisions wi
 
 ## Handoff
 
-- **Current:** `docs/stage-2-toolchain-roadmap`, based on `master` at `8333742` (deployment PR #13 merged); ADR 0002 documents the proposed Stage 2 work and holds Stage 3 features until that work is reviewed. No toolchain implementation is included.
+- **Current:** `docs/branch-off-master-only`, based on `origin/master` at `60974cc`; documents the branch-base and local/remote cleanup rule. Nine merged local topic branches were removed, merged remote topic refs were deleted or pruned, and local `master` was fast-forwarded to `origin/master`.
 - **Next, after ADR review:** implement one approved Stage 2 scope per branch/PR; defer Stage 3 feature work until the Stage 2 exit criteria are met.
 - **Open questions:** What product goals and user journeys should guide Stage 3 experience work?
