@@ -20,7 +20,7 @@
         "prepare": "husky install",
         "test": "jest --no-cache --detectOpenHandles --forceExit",
         "cy:open": "cypress open",
-        "cy:run": "cypress run --e2e",
+        "cy:run": "cypress run --e2e --browser chrome",
         "cy:test": "npm run build:shared-types --prefix .. && npm run build --prefix ../server && start-server-and-test 'concurrently -k -n tmdb,api,client \"node ../scripts/mockTmdb.mjs\" \"cd ../server && NODE_ENV=e2e TMDB_BASE_URL=http://127.0.0.1:4000 TMDB_API_VERSION=3 TMDB_API_KEY=stub TMDB_API_ACCESS_TOKEN=stub TMBD_SECURE_BASE_URL_IMAGE=https://example.org SERVER_PORT=3001 CACHE_STDTTL=60 node dist/bundle.js\" \"VITE_ENABLE_API_MOCK=false npm run dev:e2e\"' 'http://127.0.0.1:4000/health|http://127.0.0.1:3001/api/docs/|http://localhost:3000/tv-app' 'npm run cy:run'",
         "cy:e2e": "start-server-and-test dev:e2e $npm_package_config_host cy:open",
         "ts:trace-resolution": "tsc --traceResolution"
