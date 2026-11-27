@@ -232,6 +232,6 @@ Look at this [article on how to deploy pre-built docker images](https://docs.ren
 <a name="009"></a>
 ### Next steps
 
--   Decide the dependency-update and action-pinning policy before adding an update bot.
+-   Review dependency and action versions manually; revisit automation if update volume grows.
 -   Improve spatial D-pad navigation and accessibility.
 -   Refine hero imagery and review the carousel library.
