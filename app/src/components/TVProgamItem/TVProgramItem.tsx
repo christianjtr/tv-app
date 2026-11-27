@@ -1,11 +1,11 @@
 import React from 'react';
 import { TVProgram } from '@app-types/TVProgram';
-import formatReleaseDate from '../../utils/formatReleaseDate';
 import './TVProgramItem.css';
 
 export interface TVProgramItemProps {
     info: TVProgram;
     onClick: () => void;
+    onFocus?: () => void;
 }
 
 export interface RatingProps {
@@ -24,31 +24,25 @@ export const Rating: React.FC<RatingProps> = (props: RatingProps): React.ReactEl
 };
 
 const TVProgramItem: React.FC<TVProgramItemProps> = (props: TVProgramItemProps): React.ReactElement => {
-    const { info, onClick: onClickCallbackFn } = props;
+    const { info, onClick: onClickCallbackFn, onFocus } = props;
 
     const programTitle = info.title || info.name;
-
-    // Consider extract this to a utils...
-    const releaseDate = info.releaseDate || info.firstAirDate;
-    const formattedReleaseDate = formatReleaseDate(releaseDate!);
 
     return (
         <button
             type="button"
-            className="carousel-item tv-program-item relative cursor-pointer appearance-none border-0 bg-transparent p-0 text-left"
+            className="tv-program-item"
             onClick={onClickCallbackFn}
             aria-label={`View ${programTitle} details`}
             data-testid={`program_${programTitle}`}
             data-element="tv-program-rail-item"
             data-cy="tv-program-rail-item"
+            onFocus={onFocus}
         >
-            <div className="bg-base-100 w-full h-full absolute opacity-0 tv-program-item__info text-sm text-left">
-                <h4 className="block mb-1 text-base font-semibold">{programTitle}</h4>
-                <Rating value={info.rating ?? 0} className="mb-1 text-xs" />
-                <span className="block mb-5">{formattedReleaseDate}</span>
-                <p className="text-ellipsis overflow-hidden max-h-40 description">{info.description}</p>
-            </div>
-            <img src={info.images?.w185} className="rounded-md" alt={`${programTitle} poster`} />
+            <img src={info.images?.w185} alt={`${programTitle} poster`} />
+            <span className="tv-program-item__info" aria-hidden="true">
+                <span className="tv-program-item__title">{programTitle}</span>
+            </span>
         </button>
     );
 };

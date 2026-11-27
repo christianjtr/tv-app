@@ -1,0 +1,108 @@
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgb(8 8 13 / 90%);
+    backdrop-filter: blur(18px);
+}
+
+.site-header__inner {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 80rem;
+    min-height: 4.5rem;
+    padding: 0.75rem clamp(1rem, 3vw, 2rem);
+}
+
+.site-brand {
+    align-items: center;
+    color: #f7f5fb;
+    display: flex;
+    font-size: 1.05rem;
+    font-weight: 700;
+    gap: 0.65rem;
+    letter-spacing: -0.025em;
+}
+
+.site-brand svg {
+    color: #a78bfa;
+    height: 2rem;
+    stroke-width: 1.8;
+    width: 2rem;
+}
+
+.site-navigation {
+    align-items: center;
+    background: #17161e;
+    border-radius: 999px;
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.3rem;
+}
+
+.site-navigation__link {
+    align-items: center;
+    border-radius: 999px;
+    background: transparent;
+    border: 0;
+    color: #b8b5c2;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 0.55rem;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.65rem 1.1rem;
+    font-family: inherit;
+    text-decoration: none;
+    transition:
+        background-color 160ms ease,
+        color 160ms ease;
+}
+
+.site-navigation__link svg {
+    height: 1rem;
+    stroke-width: 1.8;
+    width: 1rem;
+}
+
+.site-navigation__link:hover {
+    color: #fff;
+}
+
+.site-navigation__link[aria-current='page'] {
+    background: #7042e8;
+    color: #fff;
+}
+
+.site-navigation__link:focus-visible {
+    outline: 3px solid #f472b6;
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .site-header__inner {
+        min-height: 4rem;
+        padding-inline: 1rem;
+    }
+
+    .site-navigation__link {
+        gap: 0.4rem;
+        padding-inline: 0.8rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .site-navigation__section-link {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-navigation__link {
+        transition: none;
+    }
+}

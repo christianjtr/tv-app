@@ -5,6 +5,20 @@ import 'cypress-wait-until';
 describe('Home view page navigation', () => {
     it('should visit home page', () => {
         cy.visit(Cypress.expose('APP_HOME_URL'));
+
+        cy.get('.hero-slider').should(($hero) => {
+            expect($hero[0].getBoundingClientRect().left).to.equal(0);
+            expect($hero[0].getBoundingClientRect().width).to.equal(Cypress.config('viewportWidth'));
+        });
+
+        cy.get('[data-cy="hero-slide"]')
+            .first()
+            .within(() => {
+                cy.get('[data-cy="hero-title"]')
+                    .invoke('text')
+                    .then((title) => cy.get('[data-cy="hero-image"]').should('have.attr', 'alt', `${title} backdrop`));
+                cy.get('[data-cy="hero-description"]').should('not.exist');
+            });
     });
 
     it('navigates spatially using all arrow keys', () => {
@@ -21,9 +35,27 @@ describe('Home view page navigation', () => {
 
         cy.get('[data-testid="btn_home"]').focus();
         cy.press('ArrowRight');
+        cy.focused().should('have.attr', 'data-testid', 'btn_movies');
+        cy.press('ArrowRight');
+        cy.focused().should('have.attr', 'data-testid', 'btn_tv_shows');
+        cy.press('ArrowRight');
         cy.focused().should('have.attr', 'data-testid', 'btn_search');
         cy.press('ArrowDown');
         cy.focused().should('have.attr', 'data-cy', 'tv-program-rail-item');
+
+        cy.get(`${movieItems}:first-of-type`)
+            .invoke('attr', 'aria-label')
+            .then((firstMovieLabel) => {
+                cy.get('[data-testid="btn_movies"]').click();
+                cy.focused().should('have.attr', 'aria-label', firstMovieLabel);
+            });
+
+        cy.get(`${tvItems}:first-of-type`)
+            .invoke('attr', 'aria-label')
+            .then((firstTVLabel) => {
+                cy.get('[data-testid="btn_tv_shows"]').click();
+                cy.focused().should('have.attr', 'aria-label', firstTVLabel);
+            });
 
         cy.get(`${movieItems}:nth-of-type(2)`)
             .invoke('attr', 'aria-label')
@@ -48,6 +80,32 @@ describe('Home view page navigation', () => {
                         cy.focused().should('have.attr', 'aria-label', movieLabel);
                         cy.focused().click();
                         cy.url().should('match', new RegExp(urlPattern));
+                    });
+            });
+    });
+
+    it('loops focus within a poster rail', () => {
+        const movieItems = '[data-element="tv-program-rail"]:first-of-type [data-cy="tv-program-rail-item"]';
+
+        cy.visit(Cypress.expose('APP_HOME_URL'));
+        cy.get('[data-cy="skeleton"]').should('not.exist');
+        cy.get(`${movieItems}:first-of-type`)
+            .invoke('attr', 'aria-label')
+            .then((firstMovieLabel) => {
+                cy.get(`${movieItems}:last-of-type`)
+                    .invoke('attr', 'aria-label')
+                    .then((lastMovieLabel) => {
+                        cy.get(`${movieItems}:last-of-type`).focus();
+                        cy.press('ArrowRight');
+                        cy.focused().should(($card) => {
+                            expect($card).to.have.attr('aria-label', firstMovieLabel);
+                            const card = $card[0];
+                            const viewport = card.closest('.program-rail__viewport') as HTMLElement;
+                            const paddingLeft = Number.parseFloat(window.getComputedStyle(viewport).paddingLeft);
+                            expect(card.getBoundingClientRect().left).to.be.closeTo(viewport.getBoundingClientRect().left + paddingLeft, 5);
+                        });
+                        cy.press('ArrowLeft');
+                        cy.focused().should('have.attr', 'aria-label', lastMovieLabel);
                     });
             });
     });

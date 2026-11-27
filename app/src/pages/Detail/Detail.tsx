@@ -38,7 +38,7 @@ const Detail: React.FC = (): React.ReactElement => {
                     name="btn_back"
                     data-testid="btn_back"
                     onClick={() => navigate(-1)}
-                    className="btn btn-ghost absolute top-5 left-0"
+                    className="btn btn-ghost detail-back absolute top-5 left-0"
                     aria-label="Back button"
                 >
                     <svg className="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -46,22 +46,17 @@ const Detail: React.FC = (): React.ReactElement => {
                     </svg>
                     Return
                 </button>
-                <div className="hero-content flex-col lg:flex-row mt-16">
-                    <img
-                        src={tvProgram?.images?.w300}
-                        className="max-w-sm rounded-lg shadow-2xl"
-                        alt={`${title} poster`}
-                        aria-label={`${title} poster`}
-                    />
-                    <div className="ml-3 text-white">
-                        <h6 className="text-sm mb-1">{tvProgram?.tagLine}</h6>
-                        <h1 className="text-5xl font-semibold">{title}</h1>
-                        <div className="my-3">
-                            <div className="my-3 flex align-baseline">
+                <div className="hero-content detail-content flex-col lg:flex-row mt-16">
+                    <img src={tvProgram?.images?.w300} className="detail-poster" alt={`${title} poster`} />
+                    <div className="detail-copy">
+                        {tvProgram?.tagLine && <p className="detail-tagline">{tvProgram.tagLine}</p>}
+                        <h1 className="detail-title">{title}</h1>
+                        <div className="detail-meta">
+                            <div className="detail-meta__group">
                                 <Rating value={tvProgram?.rating as number} className="text-base p-3 border-none" />
                                 {!isTVShow && (
                                     <>
-                                        <img src={ClockIcon} className="inline-block mx-2" alt="Clock icon" aria-label="Clock image" width="16" />
+                                        <img src={ClockIcon} className="inline-block" alt="" width="16" />
                                         <span>{tvProgram?.runtime} min.</span>
                                     </>
                                 )}
@@ -75,10 +70,10 @@ const Detail: React.FC = (): React.ReactElement => {
                                     rel="noreferrer"
                                     aria-label="TV program official site"
                                 >
-                                    Official site ➜
+                                    Official site
                                 </a>
                             </div>
-                            <p className="my-2">
+                            <div className="detail-meta__group">
                                 {!isTVShow && (
                                     <a
                                         id="imdb_link"
@@ -90,33 +85,27 @@ const Detail: React.FC = (): React.ReactElement => {
                                         title="IMDb Official site"
                                         aria-label="IMDb official site"
                                     >
-                                        <img src={IMDb} className="inline-block mr-2" alt="IMDb icon" aria-label="IMDb image" width="45" />
+                                        <img src={IMDb} className="inline-block" alt="IMDb" width="45" />
                                     </a>
                                 )}
                                 <span className="inline-block">{formattedReleaseDate}</span>
                                 {isTVShow && (
                                     <>
-                                        <span className="mx-2">|</span>
-                                        <span className="inline-block">
-                                            Duration: {tvProgram?.numberOfSeasons} Seasons, {tvProgram?.numberOfEpisodes} Episodes
-                                        </span>
-                                        <span className="mx-2">|</span>
-                                        <span className="inline-block">Ended: {tvProgram?.inProduction ? 'In production' : 'Yes'}</span>
+                                        <span>{tvProgram?.numberOfSeasons} seasons</span>
+                                        <span>{tvProgram?.numberOfEpisodes} episodes</span>
+                                        <span>{tvProgram?.inProduction ? 'In production' : 'Ended'}</span>
                                     </>
                                 )}
-                            </p>
+                            </div>
                         </div>
-                        <p className="my-6">
+                        <div className="detail-genres">
                             {tvProgram?.genres?.map(({ id, name }, index) => (
-                                <span
-                                    className="badge badge-secondary mr-2 rounded-xl bg-pink-500 text-white p-3 border-none"
-                                    key={`genre_${index}_${id}`}
-                                >
+                                <span className="badge badge-secondary" key={`genre_${index}_${id}`}>
                                     {name}
                                 </span>
                             ))}
-                        </p>
-                        <p className="my-6">{tvProgram?.description}</p>
+                        </div>
+                        <p className="detail-description">{tvProgram?.description}</p>
                     </div>
                 </div>
             </div>

@@ -37,6 +37,22 @@ const useArrowNavigation = (selectors: string) => {
             if (!(activeElement instanceof HTMLElement) || !container.contains(activeElement)) return;
 
             const isHorizontal = key === 'ArrowLeft' || key === 'ArrowRight';
+            const activeRail = activeElement.closest('[data-element="tv-program-rail"]');
+            if (isHorizontal && activeRail && activeElement.matches('[data-element="tv-program-rail-item"]')) {
+                const railItems = availableElements.filter(
+                    (element) =>
+                        element.matches('[data-element="tv-program-rail-item"]') && element.closest('[data-element="tv-program-rail"]') === activeRail
+                );
+                const currentIndex = railItems.indexOf(activeElement);
+
+                if (currentIndex >= 0) {
+                    const nextIndex = (currentIndex + (key === 'ArrowRight' ? 1 : railItems.length - 1)) % railItems.length;
+                    event.preventDefault();
+                    railItems[nextIndex].focus();
+                    return;
+                }
+            }
+
             const currentRect = activeElement.getBoundingClientRect();
             const currentX = (currentRect.left + currentRect.right) / 2;
             const currentY = (currentRect.top + currentRect.bottom) / 2;

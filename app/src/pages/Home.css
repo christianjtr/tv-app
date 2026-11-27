@@ -1,0 +1,31 @@
+.home-page__catalog {
+    background: #0b0a10;
+    border-radius: 1.5rem 1.5rem 0 0;
+    margin: -2.5rem auto 0;
+    max-width: 80rem;
+    padding: 2.25rem clamp(1rem, 3vw, 2.5rem) 3rem;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+.home-page__heading {
+    color: #f7f5fb;
+    font-size: clamp(1.65rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: 1.75rem;
+}
+
+@media (max-width: 640px) {
+    .home-page__catalog {
+        border-radius: 1.15rem 1.15rem 0 0;
+        margin-top: -1.5rem;
+        padding-top: 1.75rem;
+    }
+
+    .home-page__heading {
+        margin-bottom: 1.35rem;
+    }
+}

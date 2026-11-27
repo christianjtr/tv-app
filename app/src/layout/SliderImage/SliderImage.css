@@ -1,40 +1,70 @@
-.overlay img {
-    position: relative;
-    width: 100%;
-    -webkit-mask-image: linear-gradient(black 80%, transparent);
-    mask-image: linear-gradient(black 80%, transparent);
+.hero-slider {
+    margin-left: calc(50% - 50vw);
+    width: 100vw;
 }
 
-.overlay .title--centered {
-    position: absolute;
-    top: 40%;
-    right: 5%;
-    transform: translate(-50%, -50%);
-    -webkit-text-stroke: 0.5px floralwhite;
-    background-color: rgba(173, 173, 173, 0.05);
+.hero-slider__viewport {
+    overflow: hidden;
 }
 
-.overlay::after {
-    background-image: linear-gradient(0deg, #000000 1%, transparent 10%);
-    box-shadow: inset 0px -30px 50px 50px #000000;
-    content: '';
+.hero-slider__container {
+    display: flex;
     height: 100%;
+    touch-action: pan-y pinch-zoom;
+}
+
+.hero-slider__slide {
+    align-items: flex-end;
+    display: flex;
+    flex: 0 0 100%;
+    isolation: isolate;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-slider__slide img {
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    object-position: center 30%;
     position: absolute;
     width: 100%;
-    top: 0;
-    left: 0;
 }
 
-@media screen and (max-width: 768px) {
-    .overlay .title--centered {
-        top: 65%;
-        right: 7%;
-    }
+.hero-slider__slide::after {
+    background:
+        linear-gradient(90deg, rgb(0 0 0 / 48%), transparent 78%),
+        linear-gradient(0deg, rgb(0 0 0 / 88%), transparent 72%);
+    box-shadow: inset 0 0 100px 18px rgb(0 0 0 / 42%);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
-    .overlay .title--centered {
-        top: 70%;
-        right: 10%;
+.hero-caption {
+    color: #fff;
+    margin: 0 0 clamp(2.5rem, 7vw, 5rem) clamp(1.5rem, 7vw, 7rem);
+    max-width: min(80%, 45rem);
+    position: relative;
+    text-shadow: 0 3px 28px rgb(0 0 0 / 55%);
+    z-index: 1;
+}
+
+.hero-caption__title {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    margin: 0;
+    max-width: 15ch;
+}
+
+@media screen and (max-width: 640px) {
+    .hero-caption {
+        max-width: 90%;
+        margin-bottom: 4rem;
+        margin-left: 1.25rem;
     }
 }

@@ -1,51 +1,62 @@
-import React, { useEffect } from 'react';
-import Glide from '@glidejs/glide';
+import React, { useMemo } from 'react';
+import Autoplay from 'embla-carousel-autoplay';
+import Fade from 'embla-carousel-fade';
+import useEmblaCarousel from 'embla-carousel-react';
 import './SliderImage.css';
 
 export interface SliderImageProps {
     imageSources: { source: string; title: string }[];
-    hasOverlay?: boolean;
 }
 
+const EMBLA_OPTIONS = {
+    loop: true,
+    duration: 40,
+    breakpoints: {
+        '(prefers-reduced-motion: reduce)': { duration: 0 },
+    },
+};
+
 const SliderImage: React.FC<SliderImageProps> = (props: SliderImageProps): React.ReactElement => {
-    const { imageSources, hasOverlay = false } = props;
+    const { imageSources } = props;
+    const plugins = useMemo(
+        () => [
+            Fade({
+                breakpoints: {
+                    '(prefers-reduced-motion: reduce)': { active: false },
+                },
+            }),
+            Autoplay({
+                delay: 10000,
+                stopOnInteraction: false,
+                stopOnMouseEnter: false,
+                breakpoints: {
+                    '(prefers-reduced-motion: reduce)': { active: false },
+                },
+            }),
+        ],
+        []
+    );
+    const [emblaRef] = useEmblaCarousel(EMBLA_OPTIONS, plugins);
 
-    const hasImageSources = imageSources.length > 0;
-
-    useEffect(() => {
-        let glide: Glide;
-        if (hasImageSources) {
-            glide = new Glide('.glide', {
-                type: 'carousel',
-                autoplay: 10000,
-                hoverpause: false,
-                gap: 0,
-                animationDuration: 1000,
-            }).mount();
-            glide.on('swipe.end', () => {
-                glide.go('0');
-            });
-        }
-        return () => {
-            if (glide) glide.destroy();
-        };
-    }, [imageSources, hasImageSources]);
-
-    if (!hasImageSources) {
-        return <div className="h-96 skeleton w-full flex justify-center items-center opacity-60"></div>;
+    if (!imageSources.length) {
+        return <div className="hero-slider h-[25rem] md:h-[38rem] skeleton flex w-full items-center justify-center opacity-60"></div>;
     }
 
     return (
-        <div className="glide">
-            <div className={`glide__track h-60 md:h-96 ${hasOverlay && 'overlay'}`} data-glide-el="track">
-                <ul className="glide__slides">
+        <div className="hero-slider" data-cy="hero-slider" role="region" aria-label="Featured titles" aria-roledescription="carousel">
+            <div className="hero-slider__viewport h-[25rem] md:h-[38rem]" ref={emblaRef}>
+                <div className="hero-slider__container">
                     {imageSources.map((item, key) => (
-                        <li className="glide__slide relative" key={`image_item_${key}`}>
-                            <img src={item.source} alt={`${item.title} poster`} />
-                            <h1 className="block text-right md:text-4xl text-lg text-white title--centered">{item.title}</h1>
-                        </li>
+                        <div className="hero-slider__slide" data-cy="hero-slide" key={`image_item_${key}`}>
+                            <img src={item.source} alt={`${item.title} backdrop`} data-cy="hero-image" />
+                            <div className="hero-caption">
+                                <p className="hero-caption__title" data-cy="hero-title">
+                                    {item.title}
+                                </p>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </div>
     );

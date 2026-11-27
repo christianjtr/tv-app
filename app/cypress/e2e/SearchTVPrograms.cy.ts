@@ -36,7 +36,8 @@ describe('Search view page', () => {
     it('renders a TV show correctly when its episode and season counts are zero', () => {
         cy.visit(`${Cypress.expose('APP_HOME_URL')}/tv-shows/999998`);
 
-        cy.contains('Duration: 0 Seasons, 0 Episodes').should('be.visible');
+        cy.contains('0 seasons').should('be.visible');
+        cy.contains('0 episodes').should('be.visible');
         cy.get('#imdb_link').should('not.exist');
         cy.contains('undefined min.').should('not.exist');
     });
