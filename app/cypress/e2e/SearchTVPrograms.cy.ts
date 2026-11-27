@@ -9,6 +9,17 @@ describe('Search view page', () => {
         cy.visit(Cypress.expose('APP_SEARCH_URL'));
     });
 
+    it('restores a deep link redirected by GitHub Pages', () => {
+        const appHomeURL = Cypress.expose('APP_HOME_URL');
+        const route = `/search?query=${query}`;
+
+        cy.visit(`${appHomeURL}/?__spa_route=${encodeURIComponent(route)}`);
+
+        cy.location('pathname').should('eq', '/tv-app/search');
+        cy.location('search').should('eq', `?query=${query}`);
+        cy.get('[data-cy="tv-program-rail-item"]').should('have.length', 1).and('contain.text', 'Game of Thrones');
+    });
+
     it('should search a tv program correctly', () => {
         cy.visit(Cypress.expose('APP_SEARCH_URL'));
 
